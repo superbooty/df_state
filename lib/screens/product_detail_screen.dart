@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/widgets/popup_menu.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/product.dart';
+import '../widgets/popup_menu.dart';
 import '../providers/products.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -13,13 +14,11 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productId =
-        ModalRoute.of(context).settings.arguments as String; // is the id!
-    final loadedProduct =
-        Provider.of<Products>(context, listen: false).findById(productId);
+    final product =
+        ModalRoute.of(context).settings.arguments as Product; // is the id!
     return Scaffold(
       appBar: AppBar(
-        title: Text(loadedProduct.title),
+        title: Text(product.name),
         actions: <Widget>[
           MyPopupMenu(),
         ],

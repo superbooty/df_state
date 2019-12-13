@@ -1,124 +1,130 @@
-import 'dart:convert';
+// import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+import '../widgets/top_sellers.dart';
+import '../providers/products.dart';
+import '../providers/product.dart';
+
+import '../screens/products_overview_screen.dart';
+// import '../providers/query_text.dart';
+// import 'package:graphql_flutter/graphql_flutter.dart';
+// import 'package:http/http.dart' as http;
 
 class Search extends StatefulWidget {
-  final _query = '''
-    query{
-      search(
-        query: "blue jeans"
-        country: "CA"
-        locale: "en_CA"
-        sort: "relevance"
-        currentPage: 0
-        pageSize: 20
-      ) {
-          products {
-            name
-            price {
-              currencyIso
-              formattedValue
-              hardPrice
-              hardPriceFormattedValue
-              priceType
-              regularPrice
-              regularPriceFormattedValue
-              value
-            }
-            url
-          }
-      }
-    } 
-  ''';
-
-  static final HttpLink httpLink = HttpLink(
-    uri: 'https://www.levi.com/webhooks/search',
-  );
-
-  final ValueNotifier<GraphQLClient> client = ValueNotifier(
-    GraphQLClient(
-      cache: InMemoryCache(),
-      link: httpLink,
-    ),
-  );
   @override
-  _SearchState createState() => _SearchState();
+  _SearchState createState() => _SearchState();  
 }
 
 class _SearchState extends State<Search> {
   final searchTermController = TextEditingController();
   String _response = '';
 
-  void _updateResponse(data) {
-    var self = this;
-    setState(() => self._response = data);
-    ;
-  }
-
-  Future<void> _fetchData() async {
-    _updateResponse('Fetching Data...');
-
-    var resp = await http.get(
-        'https://www.levi.com/rest/v2/leviUSSite/products/005050216/swatchdata?fields=FULL&lang=en_US');
-    if (resp.statusCode == 200) {
-      _updateResponse('Done :: ${resp.statusCode}');
-    } else {
-      _updateResponse('Fetching Data...Failed');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<Products>(context);
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        TextField(
-          autocorrect: true,
-          decoration: InputDecoration(
-            hintText: 'Search',
-            icon: IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                _fetchData();
-                print('Searching for $searchTermController.text');
-              },
+        new TopSellerList(),
+        Text(
+          'STYLES YOU MAY LIKE', 
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+        SizedBox(height: 100),
+        Container(
+          padding: EdgeInsets.all(15),
+          child: TextField(
+            autocorrect: true,
+            controller: searchTermController,
+            decoration: InputDecoration(
+              hintText: 'Search',
+              icon: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () async {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      ProductsOverviewScreen.routeName,
+                      (route) => route.isCurrent &&
+                              route.settings.name ==
+                                  ProductsOverviewScreen.routeName
+                          ? false
+                          : true);
+                  print('Searching for');
+                  products.setItems([]);
+
+                  final query = '''
+                    query search(\$query: String!) {
+                      search(
+                        query: \$query
+                        country: "CA"
+                        locale: "en_CA"
+                        sort: "relevance"
+                        currentPage: 0
+                        pageSize: 20
+                      ) {
+                          products {
+                            name
+                            code
+                            price {
+                              formattedValue
+                              value
+                            }
+                            images {
+                                format
+                                imageType
+                                url
+                              }
+
+                          }
+                      }
+                  }
+                  ''';
+                  // queryText.setText(searchTermController.text);
+                  final HttpLink httpLink = HttpLink(
+                    uri: 'https://www.levi.com/webhooks/search',
+                  );
+
+                  GraphQLClient client = GraphQLClient(
+                    cache: InMemoryCache(),
+                    link: httpLink,
+                  );
+
+                  //var productList;
+                  var results = await client.query(QueryOptions(
+                    document: query,
+                    variables: {
+                      'query': searchTermController.text,
+                    },
+                  ));
+
+                  List<dynamic> productList =
+                      results.data['search']['products'];
+                  final List<Product> generated = [];
+                  for (var product in productList) {
+                    generated.add(Product(
+                        name: product['name'],
+                        price: product['price'],
+                        images: product['images'],
+                        code: product['code']));
+                  }
+                  print('Generated :: $generated');
+                  products.setItems(generated);
+                },
+              ),
             ),
           ),
         ),
         SizedBox(
           height: 40,
         ),
-        _response.isNotEmpty
-          //? Text('$_response')
-            ? GraphQLProvider(
-              client: widget.client,
-              child: Query(
-                options: QueryOptions(
-                  document: widget
-                      ._query, // this is the query string you just created
-
-                  pollInterval: 10,
-                ),
-                // Just like in apollo refetch() could be used to manually trigger a refetch
-                // while fetchMore() can be used for pagination purpose
-                builder: (QueryResult result,
-                    {VoidCallback refetch, FetchMore fetchMore}) {
-                  if (result.errors != null) {
-                    return Text(result.errors.toString());
-                  }
-
-                  if (result.loading) {
-                    return Text('Loading');
-                  }
-                  return Text(
-                    'GraphQL like a Pro'
-                  );
-                },
-              ))
-            : Text('No Response')
       ],
     );
   }

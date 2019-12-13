@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/widgets/popup_menu.dart';
+import 'package:provider/provider.dart';
 
+import '../widgets/popup_menu.dart';
+import '../providers/products.dart';
 import '../widgets/search.dart';
 
 class ProductFinderScreen extends StatelessWidget {
