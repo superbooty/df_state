@@ -4,6 +4,7 @@ import 'package:flutter_complete_guide/widgets/popup_menu.dart';
 import '../widgets/products_grid.dart';
 
 class ProductsOverviewScreen extends StatefulWidget {
+  static const routeName = '/product-overview';
   @override
   _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
 }
