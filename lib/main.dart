@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: Products()),
         ChangeNotifierProvider.value(value: QueryText()),
-         ChangeNotifierProvider.value(value: Recommendations()),
+        ChangeNotifierProvider.value(value: Recommendations()),
       ],
       child: MaterialApp(
           title: '',

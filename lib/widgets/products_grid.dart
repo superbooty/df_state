@@ -39,11 +39,12 @@ class ProductsGrid extends StatelessWidget {
       children: <Widget>[
         Container(
           width: double.infinity,
-          child: Image.network(
-            'http://cdn.lowgif.com/small/bf195e67400465f2-loading-animated-gif-transparent-background-11-gif-images-download.gif',
-            width: 75,
-            height: 75,
-          ),
+          // child: Image.network(
+          //   'http://cdn.lowgif.com/small/bf195e67400465f2-loading-animated-gif-transparent-background-11-gif-images-download.gif',
+          //   width: 75,
+          //   height: 75,
+          // ),
+          child: Text('No products to show', textAlign: TextAlign.center),
         )
       ]
     );

@@ -21,8 +21,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     // final queryText = Provider.of<QueryText>(context, listen: false);
-    final args = ModalRoute.of(context).settings.arguments;
-    
     return Scaffold(
       appBar: AppBar(
         title: Text('Levi\'s Products'),
