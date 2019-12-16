@@ -5,6 +5,9 @@ import '../providers/product.dart';
 import '../screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
+  //final Product product;
+  //ProductItem(this.product) {}
+
   // final String id;
   // final String title;
   // final double price;
@@ -15,21 +18,23 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
+    // print('Product Tile :: $product');
     return GridTile(
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(
             ProductDetailScreen.routeName,
-            arguments: product.id,
+            arguments: product,
           );
         },
         child: Stack(
           children: <Widget>[
-            Image.network(product.imageUrl, fit: BoxFit.fill),
+            Image.network(product.images[1]['url'], fit: BoxFit.fill),
             Align(
-              alignment: Alignment(1, .55),
+              alignment: Alignment(1, .53),
               child: Consumer<Product>(
-                builder: (ctx, product, _) => IconButton( // _ for last param child since we dont need it
+                builder: (ctx, product, _) => IconButton(
+                  // _ for last param child since we dont need it
                   icon: product.isFavorite
                       ? Icon(
                           Icons.favorite,
@@ -54,20 +59,21 @@ class ProductItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              height: 35,
               child: Text(
-                product.title,
+                product.name,
                 style: TextStyle(
                   color: Colors.grey[600],
+                  fontSize: 12,
                 ),
-                maxLines: 3,
+                maxLines: 2,
               ),
             ),
             Container(
               child: Text(
-                '\$${product.price}',
+                '${product.price['formattedValue']}',
                 style: TextStyle(
                   color: Colors.red[600],
+                  fontSize: 12,
                 ),
                 maxLines: 2,
               ),
