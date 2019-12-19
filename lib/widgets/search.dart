@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 
 // import '../widgets/top_sellers.dart';
-import '../widgets/recommendations.dart';
+import '../widgets/recommended_items.dart';
 import '../providers/products.dart';
 import '../providers/product.dart';
 
