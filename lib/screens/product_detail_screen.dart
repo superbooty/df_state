@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
 import '../widgets/popup_menu.dart';
-import '../providers/products.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   // final String title;

@@ -29,7 +29,7 @@ class ProductItem extends StatelessWidget {
         },
         child: Stack(
           children: <Widget>[
-            Image.network(product.images[1]['url'], fit: BoxFit.fill),
+            Image.network(product.images[1]['url'], fit: BoxFit.scaleDown),
             Align(
               alignment: Alignment(1, .53),
               child: Consumer<Product>(
@@ -58,25 +58,20 @@ class ProductItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              child: Text(
-                product.name,
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 12,
-                ),
-                maxLines: 2,
+            Text(
+              product.name,
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 12,
               ),
             ),
-            Container(
-              child: Text(
-                '${product.price['formattedValue']}',
-                style: TextStyle(
-                  color: Colors.red[600],
-                  fontSize: 12,
-                ),
-                maxLines: 2,
+            Text(
+              '${product.price['formattedValue']}',
+              style: TextStyle(
+                color: Colors.red[600],
+                fontSize: 12,
               ),
+              //maxLines: 2,
             ),
           ]),
     );

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/providers/product.dart';
 import 'package:provider/provider.dart';
 
-import './product_item.dart';
+import './item.dart';
 import '../providers/products.dart';
 
 class ProductsGrid extends StatelessWidget {
@@ -20,7 +19,7 @@ class ProductsGrid extends StatelessWidget {
       itemCount: products.length,
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
          value: products[i],
-         child: ProductItem(
+         child: Item(
           // products[i].id,
           // products[i].title,
           // products[i].price,
@@ -29,7 +28,7 @@ class ProductsGrid extends StatelessWidget {
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: .61,
+        childAspectRatio: .60,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
@@ -39,11 +38,12 @@ class ProductsGrid extends StatelessWidget {
       children: <Widget>[
         Container(
           width: double.infinity,
-          child: Image.network(
-            'http://cdn.lowgif.com/small/bf195e67400465f2-loading-animated-gif-transparent-background-11-gif-images-download.gif',
-            width: 75,
-            height: 75,
-          ),
+          // child: Image.network(
+          //   'http://cdn.lowgif.com/small/bf195e67400465f2-loading-animated-gif-transparent-background-11-gif-images-download.gif',
+          //   width: 75,
+          //   height: 75,
+          // ),
+          child: Text('No products to show', textAlign: TextAlign.center),
         )
       ]
     );

@@ -29,7 +29,7 @@ class Recommendations with ChangeNotifier {
     List<dynamic> products = productsWrapper["recommendedProducts"];
     for (var product in products) {
       recommended.add(Product(
-            name: product['name'],
+            name: product['name'].toString(),
             price: {'formattedValue': '', 'value': product['regularprice']},
             images: [{'format': 'Grid_Mobile',
               'imageType': 'PRIMARY',
