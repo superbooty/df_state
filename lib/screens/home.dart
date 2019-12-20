@@ -79,8 +79,9 @@ class Home extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             Container(
-                                              width:
-                                              MediaQuery.of(context).size.width,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
                                               child: Text(
                                                 contentModules
                                                     .moduleContent[i]
@@ -98,52 +99,46 @@ class Home extends StatelessWidget {
                                               ),
                                             ),
                                             Container(
-                                              height: 200,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: ListView.builder(
-                                                itemCount: 3,
-                                                itemBuilder: (ctx, i) =>
-                                                    Text('Hi'),
+                                              height: 100,
+                                              width: 200,
+                                              child: ListView(
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
+                                                children: contentModules
+                                                    .moduleContent[i]
+                                                    .mbHeroV1
+                                                    .overlaidContent
+                                                    .ctaLinks
+                                                    .map((link) {
+                                                  return FlatButton(
+                                                    color: Colors.white
+                                                        .withOpacity(.9),
+                                                    textColor: Colors.black54,
+                                                    disabledColor: Colors.grey,
+                                                    disabledTextColor:
+                                                        Colors.black,
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    splashColor:
+                                                        Colors.blueAccent,
+                                                    onPressed: () {
+                                                      /*...*/
+                                                    },
+                                                    child: Text(
+                                                      link.linkText,
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList(),
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
-
-                                      // ListView.builder(
-                                      //     itemCount: 1,
-                                      //     itemBuilder: (ctx, i) {
-                                      //       var link = contentModules
-                                      //           .moduleContent[i]
-                                      //           .mbHeroV1
-                                      //           .overlaidContent
-                                      //           .ctaLinks[i];
-                                      //       return FlatButton(
-                                      //               color: Colors.white
-                                      //                   .withOpacity(.9),
-                                      //               textColor: Colors.black54,
-                                      //               disabledColor: Colors.grey,
-                                      //               disabledTextColor:
-                                      //                   Colors.black,
-                                      //               padding:
-                                      //                   EdgeInsets.all(8.0),
-                                      //               splashColor:
-                                      //                   Colors.blueAccent,
-                                      //               onPressed: () {
-                                      //                 /*...*/
-                                      //               },
-                                      //               child: Text(
-                                      //                 link.linkText,
-                                      //                 style: TextStyle(
-                                      //                   fontSize: 20,
-                                      //                   fontWeight:
-                                      //                       FontWeight.bold,
-                                      //                 ),
-                                      //               ),
-                                      //             );
-                                      //     }),
                                     ],
                                   )
                                 : Container(),
