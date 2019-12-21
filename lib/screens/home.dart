@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/cms_content.dart';
 import '../widgets/popup_menu.dart';
-import '../widgets/cms_home.dart';
+import '../widgets/cms/cms_home.dart';
 
 
 class Home extends StatelessWidget {
@@ -14,11 +14,18 @@ class Home extends StatelessWidget {
   // ProductDetailScreen(this.title, this.price);
   static const routeName = '/home';
 
+  String appBarText = 'Sweet Home';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sweet Home'),
+        title: FutureBuilder (
+          future: getAppbarText(),
+          builder: (ctx, dataSnapshot) {
+            return Text(appBarText);
+          }
+        ),
         actions: <Widget>[
           MyPopupMenu(),
         ],
@@ -40,5 +47,10 @@ class Home extends StatelessWidget {
     if (module.mbHeroV1.overlaidContent.ctaLinks.length > 0) {
       for (CtaLink ctaLink in module.mbHeroV1.overlaidContent.ctaLinks) {}
     }
+  }
+
+  Future<void> getAppbarText() async {
+    this.appBarText = 'Sweet Home';
+    return await Future<void>.value(null);
   }
 }
