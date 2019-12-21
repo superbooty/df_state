@@ -1036,19 +1036,20 @@ class CmsContent with ChangeNotifier {
     _modContent = modContent;
   }
 
-  Future<void> fetchCMSMarketingModules() async {
-    // final contentURL =
-    //     'https://www.levi.com/omni-cms-gw-exp-api/v1/levicom/online/homepage?country=US&language=en_US&type=homepage_v2&include[]=ref__marketing_layout_v1.ref__marketing_modules_v1';
-    // final data = await http.get(contentURL);
+  Future<void> fetchCMSContent() async {
+    final contentURL =
+        'https://www.levi.com/omni-cms-gw-exp-api/v1/levicom/online/homepage?country=US&language=en_US&type=homepage_v2&include[]=ref__marketing_layout_v1.ref__marketing_modules_v1';
+    final data = await http.get(contentURL);
 
-    // final Map<String, dynamic> respBody = json.decode(data.body);
-    // final respModules = respBody['entries'][0]['ref__marketing_layout_v1'][0]
-    //     ['ref__marketing_modules_v1'];
+    final Map<String, dynamic> respBody = json.decode(data.body);
+    final respModules = respBody['entries'][0]['ref__marketing_layout_v1'][0]
+        ['ref__marketing_modules_v1'];
 
-    final decodedJson = json.decode(contentJson) as Map<String, dynamic>;
-    _modules =
-        MarketingModules.fromJson(decodedJson).refMarketingModulesV1;
-    await Future<void>.value(null);
+    // final decodedJson = json.decode(contentJson) as Map<String, dynamic>;
+    // final decodedJson = json.decode(respModules) as Map<String, dynamic>;
+    //_modules =
+    _modules = MarketingModules.fromJson({'ref__marketing_modules_v1': respModules}).refMarketingModulesV1;
+    //await Future<void>.value(null);
     this.setModuleContent();
     notifyListeners();
   }
