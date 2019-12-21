@@ -12,23 +12,15 @@ class CMSHome extends StatelessWidget {
      * Use SnapList to create the scrollable view
      */
     return Consumer<CmsContent>(
-      builder: (ctx, contentModules, child) => SnapList(
-        builder: (context, i, data) => ChangeNotifierProvider.value(
-            value: contentModules.moduleContent[i].mbHeroV1,
-            child: contentModules.moduleContent[i].mbHeroV1 != null
-                ? CMSHero()
-                : SizedBox()),
-        count: contentModules.moduleContent.length,
-        separatorProvider: (i, data) {
-          return contentModules.moduleContent[i].mbHeroV1 != null
-              ? Size(5, 5)
-              : Size(0, 0);
-        },
-        sizeProvider: (i, data) {
-          return contentModules.moduleContent[i].mbHeroV1 != null
-              ? Size(MediaQuery.of(context).size.width,
-                  MediaQuery.of(context).size.height)
-              : Size(0, 0);
+      builder: (ctx, contentModules, child) => PageView.builder(
+        itemCount: contentModules.heroContent.length,
+        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+          value: contentModules.heroContent[i].mbHeroV1,
+          child: CMSHero(),
+        ),
+        onPageChanged: (page) {
+          print(
+              'Pange :: ${contentModules.heroContent[page].mbHeroV1.overlaidContent.headline.headlineText}');
         },
       ),
     );

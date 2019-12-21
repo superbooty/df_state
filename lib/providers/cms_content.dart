@@ -1015,25 +1015,36 @@ const contentJson = '''
 ''';
 
 class CmsContent with ChangeNotifier {
+
   List<RefMarketingModulesV1> _modules = [];
+  List<Mb> _heroContent = [];
+  String _appTitle;
 
   List<RefMarketingModulesV1> get modules {
     return [..._modules];
   }
-
-  List<Mb> _modContent = [];
-  List<Mb> get moduleContent {
-    return [..._modContent];
+  
+  List<Mb> get heroContent {
+    return [..._heroContent];
   }
 
-  void  setModuleContent() {
+  String get appTitle {
+    return _appTitle;
+  }
+
+  void setAppTitle(String appTitle) {
+    this._appTitle = appTitle;
+  }
+
+  void  setHeroContent() {
     List<Mb> modContent = [];
     for (RefMarketingModulesV1 marketingModules in this._modules) {
       for (Mb mb in marketingModules.mb) {
-        modContent.add(mb);
+        if(mb.mbHeroV1 != null)
+          modContent.add(mb);
       }
     }
-    _modContent = modContent;
+    _heroContent = modContent;
   }
 
   Future<void> fetchCMSContent() async {
@@ -1051,7 +1062,12 @@ class CmsContent with ChangeNotifier {
     _modules = MarketingModules.fromJson(decodedJson).refMarketingModulesV1;
 
     await Future<void>.value(null);
-    this.setModuleContent();
+    this.setHeroContent();
+    notifyListeners();
+  }
+
+  Future<void> getAppTitle() async {
+    this.setAppTitle('Sweet Home');
     notifyListeners();
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 import '../providers/hero_content.dart';
 
@@ -144,7 +145,7 @@ final localeValues = EnumValues({
     "en": Locale.EN
 });
 
-class Mb {
+class Mb with ChangeNotifier{
     final MbHeroV1 mbHeroV1;
     final MbSpacerV1 mbSpacerV1;
     final MbDoorwayColumnV1 mbDoorwayColumnV1;
@@ -176,7 +177,7 @@ class Mb {
     };
 }
 
-class MbDoorwayColumnV1 {
+class MbDoorwayColumnV1 with ChangeNotifier{
     final String eyebrowText;
     final String eyebrowColor;
     final String signpost;
@@ -625,7 +626,7 @@ class Headline {
     };
 }
 
-class MbProductCarouselV1 {
+class MbProductCarouselV1 with ChangeNotifier{
     final TextAndCtaContent textAndCtaContent;
     final List<Carousel> carousel;
 
@@ -717,7 +718,7 @@ class TextAndCtaContent {
     };
 }
 
-class MbSpacerV1 {
+class MbSpacerV1 with ChangeNotifier{
     final String selectVerticalSpacingAmount;
 
     MbSpacerV1({

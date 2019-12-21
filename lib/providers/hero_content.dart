@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../models/marketing_modules.dart';
 
-class MbHeroV1 extends ChangeNotifier{
+class MbHeroV1 with ChangeNotifier{
     final BgMedia bgMedia;
     final OverlaidContent overlaidContent;
     final BottomBar bottomBar;

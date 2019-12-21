@@ -20,12 +20,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: FutureBuilder (
-          future: getAppbarText(),
-          builder: (ctx, dataSnapshot) {
-            return Text(appBarText);
-          }
-        ),
+        title: Text(appBarText),
         actions: <Widget>[
           MyPopupMenu(),
         ],
@@ -41,16 +36,5 @@ class Home extends StatelessWidget {
             }
           }),
     );
-  }
-
-  buildLinks(Mb module) {
-    if (module.mbHeroV1.overlaidContent.ctaLinks.length > 0) {
-      for (CtaLink ctaLink in module.mbHeroV1.overlaidContent.ctaLinks) {}
-    }
-  }
-
-  Future<void> getAppbarText() async {
-    this.appBarText = 'Sweet Home';
-    return await Future<void>.value(null);
   }
 }
