@@ -81,8 +81,8 @@ class CMSHome extends StatelessWidget {
                                           .subcopy,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -97,12 +97,9 @@ class CMSHome extends StatelessWidget {
                                           .map((link) {
                                         return Container(
                                           child: FlatButton(
-                                            color: Colors.white.withOpacity(.9),
-                                            textColor: Colors.black54,
-                                            disabledColor: Colors.grey,
-                                            disabledTextColor: Colors.black,
+                                            color: Colors.white,
+                                            textColor: Colors.black,
                                             padding: EdgeInsets.all(8.0),
-                                            splashColor: Colors.blueAccent,
                                             onPressed: () {
                                               /*...*/
                                             },
@@ -110,7 +107,7 @@ class CMSHome extends StatelessWidget {
                                               link.linkText,
                                               style: TextStyle(
                                                 fontSize: 11,
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight: FontWeight.w800,
                                               ),
                                             ),
                                           ),
@@ -123,7 +120,7 @@ class CMSHome extends StatelessWidget {
                             ),
                           ],
                         )
-                      : Container(),
+                      : SizedBox(),
                 ],
               )
             : Container(),

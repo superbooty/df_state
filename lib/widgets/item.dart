@@ -32,8 +32,10 @@ class Item extends StatelessWidget {
             Stack(
               children: <Widget>[
                 Image.network(product.images[1]['url'], fit: BoxFit.fill),
-                Align(
-                  alignment: Alignment(1, .53),
+                Positioned(
+                  // alignment: Alignment.bottomRight,
+                  right: -10,
+                  bottom: -10,
                   child: Consumer<Product>(
                     builder: (ctx, product, _) => IconButton(
                       // _ for last param child since we dont need it
