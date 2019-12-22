@@ -11,11 +11,12 @@ class CMSHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cmsHero = Provider.of<MbHeroV1>(context, listen: false);
+    final mediaQuery = MediaQuery.of(context);
     return Container(
       child: Stack(
           children: <Widget>[
             Container(
-              width: MediaQuery.of(context).size.width,
+              width: mediaQuery.size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   colorFilter: new ColorFilter.mode(
@@ -29,8 +30,8 @@ class CMSHero extends StatelessWidget {
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+              width: mediaQuery.size.width,
+              height: mediaQuery.size.height,
               child: Opacity(
                 opacity: .30,
                 child: DecoratedBox(
@@ -55,7 +56,7 @@ class CMSHero extends StatelessWidget {
                             child: Column(
                               children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width,
+                                  width: mediaQuery.size.width,
                                   child: Text(
                                     cmsHero.overlaidContent
                                         .headline
@@ -71,7 +72,7 @@ class CMSHero extends StatelessWidget {
                                 ),
                                 Container(
                                   height: 30,
-                                  width: MediaQuery.of(context).size.width,
+                                  width: mediaQuery.size.width,
                                   child: Text(
                                     cmsHero
                                         .overlaidContent
@@ -90,7 +91,7 @@ class CMSHero extends StatelessWidget {
                                         .map((link) {
                                       return Container(
                                         margin: EdgeInsets.all(5),
-                                        width: MediaQuery.of(context).size.width * .6,
+                                        width: mediaQuery.size.width * .6,
                                         child: FlatButton(
                                           color: Colors.white,
                                           textColor: Colors.black,

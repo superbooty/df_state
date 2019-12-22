@@ -21,7 +21,7 @@ class CMSHome extends StatelessWidget {
         itemBuilder: (ctx, i) { 
           return ChangeNotifierProvider.value(
             value: contentModules.heroContent[i].mbHeroV1,
-            child: CMSHero(),
+            child: const CMSHero(),
           );
         },
         
