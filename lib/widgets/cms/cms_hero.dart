@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/hero_content.dart';
+import '../../models/cms/marketing_modules.dart';
 
 class CMSHero extends StatelessWidget {
   const CMSHero({
@@ -85,17 +85,16 @@ class CMSHero extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  height: MediaQuery.of(context).size.height * .2,
-                                  width: MediaQuery.of(context).size.width * .5,
-                                  child: ListView(
-                                    physics: NeverScrollableScrollPhysics(),
+                                  child: Column(
                                     children: cmsHero.overlaidContent.ctaLinks
                                         .map((link) {
                                       return Container(
+                                        margin: EdgeInsets.all(5),
+                                        width: MediaQuery.of(context).size.width * .6,
                                         child: FlatButton(
                                           color: Colors.white,
                                           textColor: Colors.black,
-                                          padding: EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(15.0),
                                           onPressed: () {
                                             /*...*/
                                           },
@@ -103,13 +102,13 @@ class CMSHero extends StatelessWidget {
                                             link.linkText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w800,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w700,
                                             ),
                                           ),
                                         ),
                                       );
-                                    }).toList(),
+                                    }).toList(), // must call to List to return elements as a list
                                   ),
                                 ),
                               ],

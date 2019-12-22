@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../models/marketing_modules.dart';
+import '../models/cms/marketing_modules.dart';
 
 class MbHeroV1 with ChangeNotifier{
     final BgMedia bgMedia;

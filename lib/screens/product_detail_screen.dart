@@ -22,6 +22,9 @@ class ProductDetailScreen extends StatelessWidget {
           MyPopupMenu(),
         ],
       ),
+      body: Center(
+        child: Text(product.code),
+      ),
     );
   }
 }

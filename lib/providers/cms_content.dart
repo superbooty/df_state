@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/marketing_modules.dart';
+import '../models/cms/marketing_modules.dart';
 
 const contentJson = '''
 {
