@@ -46,44 +46,47 @@ class ProductDetailScreen extends StatelessWidget {
                         );
                       }).toList(),
                     ),
-                    Container(
-                      height: mediaQuery.size.height * .25,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              details.product.name,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
+                    SingleChildScrollView(
+                      child: Container(
+                        height: mediaQuery.size.height * .25,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                details.product.name,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: ButtonTheme(
-                              minWidth: mediaQuery.size.width * .95,
-                              child: FlatButton(
-                                color: Colors.redAccent.shade700,
-                                textColor: Colors.white,
-                                padding: EdgeInsets.all(15.0),
-                                onPressed: () {
-                                  /*...*/
-                                },
-                                child: Text(
-                                  'Add to Cart',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: ButtonTheme(
+                                minWidth: mediaQuery.size.width * .95,
+                                child: FlatButton(
+                                  color: Colors.redAccent.shade700,
+                                  textColor: Colors.white,
+                                  padding: EdgeInsets.all(15.0),
+                                  onPressed: () {
+                                    /*...*/
+                                  },
+                                  child: Text(
+                                    'Add to Cart',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
