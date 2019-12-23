@@ -400,15 +400,15 @@ class LscoBreadcrumb {
 
 class Price {
   dynamic code;
-  CurrencyIso currencyIso;
-  FormattedValue formattedValue;
+  dynamic currencyIso;
+  String formattedValue;
   dynamic hardPrice;
-  dynamic hardPriceFormattedValue;
+  String hardPriceFormattedValue;
   dynamic maxQuantity;
   dynamic minQuantity;
-  PriceType priceType;
+  String priceType;
   dynamic regularPrice;
-  FormattedValue regularPriceFormattedValue;
+  String regularPriceFormattedValue;
   dynamic softPrice;
   dynamic softPriceFormattedValue;
   dynamic value;
@@ -433,22 +433,22 @@ class Price {
         code: json["code"],
         currencyIso: json["currencyIso"] == null
             ? null
-            : currencyIsoValues.map[json["currencyIso"]],
+            : json["currencyIso"],
         formattedValue: json["formattedValue"] == null
             ? null
-            : formattedValueValues.map[json["formattedValue"]],
+            : json["formattedValue"],
         hardPrice: json["hardPrice"],
         hardPriceFormattedValue: json["hardPriceFormattedValue"],
         maxQuantity: json["maxQuantity"],
         minQuantity: json["minQuantity"],
         priceType: json["priceType"] == null
             ? null
-            : priceTypeValues.map[json["priceType"]],
+            : json["priceType"],
         regularPrice:
             json["regularPrice"] == null ? null : json["regularPrice"],
         regularPriceFormattedValue: json["regularPriceFormattedValue"] == null
             ? null
-            : formattedValueValues.map[json["regularPriceFormattedValue"]],
+            : json["regularPriceFormattedValue"],
         softPrice: json["softPrice"],
         softPriceFormattedValue: json["softPriceFormattedValue"],
         value: json["value"] == null ? null : json["value"],
@@ -457,37 +457,25 @@ class Price {
   Map<String, dynamic> toJson() => {
         "code": code,
         "currencyIso":
-            currencyIso == null ? null : currencyIsoValues.reverse[currencyIso],
+            currencyIso == null ? null : currencyIso,
         "formattedValue": formattedValue == null
             ? null
-            : formattedValueValues.reverse[formattedValue],
+            : formattedValue,
         "hardPrice": hardPrice,
         "hardPriceFormattedValue": hardPriceFormattedValue,
         "maxQuantity": maxQuantity,
         "minQuantity": minQuantity,
         "priceType":
-            priceType == null ? null : priceTypeValues.reverse[priceType],
+            priceType == null ? null : priceType,
         "regularPrice": regularPrice == null ? null : regularPrice,
         "regularPriceFormattedValue": regularPriceFormattedValue == null
             ? null
-            : formattedValueValues.reverse[regularPriceFormattedValue],
+            : regularPriceFormattedValue,
         "softPrice": softPrice,
         "softPriceFormattedValue": softPriceFormattedValue,
         "value": value == null ? null : value,
       };
 }
-
-enum CurrencyIso { EUR }
-
-final currencyIsoValues = EnumValues({"EUR": CurrencyIso.EUR});
-
-enum FormattedValue { THE_11500 }
-
-final formattedValueValues = EnumValues({"€115.00": FormattedValue.THE_11500});
-
-enum PriceType { BUY }
-
-final priceTypeValues = EnumValues({"BUY": PriceType.BUY});
 
 class SeoMetaData {
   String metaDescription;

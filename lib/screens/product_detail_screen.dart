@@ -52,16 +52,33 @@ class ProductDetailScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                details.product.name,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[700],
-                                  fontWeight: FontWeight.w600,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    details.product.price.formattedValue,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.redAccent[700],
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Container(
+                                  width: mediaQuery.size.width * .8,
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    details.product.name,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.grey[700],
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             Align(
                               alignment: Alignment.bottomCenter,
