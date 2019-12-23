@@ -5,6 +5,9 @@ import '../providers/product.dart';
 import '../screens/product_detail_screen.dart';
 
 class Item extends StatelessWidget {
+  const Item({
+    Key key,
+  }) : super(key: key);
   //final Product product;
   //ProductItem(this.product) {}
 
@@ -22,9 +25,11 @@ class Item extends StatelessWidget {
     return Container(
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(
-            ProductDetailScreen.routeName,
-            arguments: product,
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailScreen(product: product),
+            ),
           );
         },
         child: Column(

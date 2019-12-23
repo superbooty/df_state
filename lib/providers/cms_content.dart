@@ -1063,6 +1063,7 @@ class CmsContent with ChangeNotifier {
 
     await Future<void>.value(null);
     this.setHeroContent();
+    print('Hero Content');
     notifyListeners();
   }
 

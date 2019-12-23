@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 Product productFromJson(String str) => Product.fromJson(json.decode(str));
 
 String productToJson(Product data) => json.encode(data.toJson());
 
 class Product {
   String altText;
-  int averageOverallRatings;
+  double averageOverallRatings;
   String baseProduct;
   List<Classification> classifications;
   String code;
@@ -412,11 +414,11 @@ class Price {
   dynamic maxQuantity;
   dynamic minQuantity;
   PriceType priceType;
-  int regularPrice;
+  dynamic regularPrice;
   FormattedValue regularPriceFormattedValue;
   dynamic softPrice;
   dynamic softPriceFormattedValue;
-  int value;
+  dynamic value;
 
   Price({
     this.code,

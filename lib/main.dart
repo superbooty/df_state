@@ -9,6 +9,7 @@ import './providers/query_text.dart';
 import './providers/products.dart';
 import './screens/product_finder_screen.dart';
 import './screens/home.dart';
+import './providers/product_details.dart';
 
 
 void main() => runApp(MyApp());
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: QueryText()),
         ChangeNotifierProvider.value(value: Recommendations()),
         ChangeNotifierProvider.value(value: CmsContent()),
+        ChangeNotifierProvider.value(value: ProductDetails()),
       ],
       child: MaterialApp(
           title: '',
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
           
           home: Home(),
           routes: {
-            ProductDetailScreen.routeName: (ctx) => Home(),
+            Home.routeName: (ctx) => Home(),
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
             ProductFinderScreen.routeName: (ctx) => ProductFinderScreen(),

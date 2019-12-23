@@ -45,8 +45,8 @@ class _SearchState extends State<Search> {
                     query search(\$query: String!) {
                       search(
                         query: \$query
-                        country: "CA"
-                        locale: "en_CA"
+                        country: "US"
+                        locale: "en_US"
                         sort: "relevance"
                         currentPage: 0
                         pageSize: 20
@@ -96,7 +96,7 @@ class _SearchState extends State<Search> {
                     images: product['images'],
                     code: product['code']));
               }
-              print('Generated :: $generated');
+              // print('Generated :: $generated');
               products.setItems(generated);
               Navigator.of(context).pushNamedAndRemoveUntil(
                   ProductsOverviewScreen.routeName,

@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
   // ProductDetailScreen(this.title, this.price);
   static const routeName = '/home';
 
-  String appBarText = 'Sweet Home';
+  final String appBarText = 'Sweet Home';
 
   @override
   Widget build(BuildContext context) {
