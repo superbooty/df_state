@@ -8,7 +8,7 @@ String productToJson(Product data) => json.encode(data.toJson());
 
 class Product {
   String altText;
-  double averageOverallRatings;
+  dynamic averageOverallRatings;
   String baseProduct;
   List<Classification> classifications;
   String code;
@@ -25,7 +25,7 @@ class Product {
   dynamic merchantBadge;
   int minOrderQuantity;
   bool multidimensional;
-  Name name;
+  String name;
   int noOfRatings;
   List<dynamic> potentialPromotions;
   Price price;
@@ -116,7 +116,7 @@ class Product {
             json["minOrderQuantity"] == null ? null : json["minOrderQuantity"],
         multidimensional:
             json["multidimensional"] == null ? null : json["multidimensional"],
-        name: json["name"] == null ? null : nameValues.map[json["name"]],
+        name: json["name"] == null ? null : json["name"],
         noOfRatings: json["noOfRatings"] == null ? null : json["noOfRatings"],
         potentialPromotions: json["potentialPromotions"] == null
             ? null
@@ -174,7 +174,7 @@ class Product {
         "merchantBadge": merchantBadge,
         "minOrderQuantity": minOrderQuantity == null ? null : minOrderQuantity,
         "multidimensional": multidimensional == null ? null : multidimensional,
-        "name": name == null ? null : nameValues.reverse[name],
+        "name": name == null ? null : name,
         "noOfRatings": noOfRatings == null ? null : noOfRatings,
         "potentialPromotions": potentialPromotions == null
             ? null
@@ -325,7 +325,7 @@ class GalleryImageList {
 }
 
 class GalleryImage {
-  Name altText;
+  String altText;
   Format format;
   int galleryIndex;
   ImageType imageType;
@@ -341,7 +341,7 @@ class GalleryImage {
 
   factory GalleryImage.fromJson(Map<String, dynamic> json) => GalleryImage(
         altText:
-            json["altText"] == null ? null : nameValues.map[json["altText"]],
+            json["altText"] == null ? null : json["altText"],
         format:
             json["format"] == null ? null : formatValues.map[json["format"]],
         galleryIndex:
@@ -353,7 +353,7 @@ class GalleryImage {
       );
 
   Map<String, dynamic> toJson() => {
-        "altText": altText == null ? null : nameValues.reverse[altText],
+        "altText": altText == null ? null : altText,
         "format": format == null ? null : formatValues.reverse[format],
         "galleryIndex": galleryIndex == null ? null : galleryIndex,
         "imageType":
@@ -361,11 +361,6 @@ class GalleryImage {
         "url": url == null ? null : url,
       };
 }
-
-enum Name { THE_511_SLIM_FIT_JEANS }
-
-final nameValues =
-    EnumValues({"511™ Slim Fit Jeans": Name.THE_511_SLIM_FIT_JEANS});
 
 enum Format { THUMB_MOBILE, REGULAR_MOBILE }
 
@@ -498,7 +493,7 @@ final priceTypeValues = EnumValues({"BUY": PriceType.BUY});
 
 class SeoMetaData {
   String metaDescription;
-  Name metaH1;
+  String metaH1;
   String metaTitle;
   String robots;
 
@@ -512,14 +507,14 @@ class SeoMetaData {
   factory SeoMetaData.fromJson(Map<String, dynamic> json) => SeoMetaData(
         metaDescription:
             json["metaDescription"] == null ? null : json["metaDescription"],
-        metaH1: json["metaH1"] == null ? null : nameValues.map[json["metaH1"]],
+        metaH1: json["metaH1"] == null ? null : json["metaH1"],
         metaTitle: json["metaTitle"] == null ? null : json["metaTitle"],
         robots: json["robots"] == null ? null : json["robots"],
       );
 
   Map<String, dynamic> toJson() => {
         "metaDescription": metaDescription == null ? null : metaDescription,
-        "metaH1": metaH1 == null ? null : nameValues.reverse[metaH1],
+        "metaH1": metaH1 == null ? null : metaH1,
         "metaTitle": metaTitle == null ? null : metaTitle,
         "robots": robots == null ? null : robots,
       };
