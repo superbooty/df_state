@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/product/product.dart';
 import '../providers/product_details.dart';
 import '../providers/product.dart' as providerProduct;
 import '../widgets/popup_menu.dart';

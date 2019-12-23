@@ -66,8 +66,6 @@ class RecommendedItems extends StatelessWidget {
                   ),
                 ),
               );
-              print(dataSnapshot.data);
-              return Container();
             }
           }
         },
