@@ -190,7 +190,7 @@ class ProductDetails with ChangeNotifier {
 
   // queryText.setText(searchTermController.text);
   static final HttpLink httpLink = HttpLink(
-    uri: 'https://www.levi.com/webhooks/product',
+    //uri: 'https://www.levi.com/webhooks/product',
   );
 
   final GraphQLClient client = GraphQLClient(

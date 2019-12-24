@@ -33,59 +33,86 @@ class ProductDetailScreen extends StatelessWidget {
               return Consumer<ProductDetails>(
                 builder: (ctx, details, _) => Column(
                   children: <Widget>[
-                    CarouselSlider(
-                      height: mediaQuery.size.height * .58,
-                      enlargeCenterPage: true,
-                      aspectRatio: .5,
-                      viewportFraction: 1.0,
-                      items: details.mobileGallery.map((image) {
-                        return Container(
-                          width: mediaQuery.size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 1.0),
-                          child: Image.network(image.url),
-                        );
-                      }).toList(),
+                    Container(
+                      child: CarouselSlider(
+                        height: mediaQuery.size.height * .58,
+                        enlargeCenterPage: true,
+                        viewportFraction: 1.0,
+                        items: details.mobileGallery.map((image) {
+                          return Container(
+                            width: mediaQuery.size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 1.0),
+                            child: Image.network(image.url),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    Divider(
+                      color: Colors.grey[600],
                     ),
                     SingleChildScrollView(
-                      child: Container(
-                        height: mediaQuery.size.height * .25,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                details.product.name,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[700],
-                                  fontWeight: FontWeight.w600,
-                                ),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(),
+                        child: Container(
+                          height: mediaQuery.size.height * .25,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      details.product.price.formattedValue,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.redAccent[700],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: mediaQuery.size.width * .7,
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      details.product.name,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey[700],
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: ButtonTheme(
-                                minWidth: mediaQuery.size.width * .95,
-                                child: FlatButton(
-                                  color: Colors.redAccent.shade700,
-                                  textColor: Colors.white,
-                                  padding: EdgeInsets.all(15.0),
-                                  onPressed: () {
-                                    /*...*/
-                                  },
-                                  child: Text(
-                                    'Add to Cart',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700,
+                              // Text(details.product.description),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: ButtonTheme(
+                                  minWidth: mediaQuery.size.width * .95,
+                                  child: FlatButton(
+                                    color: Colors.redAccent.shade700,
+                                    textColor: Colors.white,
+                                    padding: EdgeInsets.all(15.0),
+                                    onPressed: () {
+                                      /*...*/
+                                    },
+                                    child: Text(
+                                      'Add to Cart',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
