@@ -14,6 +14,7 @@ class Recommendations with ChangeNotifier {
   }
   
   Future<void> getRecommendationProducts() async {
+    // this URL is a production URL do not use unless you're sure of what you're doing
     final recommendationsURL = 'https://api.levi-site.com/homereco/homerecommendations';
     final List<Product> recommended = [];
     final data = await http.post(recommendationsURL, body: {
