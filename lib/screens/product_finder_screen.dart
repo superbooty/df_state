@@ -26,6 +26,7 @@ class ProductFinderScreen extends StatelessWidget {
           ],
         ),
         body: Column(children: <Widget>[
+          // commenting out following call as to not make too many prod calls
           RecommendedItems(),
           Text(
             'RECOMMENDED FOR YOU',

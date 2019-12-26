@@ -69,7 +69,8 @@ class _SearchState extends State<Search> {
                   ''';
               // queryText.setText(searchTermController.text);
               final HttpLink httpLink = HttpLink(
-                // uri: 'https://www.levi.com/webhooks/search',
+                // do not use the following URI unless you are sure of what you're doing
+                uri: 'https://www.levi.com/webhooks/search',
               );
 
               GraphQLClient client = GraphQLClient(

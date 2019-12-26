@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/screens/products_overview_screen.dart';
 
+import '../screens/products_overview_screen.dart';
+import '../screens/store_finder.dart';
 import '../screens/product_finder_screen.dart';
 
 
@@ -20,7 +21,8 @@ class MyPopupMenu extends StatelessWidget {
                   : true,
                arguments: '',
             );
-        } else {
+        }  
+        if (val == 1) {
           Navigator.of(context).pushNamedAndRemoveUntil(
               ProductsOverviewScreen.routeName,
               (route) => route.isCurrent &&
@@ -29,6 +31,16 @@ class MyPopupMenu extends StatelessWidget {
                   : true,
               arguments: '',
             );
+        }
+        if (val == 2) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            StoreFinderScreen.routeName,
+            (route) => route.isCurrent &&
+                    route.settings.name == StoreFinderScreen.routeName
+                ? false
+                : true,
+            arguments: '',
+          );
         }
       },
       icon: Icon(
@@ -42,6 +54,10 @@ class MyPopupMenu extends StatelessWidget {
         PopupMenuItem(
           value: 1,
           child: Text('browse'),
+        ),
+        PopupMenuItem(
+          value: 2,
+          child: Text('Store finder'),
         ),
       ],
     );

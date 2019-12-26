@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/providers/recommendations.dart';
+import './screens/store_finder.dart';
 import 'package:provider/provider.dart';
 
 import './providers/cms_content.dart';
@@ -12,7 +13,10 @@ import './screens/home.dart';
 import './providers/product_details.dart';
 
 
-void main() => runApp(MyApp());
+void main() { 
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -40,6 +44,7 @@ class MyApp extends StatelessWidget {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(product: null),
             ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
             ProductFinderScreen.routeName: (ctx) => ProductFinderScreen(),
+            StoreFinderScreen.routeName: (ctx) => StoreFinderScreen(),
           }),
     );
   }
