@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/providers/recommendations.dart';
+import 'package:flutter_complete_guide/providers/store_locaions.dart';
 import './screens/store_finder.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: Recommendations()),
         ChangeNotifierProvider.value(value: CmsContent()),
         ChangeNotifierProvider.value(value: ProductDetails()),
+        ChangeNotifierProvider.value(value: LocationFetcher()),
       ],
       child: MaterialApp(
           title: '',
