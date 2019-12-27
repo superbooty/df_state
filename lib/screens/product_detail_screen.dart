@@ -87,7 +87,7 @@ class ProductDetailScreen extends StatelessWidget {
                                           details.product.name,
                                           style: TextStyle(
                                             fontSize: 18,
-                                            color: Colors.grey[500],
+                                            color: Colors.grey[700],
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -104,7 +104,7 @@ class ProductDetailScreen extends StatelessWidget {
                                           style: TextStyle(
                                             fontSize: 18,
                                             color: Colors.grey[500],
-                                            fontWeight: FontWeight.w800,
+                                            fontWeight: FontWeight.w400,
                                           ),
                                         ),
                                       ),
@@ -114,7 +114,7 @@ class ProductDetailScreen extends StatelessWidget {
                                           style: TextStyle(
                                             fontSize: 18,
                                             color: Colors.grey[500],
-                                            fontWeight: FontWeight.w800,
+                                            fontWeight: FontWeight.w400,
                                           ),
                                         ),
                                       ),

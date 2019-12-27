@@ -13,8 +13,7 @@ import './screens/product_finder_screen.dart';
 import './screens/home.dart';
 import './providers/product_details.dart';
 
-
-void main() { 
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -22,7 +21,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: Products()),
@@ -37,13 +35,33 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.red,
             accentColor: Colors.redAccent,
-            fontFamily: 'Lato',
+            textTheme: ThemeData.light().textTheme.copyWith(
+              title: TextStyle(
+                fontFamily: 'Quicksand',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              display1: TextStyle(
+                fontFamily: 'Quicksand',
+                fontSize: 12,
+                color: Colors.grey[900],
+              ),
+            ),
+            appBarTheme: AppBarTheme(
+              textTheme: ThemeData.light().textTheme.copyWith(
+                title: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
-          
           home: Home(),
           routes: {
             Home.routeName: (ctx) => Home(),
-            ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(product: null),
+            ProductDetailScreen.routeName: (ctx) =>
+                ProductDetailScreen(product: null),
             ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
             ProductFinderScreen.routeName: (ctx) => ProductFinderScreen(),
             StoreFinderScreen.routeName: (ctx) => StoreFinderScreen(),
