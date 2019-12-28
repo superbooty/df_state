@@ -8,12 +8,16 @@ import '../widgets/popup_menu.dart';
 class StoreFinderScreen extends StatelessWidget {
   static const routeName = '/store-finder';
 
+  final zipCodeController = TextEditingController();
+  final LocationFetcher fetcher = LocationFetcher();
+
   @override
   /**
    * Eventually this class will use data from the LocationFetcher to generate
    * a list of Markers to show on the Map.
    */
   Widget build(BuildContext context) {
+    LocationFetcher fetcher = Provider.of<LocationFetcher>(context);
     print('Showing store finder screen');
     return Scaffold(
       appBar: AppBar(
@@ -23,23 +27,35 @@ class StoreFinderScreen extends StatelessWidget {
         ],
       ),
       body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            TextField(
+              textAlign: TextAlign.left,
+              decoration: InputDecoration(
+                alignLabelWithHint: true,
+                hintText: 'Enter Zip Code',
+                prefixIcon: IconButton(
+                  alignment: Alignment.centerRight,
+                  icon: Icon(Icons.location_searching),
+                  iconSize: 24,
+                  onPressed: () {
+                    fetcher.fetchStoreLocationsForZip(zipCodeController.value);
+                  },
+                ),
+              ),
+              controller: zipCodeController,
+              // onChanged: (val) {
+              //   titleInput = val;
+              // },
+            ),
             Center(
               child: Container(
-                height: 600,
+                height: MediaQuery.of(context).size.height * .8,
                 width: MediaQuery.of(context).size.width,
-                child: FutureBuilder(
-                    future: Provider.of<LocationFetcher>(context, listen: false)
-                        .fetchStoreLocationsForZip('94103'),
-                    builder: (ctx, dataSnapshot) {
-                      if (dataSnapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        return StaticLocation();
-                      }
-                    }),
+                child: ChangeNotifierProvider.value(
+                  value: fetcher.storeLocations,
+                  child: StaticLocation(),
+                ),
               ),
             )
           ]),

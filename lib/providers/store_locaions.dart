@@ -5,6 +5,10 @@ import 'package:http/http.dart' as http;
 class LocationFetcher with ChangeNotifier {
   StoreLocations _locations;
 
+  StoreLocations get storeLocations {
+    return this._locations;
+  }
+
   Future<void> fetchStoreLocationsForZip(zipCode) async {
     final contentURL =
         'https://maps.levi.com/api/getAsyncLocations?template=search&level=search&radius=50&search=$zipCode';
@@ -18,7 +22,7 @@ class LocationFetcher with ChangeNotifier {
   }
 }
 
-class StoreLocations {
+class StoreLocations with ChangeNotifier {
   final double lat;
   final double lng;
   final String originLat;
