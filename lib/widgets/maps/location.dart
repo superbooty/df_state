@@ -105,6 +105,21 @@ class _LocationInputState extends State<StaticLocation> {
                             size: 36,
                             color: Colors.redAccent,
                           ),
+                          trailing: Container(
+                            width: 120,
+                            height: 40,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.red[600],
+                            ),
+                            child: Text(
+                              m.storeType,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              )
+                            ),
+                          ),
                         ),
                       );
                     })

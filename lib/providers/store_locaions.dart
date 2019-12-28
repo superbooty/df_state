@@ -108,6 +108,15 @@ class Marker {
 
   factory Marker.fromJson(String str) => Marker.fromMap(json.decode(str));
 
+  String get storeType {
+    for(Specialty specialty in this.specialties) {
+      if (specialty.group == 'Store Type') {
+        return specialty.name;
+      }
+    }
+    return '';
+  }
+
   String toJson() => json.encode(toMap());
 
   factory Marker.fromMap(Map<String, dynamic> json) => Marker(
