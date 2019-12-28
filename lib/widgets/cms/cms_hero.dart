@@ -65,7 +65,7 @@ class CMSHero extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 42,
                                       letterSpacing: 5,
-                                      fontWeight: FontWeight.w800,
+                                      fontWeight: FontWeight.w600,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -79,7 +79,7 @@ class CMSHero extends StatelessWidget {
                                         .subcopy,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white,
                                     ),
@@ -103,7 +103,7 @@ class CMSHero extends StatelessWidget {
                                             link.linkText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                              fontSize: 11,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),

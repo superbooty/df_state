@@ -12,7 +12,7 @@ class RecommendedItems extends StatelessWidget {
   Widget build(BuildContext context) {
     print('Recommended for you...');
     return Container(
-      height: 255,
+      height: 275,
       padding: EdgeInsets.all(10),
       child: FutureBuilder(
         future: Provider.of<Recommendations>(context, listen: false)
@@ -34,7 +34,7 @@ class RecommendedItems extends StatelessWidget {
                   itemCount: recommendations.items.length,
                   itemBuilder: (ctx, i) => Card(
                     child: Container(
-                      width: 135,
+                      width: 145,
                       //padding: EdgeInsets.only(left: 5, right: 5),
                       child: Column(
                         children: <Widget>[
@@ -47,7 +47,7 @@ class RecommendedItems extends StatelessWidget {
                               recommendations.items[i].name,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 12,
+                                fontSize: 13,
                                 color: Colors.black,
                               ),
                             ),
@@ -56,7 +56,7 @@ class RecommendedItems extends StatelessWidget {
                             '\$${recommendations.items[i].price['value'].toStringAsFixed(2)}',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 12,
+                              fontSize: 13,
                               color: Colors.red,
                             ),
                           ),

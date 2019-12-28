@@ -73,7 +73,7 @@ class Item extends StatelessWidget {
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.grey[600],
-                        fontSize: 13,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -81,7 +81,7 @@ class Item extends StatelessWidget {
                     '${product.price['formattedValue']}',
                     style: TextStyle(
                       color: Colors.red[600],
-                      fontSize: 13,
+                      fontSize: 16,
                     ),
                     //maxLines: 2,
                   ),
