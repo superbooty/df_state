@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/maps/location.dart';
 import '../widgets/popup_menu.dart';
+import '../providers/store_locaions.dart' as loc;
 
 class StoreFinderScreen extends StatelessWidget {
   static const routeName = '/store-finder';
@@ -27,13 +28,15 @@ class StoreFinderScreen extends StatelessWidget {
         ],
       ),
       body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            TextField(
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: TextField(
               textAlign: TextAlign.left,
               decoration: InputDecoration(
                 alignLabelWithHint: true,
-                hintText: 'Enter Zip Code',
+                labelText: 'Enter Zip Code',
                 prefixIcon: IconButton(
                   alignment: Alignment.centerRight,
                   icon: Icon(Icons.location_searching),
@@ -48,7 +51,10 @@ class StoreFinderScreen extends StatelessWidget {
               //   titleInput = val;
               // },
             ),
-            Center(
+          ),
+          Expanded(
+            flex: 9,
+            child: Center(
               child: Container(
                 height: MediaQuery.of(context).size.height * .8,
                 width: MediaQuery.of(context).size.width,
@@ -57,8 +63,10 @@ class StoreFinderScreen extends StatelessWidget {
                   child: StaticLocation(),
                 ),
               ),
-            )
-          ]),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

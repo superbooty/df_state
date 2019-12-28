@@ -37,31 +37,82 @@ class _LocationInputState extends State<StaticLocation> {
             double.parse(locations.originLng),
           );
           for (loc.Marker dataMarker in locations.markers) {
-            for (loc.Specialty specialty in dataMarker.specialties) {
-              if (specialty.order == '1') {
-                Marker mapMarker = Marker(
-                  markerId: MarkerId(dataMarker.locationId),
-                  position: LatLng(double.parse(dataMarker.lat),
-                      double.parse(dataMarker.lng)),
-                );
-                markers[mapMarker.markerId] = mapMarker;
-              }
-            }
+            Marker mapMarker = Marker(
+              markerId: MarkerId(dataMarker.locationId),
+              position: LatLng(double.parse(dataMarker.lat),
+                  double.parse(dataMarker.lng)),
+            );
+            markers[mapMarker.markerId] = mapMarker;
           }
         }
         mapController.future.then((controller) {
-          controller.moveCamera(CameraUpdate.newLatLng(center));
+          controller.moveCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: LatLng(center.latitude, center.longitude),
+                zoom: 12,
+              ),
+            ),
+          );
         });
-        return GoogleMap(
-          markers: Set<Marker>.of(markers.values),
-          onMapCreated: (controller) {
-            mapController.complete(controller);
-          },
-          initialCameraPosition: CameraPosition(
-            target: center,
-            zoom: 12.0,
+        return Column(children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: GoogleMap(
+              markers: Set<Marker>.of(markers.values),
+              onMapCreated: (controller) {
+                mapController.complete(controller);
+              },
+              initialCameraPosition: CameraPosition(
+                target: center,
+                zoom: 12.0,
+              ),
+            ),
           ),
-        );
+          SizedBox(height: 10),
+          Expanded(
+            flex: 5,
+            child: locations != null
+                ? ListView.builder(
+                    itemCount: locations.markers.length,
+                    itemBuilder: (ctx, i) {
+                      loc.Marker m = locations.markers[i];
+                      return Card(
+                        child: ListTile(
+                          contentPadding: EdgeInsets.all(5),
+                          onTap: () {
+                            mapController.future.then((controller) {
+                              controller.animateCamera(
+                                CameraUpdate.newCameraPosition(
+                                  CameraPosition(
+                                    target: LatLng(
+                                      double.parse(m.lat),
+                                      double.parse(m.lng),
+                                    ),
+                                    zoom: 16,
+                                  ),
+                                ),
+                              );
+                            });
+                          },
+                          subtitle: Text(m.infoMap['address_1']),
+                          title: Text(
+                            '${m.infoMap['location_name']}, ${m.infoMap['city']}',
+                            maxLines: 3,
+                          ),
+                          leading: Icon(
+                            Icons.store,
+                            size: 36,
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      );
+                    })
+                : Center(
+                    child: Text('No Stores To Show'),
+                  ),
+          ),
+        ]);
       },
     );
   }

@@ -9,6 +9,16 @@ class LocationFetcher with ChangeNotifier {
     return this._locations;
   }
 
+  Map<String, dynamic> removeAllHtmlTags(String htmlText) {
+    RegExp exp = RegExp(
+      r"<[^>]*>",
+      multiLine: true,
+      caseSensitive: true
+    );
+    String jsonInfo = htmlText.replaceAll(exp, '');
+    return json.decode(jsonInfo);
+  }
+
   Future<void> fetchStoreLocationsForZip(zipCode) async {
     final contentURL =
         'https://maps.levi.com/api/getAsyncLocations?template=search&level=search&radius=50&search=$zipCode';
@@ -16,6 +26,12 @@ class LocationFetcher with ChangeNotifier {
     final data = await http.get(contentURL);
     final Map<String, dynamic> respBody = json.decode(data.body);
     _locations = StoreLocations.fromMap(respBody);
+
+    if(_locations != null && _locations.markers != null) {
+      for (Marker m in _locations.markers) {
+        m.infoMap = removeAllHtmlTags(m.info);
+      }
+    }
 
     print('Got Locations...');
     notifyListeners();
@@ -77,6 +93,7 @@ class Marker {
   final bool clickable;
   final String locationId;
   final List<Specialty> specialties;
+  Map<String, dynamic> infoMap;
 
   Marker({
     this.lat,
