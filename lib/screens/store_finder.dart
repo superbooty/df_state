@@ -21,6 +21,7 @@ class StoreFinderScreen extends StatelessWidget {
     LocationFetcher fetcher = Provider.of<LocationFetcher>(context);
     print('Showing store finder screen');
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Store Finder'),
         actions: <Widget>[
@@ -30,33 +31,29 @@ class StoreFinderScreen extends StatelessWidget {
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: TextField(
-              textAlign: TextAlign.left,
-              decoration: InputDecoration(
-                alignLabelWithHint: true,
-                labelText: 'Enter Zip Code',
-                prefixIcon: IconButton(
-                  alignment: Alignment.centerRight,
-                  icon: Icon(Icons.location_searching),
-                  iconSize: 24,
-                  onPressed: () {
-                    fetcher.fetchStoreLocationsForZip(zipCodeController.value);
-                  },
-                ),
+          TextField(
+            textAlign: TextAlign.left,
+            decoration: InputDecoration(
+              alignLabelWithHint: true,
+              labelText: 'Enter Zip Code',
+              prefixIcon: IconButton(
+                alignment: Alignment.centerRight,
+                icon: Icon(Icons.location_searching),
+                iconSize: 24,
+                onPressed: () {
+                  fetcher.fetchStoreLocationsForZip(zipCodeController.value);
+                },
               ),
-              controller: zipCodeController,
-              // onChanged: (val) {
-              //   titleInput = val;
-              // },
             ),
+            controller: zipCodeController,
+            // onChanged: (val) {
+            //   titleInput = val;
+            // },
           ),
           Expanded(
-            flex: 9,
             child: Center(
               child: Container(
-                height: MediaQuery.of(context).size.height * .8,
+                // height: MediaQuery.of(context).size.height * .8,
                 width: MediaQuery.of(context).size.width,
                 child: ChangeNotifierProvider.value(
                   value: fetcher.storeLocations,

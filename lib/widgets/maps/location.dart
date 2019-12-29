@@ -26,6 +26,7 @@ class _LocationInputState extends State<StaticLocation> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     print('building map...');
     LatLng center = const LatLng(37.7758, -122.4128);
     return Consumer<loc.StoreLocations>(
@@ -39,8 +40,8 @@ class _LocationInputState extends State<StaticLocation> {
           for (loc.Marker dataMarker in locations.markers) {
             Marker mapMarker = Marker(
               markerId: MarkerId(dataMarker.locationId),
-              position: LatLng(double.parse(dataMarker.lat),
-                  double.parse(dataMarker.lng)),
+              position: LatLng(
+                  double.parse(dataMarker.lat), double.parse(dataMarker.lng)),
             );
             markers[mapMarker.markerId] = mapMarker;
           }
@@ -55,79 +56,86 @@ class _LocationInputState extends State<StaticLocation> {
             ),
           );
         });
-        return Column(children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: GoogleMap(
-              markers: Set<Marker>.of(markers.values),
-              onMapCreated: (controller) {
-                mapController.complete(controller);
-              },
-              initialCameraPosition: CameraPosition(
-                target: center,
-                zoom: 12.0,
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              // height: MediaQuery.of(context).size.height * .4,
+              flex: 5,
+              child: GoogleMap(
+                markers: Set<Marker>.of(markers.values),
+                onMapCreated: (controller) {
+                  mapController.complete(controller);
+                },
+                initialCameraPosition: CameraPosition(
+                  target: center,
+                  zoom: 12.0,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 10),
-          Expanded(
-            flex: 5,
-            child: locations != null
-                ? ListView.builder(
-                    itemCount: locations.markers.length,
-                    itemBuilder: (ctx, i) {
-                      loc.Marker m = locations.markers[i];
-                      return Card(
-                        child: ListTile(
-                          contentPadding: EdgeInsets.all(5),
-                          onTap: () {
-                            mapController.future.then((controller) {
-                              controller.animateCamera(
-                                CameraUpdate.newCameraPosition(
-                                  CameraPosition(
-                                    target: LatLng(
-                                      double.parse(m.lat),
-                                      double.parse(m.lng),
+            SizedBox(height: 10),
+            Expanded(
+              flex: 3,
+              child: (locations != null && locations.markers != null)
+                  ? ListView.builder(
+                      itemCount: locations.markers.length,
+                      itemBuilder: (ctx, i) {
+                        loc.Marker m = locations.markers[i];
+                        return Card(
+                          child: ListTile(
+                            contentPadding: EdgeInsets.all(5),
+                            onTap: () {
+                              mapController.future.then(
+                                (controller) {
+                                  controller.animateCamera(
+                                    CameraUpdate.newCameraPosition(
+                                      CameraPosition(
+                                        target: LatLng(
+                                          double.parse(m.lat),
+                                          double.parse(m.lng),
+                                        ),
+                                        zoom: 16,
+                                      ),
                                     ),
-                                    zoom: 16,
-                                  ),
-                                ),
+                                  );
+                                },
                               );
-                            });
-                          },
-                          subtitle: Text(m.infoMap['address_1']),
-                          title: Text(
-                            '${m.infoMap['location_name']}, ${m.infoMap['city']}',
-                            maxLines: 3,
-                          ),
-                          leading: Icon(
-                            Icons.store,
-                            size: 36,
-                            color: Colors.redAccent,
-                          ),
-                          trailing: Container(
-                            width: 120,
-                            height: 40,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.red[600],
+                            },
+                            subtitle: Text(m.infoMap['address_1']),
+                            title: Text(
+                              '${m.infoMap['location_name']}, ${m.infoMap['city']}',
+                              maxLines: 3,
                             ),
-                            child: Text(
-                              m.storeType,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              )
+                            leading: Icon(
+                              Icons.store,
+                              size: 36,
+                              color: Colors.redAccent,
+                            ),
+                            trailing: Container(
+                              width: 120,
+                              height: 30,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.red[600],
+                              ),
+                              child: Text(
+                                m.storeType,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    })
-                : Center(
-                    child: Text('No Stores To Show'),
-                  ),
-          ),
-        ]);
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text('No Stores To Show'),
+                    ),
+            ),
+          ],
+        );
       },
     );
   }

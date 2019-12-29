@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/providers/recommendations.dart';
 import 'package:flutter_complete_guide/providers/store_locaions.dart';
-import './screens/store_finder.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
+import './screens/store_finder.dart';
 import './providers/cms_content.dart';
 import './screens/products_overview_screen.dart';
 import './screens/product_detail_screen.dart';
@@ -15,7 +16,11 @@ import './providers/product_details.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp,DeviceOrientation.portraitDown])
+      .then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

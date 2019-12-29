@@ -37,9 +37,11 @@ class RecommendedItems extends StatelessWidget {
                       width: 145,
                       //padding: EdgeInsets.only(left: 5, right: 5),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Image.network(
                             recommendations.items[i].images[0]['url'],
+                            height: 180,
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 5, right: 5),
@@ -54,6 +56,7 @@ class RecommendedItems extends StatelessWidget {
                           ),
                           Text(
                             '\$${recommendations.items[i].price['value'].toStringAsFixed(2)}',
+                            textAlign: TextAlign.end,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 13,
