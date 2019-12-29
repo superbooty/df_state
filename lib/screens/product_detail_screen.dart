@@ -16,8 +16,8 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final waist = 'Not Selected';
-    final length = 'Not Selected';
+    final waist = '';
+    final length = '';
     return Scaffold(
       appBar: AppBar(
         title: Text(product.name),
@@ -96,9 +96,10 @@ class ProductDetailScreen extends StatelessWidget {
                                   ),
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.start,
                                     children: <Widget>[
                                       Container(
+                                        width: mediaQuery.size.width * .5,
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text('Waist - $waist',
                                           style: TextStyle(
@@ -111,6 +112,7 @@ class ProductDetailScreen extends StatelessWidget {
                                       Container(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text('Length - $length',
+                                          textAlign: TextAlign.left,
                                           style: TextStyle(
                                             fontSize: 18,
                                             color: Colors.grey[500],
