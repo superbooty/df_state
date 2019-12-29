@@ -19,6 +19,7 @@ class ProductFinderScreen extends StatelessWidget {
     Provider.of<Recommendations>(context, listen: false)
         .getRecommendationProducts();
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Product Finder'),
           actions: <Widget>[
@@ -27,7 +28,10 @@ class ProductFinderScreen extends StatelessWidget {
         ),
         body: Column(children: <Widget>[
           // commenting out following call as to not make too many prod calls
-          RecommendedItems(),
+          Search(),
+          SizedBox(
+            height: 30,
+          ),
           Text(
             'RECOMMENDED FOR YOU',
             textAlign: TextAlign.center,
@@ -37,10 +41,7 @@ class ProductFinderScreen extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          SizedBox(
-            height: 100,
-          ),
-          Search(),
+          RecommendedItems(),
         ]));
   }
 }
