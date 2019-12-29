@@ -34,7 +34,7 @@ class RecommendedItems extends StatelessWidget {
                   itemCount: recommendations.items.length,
                   itemBuilder: (ctx, i) => Card(
                     child: Container(
-                      width: 145,
+                      width: 150,
                       //padding: EdgeInsets.only(left: 5, right: 5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -47,19 +47,21 @@ class RecommendedItems extends StatelessWidget {
                             padding: EdgeInsets.only(left: 5, right: 5),
                             child: Text(
                               recommendations.items[i].name,
+                              maxLines: 2,
                               style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
                                 color: Colors.black,
                               ),
                             ),
                           ),
+                          SizedBox(height: 10,),
                           Text(
                             '\$${recommendations.items[i].price['value'].toStringAsFixed(2)}',
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
                               color: Colors.red,
                             ),
                           ),
