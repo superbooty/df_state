@@ -61,7 +61,7 @@ class _LocationInputState extends State<StaticLocation> {
           children: <Widget>[
             Expanded(
               // height: MediaQuery.of(context).size.height * .4,
-              flex: 5,
+              flex: 6,
               child: GoogleMap(
                 markers: Set<Marker>.of(markers.values),
                 onMapCreated: (controller) {

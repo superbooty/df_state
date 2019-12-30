@@ -31,6 +31,7 @@ class StoreFinderScreen extends StatelessWidget {
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
+          SizedBox(height: 5),
           TextField(
             textAlign: TextAlign.left,
             decoration: InputDecoration(
@@ -42,6 +43,7 @@ class StoreFinderScreen extends StatelessWidget {
                 iconSize: 24,
                 onPressed: () {
                   fetcher.fetchStoreLocationsForZip(zipCodeController.value);
+                  FocusScope.of(context).requestFocus(new FocusNode());
                 },
               ),
             ),

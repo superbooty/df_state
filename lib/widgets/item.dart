@@ -70,7 +70,9 @@ class Item extends StatelessWidget {
                     width: double.infinity,
                     child: Text(
                       product.name,
+                      overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
+                      maxLines: 2,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 16,
