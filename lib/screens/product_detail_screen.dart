@@ -147,7 +147,6 @@ class ProductDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 15),
                     Container(
                       height: mediaQuery.size.height * .08, 
                       child: Align(
