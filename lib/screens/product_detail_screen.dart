@@ -36,20 +36,20 @@ class ProductDetailScreen extends StatelessWidget {
                 builder: (ctx, details, _) => Column(
                   children: <Widget>[
                     Container(
-                      height: mediaQuery.size.height * .76,
+                      height: mediaQuery.size.height * .78,
                       child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
                             Container(
                               child: CarouselSlider(
-                                height: mediaQuery.size.height * .58,
+                                height: mediaQuery.size.height * .55,
                                 enlargeCenterPage: true,
-                                viewportFraction: 1.0,
+                                viewportFraction: .8,
                                 items: details.mobileGallery.map((image) {
                                   return Container(
                                     width: mediaQuery.size.width,
                                     margin:
-                                        EdgeInsets.symmetric(horizontal: 1.0),
+                                        EdgeInsets.symmetric(horizontal: .5),
                                     child: Image.network(image.url),
                                   );
                                 }).toList(),
@@ -62,7 +62,7 @@ class ProductDetailScreen extends StatelessWidget {
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                //crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment:
@@ -96,27 +96,45 @@ class ProductDetailScreen extends StatelessWidget {
                                   ),
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                        MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       Container(
-                                        width: mediaQuery.size.width * .5,
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text('Waist - $waist',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.grey[500],
-                                            fontWeight: FontWeight.w400,
+                                        child: ButtonTheme(
+                                          minWidth: mediaQuery.size.width * .45,
+                                          child: OutlineButton(
+                                            //color: Colors.grey[300],
+                                            textColor: Colors.black45,
+                                            padding: EdgeInsets.all(15.0),
+                                            onPressed: () {
+                                              /*...*/
+                                            },
+                                            child: Text('Waist - $waist',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
                                       Container(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text('Length - $length',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.grey[500],
-                                            fontWeight: FontWeight.w400,
+                                        child: ButtonTheme(
+                                          minWidth: mediaQuery.size.width * .45,
+                                          child: OutlineButton(
+                                            color: Colors.grey[300],
+                                            textColor: Colors.black45,
+                                            padding: EdgeInsets.all(15.0),
+                                            onPressed: () {
+                                              /*...*/
+                                            },
+                                            child: Text('Length - $length',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -129,8 +147,9 @@ class ProductDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(height: 15),
                     Container(
-                      height: mediaQuery.size.height * .1, 
+                      height: mediaQuery.size.height * .08, 
                       child: Align(
                         alignment: Alignment.center,
                         child: ButtonTheme(
