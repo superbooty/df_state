@@ -3,12 +3,47 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/product_details.dart';
+import '../models/product/product.dart';
 import '../providers/product.dart' as providerProduct;
 import '../widgets/popup_menu.dart';
+
+enum Dimension { 
+   Waist,
+   Length,
+   Size,
+}
 
 class ProductDetailScreen extends StatelessWidget {
   static const routeName = '/product-detail';
   final providerProduct.Product product;
+
+  selectWaistOrLength(BuildContext ctx, Product product, Dimension dim ) {
+    String selector = 'Size';
+    switch (dim) {
+      case Dimension.Waist:
+      selector = 'Waist';
+        break;
+      case Dimension.Length:
+        selector = 'Length';
+        break;
+      case Dimension.Size:
+        break;
+    }
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: Container(
+            height: 200,
+            width: double.infinity,
+            child: Text('Select :: $selector'),
+          ),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
 
   // In the constructor, require a Todo.
   ProductDetailScreen({Key key, @required this.product}) : super(key: key);
@@ -59,41 +94,35 @@ class ProductDetailScreen extends StatelessWidget {
                               color: Colors.grey[600],
                             ),
                             Container(
+                               width: mediaQuery.size.width * .95,
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                //crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Container(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          details.product.price.formattedValue,
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.redAccent[700],
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
+                                  Container(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Text(
+                                      details.product.name,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey[700],
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                      Container(
-                                        width: mediaQuery.size.width * .7,
-                                        alignment: Alignment.centerRight,
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          details.product.name,
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.grey[700],
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
+                                  Container(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Text(
+                                      details.product.price.formattedValue,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.redAccent[700],
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
@@ -106,7 +135,7 @@ class ProductDetailScreen extends StatelessWidget {
                                             textColor: Colors.black45,
                                             padding: EdgeInsets.all(15.0),
                                             onPressed: () {
-                                              /*...*/
+                                              selectWaistOrLength(context, details.product, Dimension.Waist);
                                             },
                                             child: Text('Waist - $waist',
                                               textAlign: TextAlign.center,
@@ -126,7 +155,7 @@ class ProductDetailScreen extends StatelessWidget {
                                             textColor: Colors.black45,
                                             padding: EdgeInsets.all(15.0),
                                             onPressed: () {
-                                              /*...*/
+                                             selectWaistOrLength(context, details.product, Dimension.Length);
                                             },
                                             child: Text('Length - $length',
                                               textAlign: TextAlign.center,
@@ -147,26 +176,30 @@ class ProductDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      height: mediaQuery.size.height * .08, 
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: ButtonTheme(
-                          minWidth: mediaQuery.size.width * .95,
-                          child: FlatButton(
-                            color: Colors.redAccent.shade700,
-                            textColor: Colors.white,
-                            padding: EdgeInsets.all(15.0),
-                            onPressed: () {
-                              /*...*/
-                            },
-                            child: Text(
-                              'Add to Cart',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                              ),
+                    SizedBox(
+                      // height: mediaQuery.size.height * .08,
+                      width: mediaQuery.size.width * .95,
+                      child: DecoratedBox(
+                        decoration:
+                          ShapeDecoration(
+                            color: Colors.red[700], 
+                            shape: Border.all(width: .3),
+                          ),
+                        child: OutlineButton.icon(
+                          textColor: Colors.white,
+                          padding: EdgeInsets.all(15.0),
+                          onPressed: () {
+                            /*...*/
+                          },
+                          icon: Icon(
+                            Icons.add_shopping_cart,
+                          ),
+                          label: Text(
+                            'Add to Cart',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
