@@ -38,7 +38,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           title: '',
           theme: ThemeData(
-            primarySwatch: Colors.red,
+            //primarySwatch: Colors.,
+            primaryColor: Colors.red[700],
             accentColor: Colors.redAccent,
             textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
