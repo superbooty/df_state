@@ -62,7 +62,7 @@ class RecommendedItems extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
-                              color: Colors.red,
+                              color: Color(0XFFc41130),
                             ),
                           ),
                         ],

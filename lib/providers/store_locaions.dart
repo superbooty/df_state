@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/utils/text_utils.dart';
 import 'package:http/http.dart' as http;
 
 class LocationFetcher with ChangeNotifier {
@@ -7,16 +8,6 @@ class LocationFetcher with ChangeNotifier {
 
   StoreLocations get storeLocations {
     return this._locations;
-  }
-
-  Map<String, dynamic> removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(
-      r"<[^>]*>",
-      multiLine: true,
-      caseSensitive: true
-    );
-    String jsonInfo = htmlText.replaceAll(exp, '');
-    return json.decode(jsonInfo);
   }
 
   Future<void> fetchStoreLocationsForZip(zipCode) async {
@@ -29,7 +20,7 @@ class LocationFetcher with ChangeNotifier {
 
     if(_locations != null && _locations.markers != null) {
       for (Marker m in _locations.markers) {
-        m.infoMap = removeAllHtmlTags(m.info);
+        m.infoMap = TextUtils.toJSONMap(TextUtils.removeAllHtmlTags(m.info));
       }
     }
 

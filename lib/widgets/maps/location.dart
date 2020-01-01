@@ -109,14 +109,14 @@ class _LocationInputState extends State<StaticLocation> {
                             leading: Icon(
                               Icons.store,
                               size: 36,
-                              color: Colors.redAccent,
+                              color: Colors.red[700],
                             ),
                             trailing: Container(
                               width: 120,
                               height: 30,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: Colors.red[600],
+                                color: Colors.red[700],
                               ),
                               child: Text(
                                 m.storeType,
