@@ -39,7 +39,9 @@ class MyApp extends StatelessWidget {
           title: '',
           theme: ThemeData(
             //primarySwatch: Colors.,
-            primaryColor: Colors.red[700],
+            primaryColor: Color(0XFFc41130),
+            scaffoldBackgroundColor: Color(0xFFf4f4f4),
+            // backgroundColor: Color(0XFFF1DD33),
             accentColor: Colors.redAccent,
             textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(

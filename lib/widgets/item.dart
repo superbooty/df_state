@@ -82,7 +82,7 @@ class Item extends StatelessWidget {
                   Text(
                     '${product.price['formattedValue']}',
                     style: TextStyle(
-                      color: Colors.red[600],
+                      color: Color(0XFFc41130),
                       fontSize: 16,
                     ),
                     //maxLines: 2,
