@@ -26,13 +26,13 @@ class Item extends StatelessWidget {
     return Container(
       child: GestureDetector(
         onTap: () {
+          Provider.of<ProductDetails>(context, listen: false).fetchProduct(product.code);
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ProductDetailScreen(product: product),
             ),
           );
-          Provider.of<ProductDetails>(context, listen: false).fetchProduct(product.code);
         },
         child: Column(
           children: <Widget>[

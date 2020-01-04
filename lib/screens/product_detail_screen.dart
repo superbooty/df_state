@@ -107,18 +107,19 @@ class ProductDetailScreen extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             details.product.name,
+                            textAlign: TextAlign.start,
                             style: TextStyle(
-                              fontFamily: 'OpenSans',
+                              fontFamily: 'Quicksand',
                               fontSize: 20,
                               color: Colors.grey[800],
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
                             details.product.price.formattedValue,
                             textAlign: TextAlign.start,
                             style: TextStyle(
-                              fontFamily: 'OpenSans',
+                              fontFamily: 'Quicksand',
                               fontSize: 20,
                               color: Color(0XFFc41130),
                               fontWeight: FontWeight.w600,
@@ -129,8 +130,9 @@ class ProductDetailScreen extends StatelessWidget {
                             TextUtils.removeAllHtmlTags(
                                 details.product.description),
                             style: TextStyle(
-                              fontFamily: 'OpenSans',
+                              //fontFamily: 'Quicksand',
                               fontSize: 16,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                           SizedBox(height: 10),
