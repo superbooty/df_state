@@ -34,9 +34,9 @@ class _SizeSelectorState extends State<SizeSelector> {
             child: Text(
               'Select Size',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 18,
                 fontFamily: 'Quicksand',
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),

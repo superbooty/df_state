@@ -25,7 +25,7 @@ class LabeledRadio extends StatelessWidget {
       child: Padding(
         padding: padding,
         child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20),
+          padding: EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
             //color: !enabled ? Colors.grey[200] : Colors.transparent,
             border: Border(
@@ -45,11 +45,12 @@ class LabeledRadio extends StatelessWidget {
                 },
                 child: Text(label,
                   style: TextStyle(
+                    decorationThickness: 3,
                     letterSpacing: 2,
                     decoration: !enabled ? TextDecoration.lineThrough : TextDecoration.none,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: !enabled ? Colors.grey[350] : Colors.grey[700],
+                    color: !enabled ? Colors.grey[500] : Colors.grey[700],
                   )
                 ),
               ),
