@@ -149,16 +149,17 @@ class ProductDetailScreen extends StatelessWidget {
                                   textColor: Colors.grey[600],
                                   padding: EdgeInsets.only(left: 0),
                                   onPressed: () {
-                                    selectWaistOrLength(context, details.product);
+                                    selectWaistOrLength(
+                                        context, details.product);
                                   },
                                   textTheme: ButtonTextTheme.accent,
                                   label: Text(
-                                      'Size',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                    'Size',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                     ),
+                                  ),
                                   icon: Icon(
                                     Icons.keyboard_arrow_down,
                                   ),
@@ -169,16 +170,15 @@ class ProductDetailScreen extends StatelessWidget {
                                   // color: Colors.black,
                                   textColor: Colors.grey[600],
                                   padding: EdgeInsets.only(left: 0),
-                                  onPressed: () {
-                                  },
+                                  onPressed: () {},
                                   textTheme: ButtonTextTheme.accent,
                                   label: Text(
-                                      'Qty',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                    'Qty',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                     ),
+                                  ),
                                   icon: Icon(
                                     Icons.keyboard_arrow_down,
                                   ),
