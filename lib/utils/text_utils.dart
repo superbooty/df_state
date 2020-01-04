@@ -8,7 +8,12 @@ class TextUtils {
       multiLine: true,
       caseSensitive: true
     );
-    String jsonInfo = htmlText.replaceAll(exp, '');
+    RegExp exp2 = RegExp(
+      r"&[^;]*;",
+      multiLine: true,
+      caseSensitive: true
+    );
+    String jsonInfo = htmlText.replaceAll(exp, '').replaceAll(exp2 , '');
     return jsonInfo.trimLeft();
   }
 
