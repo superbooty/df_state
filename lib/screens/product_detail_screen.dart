@@ -106,9 +106,19 @@ class ProductDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
+                            details.product.name,
+                            style: TextStyle(
+                              fontFamily: 'OpenSans',
+                              fontSize: 20,
+                              color: Colors.grey[800],
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
                             details.product.price.formattedValue,
                             textAlign: TextAlign.start,
                             style: TextStyle(
+                              fontFamily: 'OpenSans',
                               fontSize: 20,
                               color: Color(0XFFc41130),
                               fontWeight: FontWeight.w600,
@@ -119,6 +129,7 @@ class ProductDetailScreen extends StatelessWidget {
                             TextUtils.removeAllHtmlTags(
                                 details.product.description),
                             style: TextStyle(
+                              fontFamily: 'OpenSans',
                               fontSize: 16,
                             ),
                           ),
@@ -136,16 +147,17 @@ class ProductDetailScreen extends StatelessWidget {
                                   textColor: Colors.grey[600],
                                   padding: EdgeInsets.only(left: 0),
                                   onPressed: () {
-                                    selectWaistOrLength(context, details.product);
+                                    selectWaistOrLength(
+                                        context, details.product);
                                   },
                                   textTheme: ButtonTextTheme.accent,
                                   label: Text(
-                                      'Size',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                    'Size',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
                                     ),
+                                  ),
                                   icon: Icon(
                                     Icons.keyboard_arrow_down,
                                   ),
@@ -156,16 +168,15 @@ class ProductDetailScreen extends StatelessWidget {
                                   // color: Colors.black,
                                   textColor: Colors.grey[600],
                                   padding: EdgeInsets.only(left: 0),
-                                  onPressed: () {
-                                  },
+                                  onPressed: () {},
                                   textTheme: ButtonTextTheme.accent,
                                   label: Text(
-                                      'Qty',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                    'Qty',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
                                     ),
+                                  ),
                                   icon: Icon(
                                     Icons.keyboard_arrow_down,
                                   ),
