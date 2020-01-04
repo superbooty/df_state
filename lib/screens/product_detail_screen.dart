@@ -52,7 +52,7 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final waist = '';
+    final waist = 'Waist';
     final length = '';
     return Scaffold(
       appBar: AppBar(
@@ -66,7 +66,9 @@ class ProductDetailScreen extends StatelessWidget {
         label: Text('Add to Cart'),
         icon: Icon(Icons.add_shopping_cart),
         backgroundColor: Color(0XFFc41130),
-        shape: RoundedRectangleBorder(),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20)
+        ),
       ),
       body: FutureBuilder(
         future: Provider.of<ProductDetails>(context, listen: false)
@@ -86,8 +88,8 @@ class ProductDetailScreen extends StatelessWidget {
                       child: CarouselSlider(
                         //height: mediaQuery.size.height * .5,
                         enlargeCenterPage: true,
-                        viewportFraction: .88,
-                        aspectRatio: 5 / 4,
+                        viewportFraction: 1.0,
+                        aspectRatio:  3/4,
                         items: details.mobileGallery.map(
                           (image) {
                             return Container(
@@ -116,7 +118,8 @@ class ProductDetailScreen extends StatelessWidget {
                     Expanded(
                       flex: 4,
                       child: SingleChildScrollView(
-                        padding: EdgeInsets.only(bottom: 70),
+                        padding:
+                            EdgeInsets.only(bottom: 70, left: 10, right: 10),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,29 +134,40 @@ class ProductDetailScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 10),
-                            Text(TextUtils.removeAllHtmlTags(
-                                details.product.description)),
-                            SizedBox(height: 10),
                             SizedBox(
-                                // height: 100,
-                                width: 100,
-                                child: OutlineButton(
-                                  //color: Colors.grey[300],
-                                  textColor: Colors.black45,
-                                  padding: EdgeInsets.all(15.0),
-                                  onPressed: () {
-                                    selectWaistOrLength(context,
-                                        details.product, Dimension.Waist);
-                                  },
+                              // height: 100,
+                              width: 120,
+                              child: FlatButton.icon(
+                                color: Colors.black,
+                                textColor: Colors.white,
+                                padding: EdgeInsets.all(15.0),
+                                onPressed: () {
+                                  selectWaistOrLength(context, details.product,
+                                      Dimension.Waist);
+                                },
+                                label: Align(
+                                  alignment: Alignment.centerLeft,
                                   child: Text(
-                                    'Waist - $waist',
-                                    textAlign: TextAlign.center,
+                                    '$waist',
                                     style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                )),
+                                ), 
+                                icon: Icon(
+                                  Icons.add_circle_outline,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(TextUtils.removeAllHtmlTags(
+                                details.product.description),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                )
+                            ),
                           ],
                         ),
                       ),
