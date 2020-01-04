@@ -26,7 +26,6 @@ class _LocationInputState extends State<StaticLocation> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     print('building map...');
     LatLng center = const LatLng(37.7758, -122.4128);
     return Consumer<loc.StoreLocations>(

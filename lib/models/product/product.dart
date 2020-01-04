@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 Product productFromJson(String str) => Product.fromJson(json.decode(str));
 
 String productToJson(Product data) => json.encode(data.toJson());
 
-class Product {
+class Product with ChangeNotifier{
   String altText;
   dynamic averageOverallRatings;
   String baseProduct;
@@ -37,7 +39,7 @@ class Product {
   String url;
   List<String> variantLength;
   List<VariantOption> variantOptions;
-  dynamic variantSize;
+  List<String> variantSize;
   String variantType;
   List<String> variantWaist;
 
@@ -139,7 +141,9 @@ class Product {
             ? null
             : List<VariantOption>.from(
                 json["variantOptions"].map((x) => VariantOption.fromJson(x))),
-        variantSize: json["variantSize"],
+        variantSize: json["variantSize"]== null
+            ? null
+            : List<String>.from(json["variantSize"].map((x) => x)),
         variantType: json["variantType"] == null ? null : json["variantType"],
         variantWaist: json["variantWaist"] == null
             ? null

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/product_details.dart';
 import '../providers/product.dart';
 import '../screens/product_detail_screen.dart';
 
@@ -31,6 +32,7 @@ class Item extends StatelessWidget {
               builder: (context) => ProductDetailScreen(product: product),
             ),
           );
+          Provider.of<ProductDetails>(context, listen: false).fetchProduct(product.code);
         },
         child: Column(
           children: <Widget>[
