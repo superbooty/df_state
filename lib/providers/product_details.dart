@@ -200,6 +200,8 @@ class ProductDetails with ChangeNotifier {
   );
 
   Future<void> fetchProduct(productCode) async {
+    _product = null;
+    notifyListeners();
     var results = await client.query(QueryOptions(
       documentNode: gql(productQuery),
       variables: {
