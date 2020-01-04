@@ -23,13 +23,13 @@ class _SizeSelectorState extends State<SizeSelector> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 320,
+      padding: EdgeInsets.all(10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(10),
             height: 60,
             child: Text(
               'Select Size',
@@ -42,8 +42,8 @@ class _SizeSelectorState extends State<SizeSelector> {
           ),
           Container(
             // margin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.only(left: 10),
             // color: Colors.grey,
+            margin: EdgeInsets.only(bottom: 10),
             child: Text(
               'Waist',
               style: TextStyle(
@@ -53,7 +53,7 @@ class _SizeSelectorState extends State<SizeSelector> {
                 fontSize: 18,
                 shadows: [
                   Shadow(
-                    blurRadius: 10.0,
+                    blurRadius: 7.0,
                     color: Colors.grey[400],
                     offset: Offset(5.0, 5.0),
                   ),
@@ -86,8 +86,8 @@ class _SizeSelectorState extends State<SizeSelector> {
           ),
           SizedBox(height: 20),
           Container(
-            padding: const EdgeInsets.only(left: 10),
             //color: Colors.grey,
+            margin: EdgeInsets.only(bottom: 10),
             child: Text(
               'Length',
               style: TextStyle(
@@ -97,7 +97,7 @@ class _SizeSelectorState extends State<SizeSelector> {
                 fontSize: 18,
                 shadows: [
                   Shadow(
-                    blurRadius: 10.0,
+                    blurRadius: 7.0,
                     color: Colors.grey[400],
                     offset: Offset(5.0, 5.0),
                   ),
@@ -127,7 +127,30 @@ class _SizeSelectorState extends State<SizeSelector> {
                 );
               },
             ),
-          )
+          ),
+          SizedBox(height: 21),
+          FlatButton(
+            color: Colors.black,
+            shape: Border.all(
+              color: Colors.grey[600],
+              width: .75,
+            ),
+            textColor: Colors.black,
+            padding: EdgeInsets.all(12.0),
+            onPressed: () {
+              print('Size :: ${widget.waist[_selectedWaist]} X ${widget.length[_selectedLength]}');
+            },
+            child: Text(
+              'Update',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Quicksand',
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
         ],
       ),
     );
