@@ -35,8 +35,8 @@ class _SizeSelectorState extends State<SizeSelector> {
               'Select Size',
               style: TextStyle(
                 fontSize: 24,
-                fontFamily: 'OpenSans',
-                fontWeight: FontWeight.w500,
+                fontFamily: 'Quicksand',
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -74,7 +74,7 @@ class _SizeSelectorState extends State<SizeSelector> {
                   enabled: i > 3 ? false : true,
                   value: i,
                   selected: _selectedWaist == i,
-                  groupValue: _selectedWaist,
+                  sizeValue: widget.waist[i],
                   updateGroup: (groupId) {
                     setState(() {
                       _selectedWaist = groupId;
@@ -118,7 +118,7 @@ class _SizeSelectorState extends State<SizeSelector> {
                   enabled: i > 3 ? false : true,
                   value: i,
                   selected: _selectedLength == i,
-                  groupValue: _selectedLength,
+                  sizeValue: widget.length[i],
                   updateGroup: (groupId) {
                     setState(() {
                       _selectedLength = groupId;

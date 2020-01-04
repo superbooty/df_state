@@ -24,7 +24,8 @@ class ProductDetailScreen extends StatelessWidget {
     if (product.variantSize != null) {
       selector = SizeSelector.forSizes(sizes: product.variantSize);
     } else {
-      selector = SizeSelector.forWasitLength(waist: product.variantWaist, length: product.variantLength);
+      selector = SizeSelector.forWasitLength(
+          waist: product.variantWaist, length: product.variantLength);
     }
 
     showModalBottomSheet(
@@ -114,40 +115,64 @@ class ProductDetailScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 10),
-                          SizedBox(
-                            // height: 100,
-                            width: 120,
-                            child: FlatButton.icon(
-                              color: Colors.black,
-                              textColor: Colors.white,
-                              padding: EdgeInsets.all(15.0),
-                              onPressed: () {
-                                selectWaistOrLength(
-                                    context, details.product);
-                              },
-                              label: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Size',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.add_circle_outline,
-                                color: Colors.white,
-                              ),
+                          Text(
+                            TextUtils.removeAllHtmlTags(
+                                details.product.description),
+                            style: TextStyle(
+                              fontSize: 16,
                             ),
                           ),
                           SizedBox(height: 10),
-                          Text(
-                              TextUtils.removeAllHtmlTags(
-                                  details.product.description),
-                              style: TextStyle(
-                                fontSize: 16,
-                              )),
+                          Divider(
+                            color: Colors.grey[700],
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Expanded(
+                                child: FlatButton.icon(
+                                  // color: Colors.black,
+                                  textColor: Colors.grey[600],
+                                  padding: EdgeInsets.only(left: 0),
+                                  onPressed: () {
+                                    selectWaistOrLength(context, details.product);
+                                  },
+                                  textTheme: ButtonTextTheme.accent,
+                                  label: Text(
+                                      'Size',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: FlatButton.icon(
+                                  // color: Colors.black,
+                                  textColor: Colors.grey[600],
+                                  padding: EdgeInsets.only(left: 0),
+                                  onPressed: () {
+                                  },
+                                  textTheme: ButtonTextTheme.accent,
+                                  label: Text(
+                                      'Qty',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
