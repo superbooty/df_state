@@ -156,8 +156,8 @@ class ProductDetailScreen extends StatelessWidget {
                                   label: Text(
                                     'Size',
                                     style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   icon: Icon(
@@ -175,8 +175,8 @@ class ProductDetailScreen extends StatelessWidget {
                                   label: Text(
                                     'Qty',
                                     style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   icon: Icon(
