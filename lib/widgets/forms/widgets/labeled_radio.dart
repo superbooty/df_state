@@ -7,7 +7,7 @@ class LabeledRadio extends StatelessWidget {
     this.selected,
     this.enabled,
     this.value,
-    this.groupValue,
+    this.sizeValue,
     this.updateGroup,
   });
 
@@ -16,7 +16,7 @@ class LabeledRadio extends StatelessWidget {
   final bool selected;
   final bool enabled;
   final int value;
-  final int groupValue;
+  final String sizeValue;
   final Function updateGroup;
 
   @override
@@ -30,7 +30,7 @@ class LabeledRadio extends StatelessWidget {
             //color: !enabled ? Colors.grey[200] : Colors.transparent,
             border: Border(
               bottom: BorderSide(
-                color: selected ? Colors.red[700] : Colors.transparent,
+                color: enabled && selected ? Colors.red[700] : Colors.transparent,
                 width: 2,
               ),
             ),
@@ -39,12 +39,17 @@ class LabeledRadio extends StatelessWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  updateGroup(value);
+                  if (enabled) {
+                    updateGroup(value);
+                  }
                 },
                 child: Text(label,
                   style: TextStyle(
+                    letterSpacing: 2,
                     decoration: !enabled ? TextDecoration.lineThrough : TextDecoration.none,
                     fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: !enabled ? Colors.grey[350] : Colors.grey[700],
                   )
                 ),
               ),
