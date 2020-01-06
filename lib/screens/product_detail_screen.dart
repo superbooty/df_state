@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/cart_product.dart';
 import '../utils/text_utils.dart';
 import '../widgets/forms/size.dart';
 import '../providers/product_details.dart';
@@ -24,10 +25,9 @@ class ProductDetailScreen extends StatelessWidget {
     if (product.variantSize != null) {
       selector = SizeSelector.forSizes(tabIndex, sizes: product.variantSize);
     } else {
-      selector = SizeSelector.forWasitLength(tabIndex, 
+      selector = SizeSelector.forWasitLength(tabIndex,
           waist: product.variantWaist, length: product.variantLength);
     }
-
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
@@ -71,13 +71,13 @@ class ProductDetailScreen extends StatelessWidget {
                     child: CarouselSlider(
                       //height: mediaQuery.size.height * .5,
                       enlargeCenterPage: true,
-                      viewportFraction: 1.0,
-                      aspectRatio: 1.1,
+                      viewportFraction: .9,
+                      aspectRatio: 1.3,
                       items: details.mobileGallery.map(
                         (image) {
                           return Container(
                             width: double.infinity,
-                            margin: EdgeInsets.all(2),
+                            margin: EdgeInsets.only(left: 4, right: 4),
                             child: GestureDetector(
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
@@ -154,11 +154,13 @@ class ProductDetailScreen extends StatelessWidget {
                                         context, details.product, 0);
                                   },
                                   textTheme: ButtonTextTheme.accent,
-                                  label: Text(
-                                    'Size',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
+                                  label: Consumer<CartProduct>(
+                                    builder: (ctx, cartProduct, _) => Text(
+                                      '${cartProduct.size}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                   icon: Icon(
@@ -173,14 +175,16 @@ class ProductDetailScreen extends StatelessWidget {
                                   padding: EdgeInsets.only(left: 0),
                                   onPressed: () {
                                     selectSizeAndQty(
-                                      context, details.product, 1);
+                                        context, details.product, 1);
                                   },
                                   textTheme: ButtonTextTheme.accent,
-                                  label: Text(
-                                    'Qty',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
+                                  label: Consumer<CartProduct>(
+                                    builder: (ctx, cartProduct, _) => Text(
+                                      cartProduct.qty > 0 ? 'Qty ${cartProduct.qty}' : 'Qty',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                   icon: Icon(
@@ -201,5 +205,6 @@ class ProductDetailScreen extends StatelessWidget {
         },
       ),
     );
+    ;
   }
 }

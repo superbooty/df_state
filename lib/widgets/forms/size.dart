@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import './widgets/labeled_radio.dart';
+import '../../providers/cart_product.dart';
+
 
 class SizeSelector extends StatefulWidget {
   final List<String> waist;
@@ -23,6 +26,7 @@ class _SizeSelectorState extends State<SizeSelector> {
 
   @override
   Widget build(BuildContext context) {
+    CartProduct cp = Provider.of<CartProduct>(context);
     return DefaultTabController(
       length: 2,
       initialIndex: widget.tabIndex,
@@ -156,8 +160,11 @@ class _SizeSelectorState extends State<SizeSelector> {
                           textColor: Colors.black,
                           padding: EdgeInsets.all(12.0),
                           onPressed: () {
+                            String sizeString = '${widget.waist[_selectedWaist]} X ${widget.length[_selectedLength]}';
                             print(
-                                'Size :: ${widget.waist[_selectedWaist]} X ${widget.length[_selectedLength]}');
+                                'Size :: $sizeString');
+                            cp.setSize(sizeString);
+                            Navigator.pop(context);
                           },
                           child: Text(
                             'Update',
