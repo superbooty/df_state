@@ -30,7 +30,7 @@ class LabeledRadio extends StatelessWidget {
             //color: !enabled ? Colors.grey[200] : Colors.transparent,
             border: Border(
               bottom: BorderSide(
-                color: enabled && selected ? Colors.red[700] : Colors.transparent,
+                color: enabled && selected ? Color(0XFFc41130) : Colors.transparent,
                 width: 2,
               ),
             ),
