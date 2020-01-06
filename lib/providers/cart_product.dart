@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class CartProduct with ChangeNotifier{
 
-  final String code;
+  String code;
   String size = 'Size';
   int qty = 1;
 

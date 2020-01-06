@@ -41,6 +41,7 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<CartProduct>(context, listen: false).code = product.code;
     return Scaffold(
       appBar: AppBar(
         title: Text(product.name),
