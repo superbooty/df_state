@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/providers/cart_product.dart';
 import 'package:flutter_complete_guide/providers/recommendations.dart';
 import 'package:flutter_complete_guide/providers/store_locaions.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
+import './providers/buying_options.dart';
 import './screens/store_finder.dart';
 import './providers/cms_content.dart';
 import './screens/products_overview_screen.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CmsContent()),
         ChangeNotifierProvider(create: (_) =>  ProductDetails()),
         ChangeNotifierProvider(create: (_) =>  LocationFetcher()),
-        ChangeNotifierProvider(create: (_) =>  CartProduct(code: null)),
+        ChangeNotifierProvider(create: (_) =>  BuyingOptions()),
       ],
       child: MaterialApp(
           title: '',

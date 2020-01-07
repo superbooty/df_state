@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/cart_product.dart';
+import '../providers/buying_options.dart';
 import '../utils/text_utils.dart';
 import '../widgets/forms/size.dart';
 import '../providers/product_details.dart';
@@ -30,7 +30,7 @@ class ProductDetailScreen extends StatelessWidget {
     }
     showModalBottomSheet(
       context: ctx,
-      builder: (_) {
+      builder: (ctx) {
         return selector;
       },
     );
@@ -41,7 +41,7 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<CartProduct>(context, listen: false).code = product.code;
+    //Provider.of<CartProduct>(context).setCode(product.code);
     return Scaffold(
       appBar: AppBar(
         title: Text(product.name),
@@ -155,7 +155,7 @@ class ProductDetailScreen extends StatelessWidget {
                                         context, details.product, 0);
                                   },
                                   textTheme: ButtonTextTheme.accent,
-                                  label: Consumer<CartProduct>(
+                                  label: Consumer<BuyingOptions>(
                                     builder: (ctx, cartProduct, _) => Text(
                                       '${cartProduct.size}',
                                       style: TextStyle(
@@ -179,7 +179,7 @@ class ProductDetailScreen extends StatelessWidget {
                                         context, details.product, 1);
                                   },
                                   textTheme: ButtonTextTheme.accent,
-                                  label: Consumer<CartProduct>(
+                                  label: Consumer<BuyingOptions>(
                                     builder: (ctx, cartProduct, _) => Text(
                                       cartProduct.qty > 0 ? 'Qty ${cartProduct.qty}' : 'Qty',
                                       style: TextStyle(

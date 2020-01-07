@@ -1,14 +1,15 @@
 import 'package:flutter/foundation.dart';
 
-class CartProduct with ChangeNotifier{
+class BuyingOptions with ChangeNotifier{
 
   String code;
   String size = 'Size';
   int qty = 1;
 
-  CartProduct({
-    @required this.code,
-  });
+  void setCode(code) {
+    this.code = code;
+    notifyListeners();
+  }
 
   void setQty(qty) {
     this.qty = qty;
