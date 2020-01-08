@@ -13,7 +13,7 @@ import './providers/query_text.dart';
 import './providers/products.dart';
 import './screens/product_finder_screen.dart';
 import './screens/home.dart';
-import './providers/product_details.dart';
+import './providers/product_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => QueryText()),
         ChangeNotifierProvider(create: (_) => Recommendations()),
         ChangeNotifierProvider(create: (_) => CmsContent()),
-        ChangeNotifierProvider(create: (_) =>  ProductDetails()),
+        ChangeNotifierProvider(create: (_) =>  ProductService()),
         ChangeNotifierProvider(create: (_) =>  LocationFetcher()),
         ChangeNotifierProvider(create: (_) =>  BuyingOptions()),
       ],
