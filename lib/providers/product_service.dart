@@ -3,7 +3,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../models/product/product.dart';
 
-class ProductDetails with ChangeNotifier {
+class ProductService with ChangeNotifier {
   final productQuery = '''
    query product(\$code: ID!) {
     product(code: \$code, locale: "en_US", country: "US" ) {
@@ -175,19 +175,7 @@ class ProductDetails with ChangeNotifier {
   Product get product {
     return _product;
   }
-
-  List<GalleryImage> get mobileGallery {
-    List<GalleryImage> reduced = [];
-    if(_product != null) {
-      for(GalleryImage img in _product.galleryImageList.galleryImage) {
-        if (img.format == Format.REGULAR_MOBILE) {
-          reduced.add(img);
-        }
-      }
-    }
-    return reduced;
-  }
-
+  
   // queryText.setText(searchTermController.text);
   static final HttpLink httpLink = HttpLink(
     // do not use the following URI unless you are sure of what you're doing

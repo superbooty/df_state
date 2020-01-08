@@ -6,7 +6,7 @@ Product productFromJson(String str) => Product.fromJson(json.decode(str));
 
 String productToJson(Product data) => json.encode(data.toJson());
 
-class Product with ChangeNotifier{
+class Product with ChangeNotifier {
   String altText;
   dynamic averageOverallRatings;
   String baseProduct;
@@ -141,7 +141,7 @@ class Product with ChangeNotifier{
             ? null
             : List<VariantOption>.from(
                 json["variantOptions"].map((x) => VariantOption.fromJson(x))),
-        variantSize: json["variantSize"]== null
+        variantSize: json["variantSize"] == null
             ? null
             : List<String>.from(json["variantSize"].map((x) => x)),
         variantType: json["variantType"] == null ? null : json["variantType"],
@@ -202,6 +202,16 @@ class Product with ChangeNotifier{
             ? null
             : List<dynamic>.from(variantWaist.map((x) => x)),
       };
+
+  List<GalleryImage> get mobileGallery {
+    List<GalleryImage> reduced = [];
+    for (GalleryImage img in this.galleryImageList.galleryImage) {
+      if (img.format == Format.REGULAR_MOBILE) {
+        reduced.add(img);
+      }
+    }
+    return reduced;
+  }
 }
 
 class Classification {
@@ -342,8 +352,7 @@ class GalleryImage {
   });
 
   factory GalleryImage.fromJson(Map<String, dynamic> json) => GalleryImage(
-        altText:
-            json["altText"] == null ? null : json["altText"],
+        altText: json["altText"] == null ? null : json["altText"],
         format:
             json["format"] == null ? null : formatValues.map[json["format"]],
         galleryIndex:
@@ -435,19 +444,14 @@ class Price {
 
   factory Price.fromJson(Map<String, dynamic> json) => Price(
         code: json["code"],
-        currencyIso: json["currencyIso"] == null
-            ? null
-            : json["currencyIso"],
-        formattedValue: json["formattedValue"] == null
-            ? null
-            : json["formattedValue"],
+        currencyIso: json["currencyIso"] == null ? null : json["currencyIso"],
+        formattedValue:
+            json["formattedValue"] == null ? null : json["formattedValue"],
         hardPrice: json["hardPrice"],
         hardPriceFormattedValue: json["hardPriceFormattedValue"],
         maxQuantity: json["maxQuantity"],
         minQuantity: json["minQuantity"],
-        priceType: json["priceType"] == null
-            ? null
-            : json["priceType"],
+        priceType: json["priceType"] == null ? null : json["priceType"],
         regularPrice:
             json["regularPrice"] == null ? null : json["regularPrice"],
         regularPriceFormattedValue: json["regularPriceFormattedValue"] == null
@@ -460,17 +464,13 @@ class Price {
 
   Map<String, dynamic> toJson() => {
         "code": code,
-        "currencyIso":
-            currencyIso == null ? null : currencyIso,
-        "formattedValue": formattedValue == null
-            ? null
-            : formattedValue,
+        "currencyIso": currencyIso == null ? null : currencyIso,
+        "formattedValue": formattedValue == null ? null : formattedValue,
         "hardPrice": hardPrice,
         "hardPriceFormattedValue": hardPriceFormattedValue,
         "maxQuantity": maxQuantity,
         "minQuantity": minQuantity,
-        "priceType":
-            priceType == null ? null : priceType,
+        "priceType": priceType == null ? null : priceType,
         "regularPrice": regularPrice == null ? null : regularPrice,
         "regularPriceFormattedValue": regularPriceFormattedValue == null
             ? null

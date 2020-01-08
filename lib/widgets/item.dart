@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/product_details.dart';
+import '../providers/product_service.dart';
 import '../providers/product.dart';
 import '../screens/product_detail_screen.dart';
 
@@ -26,7 +26,7 @@ class Item extends StatelessWidget {
     return Container(
       child: GestureDetector(
         onTap: () {
-          Provider.of<ProductDetails>(context, listen: false).fetchProduct(product.code);
+          Provider.of<ProductService>(context, listen: false).fetchProduct(product.code);
           Navigator.push(
             context,
             MaterialPageRoute(
