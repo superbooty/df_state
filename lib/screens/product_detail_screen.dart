@@ -19,7 +19,7 @@ enum Dimension {
 class ProductDetailScreen extends StatelessWidget {
   static const routeName = '/product-detail';
   final providerProduct.Product product;
-  
+
   // In the constructor, require a Todo.
   ProductDetailScreen({Key key, @required this.product}) : super(key: key);
 
@@ -41,7 +41,8 @@ class ProductDetailScreen extends StatelessWidget {
             label: Text('Add to Cart'),
             icon: Icon(Icons.add_shopping_cart),
             backgroundColor: Color(0XFFc41130),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           ),
           body: Consumer<ProductService>(
             builder: (ctx, data, _) {
@@ -59,10 +60,71 @@ class ProductDetailScreen extends StatelessWidget {
   }
 }
 
+class SelectableButton extends FlatButton with MaterialButtonWithIconMixin {
+  SelectableButton({
+    Key key,
+    @required VoidCallback onPressed,
+    VoidCallback onLongPress,
+    ValueChanged<bool> onHighlightChanged,
+    ButtonTextTheme textTheme,
+    Color textColor,
+    Color disabledTextColor,
+    Color color,
+    Color disabledColor,
+    Color focusColor,
+    Color hoverColor,
+    Color highlightColor,
+    Color splashColor,
+    Brightness colorBrightness,
+    EdgeInsetsGeometry padding,
+    ShapeBorder shape,
+    Clip clipBehavior = Clip.none,
+    FocusNode focusNode,
+    bool autofocus = false,
+    MaterialTapTargetSize materialTapTargetSize,
+    @required Widget icon,
+    @required Widget label,
+  })  : assert(icon != null),
+        assert(label != null),
+        assert(clipBehavior != null),
+        assert(autofocus != null),
+        super(
+          key: key,
+          onPressed: onPressed,
+          onLongPress: onLongPress,
+          onHighlightChanged: onHighlightChanged,
+          textTheme: textTheme,
+          textColor: textColor,
+          disabledTextColor: disabledTextColor,
+          color: color,
+          disabledColor: disabledColor,
+          focusColor: focusColor,
+          hoverColor: hoverColor,
+          highlightColor: highlightColor,
+          splashColor: splashColor,
+          colorBrightness: colorBrightness,
+          padding: padding,
+          shape: shape,
+          clipBehavior: clipBehavior,
+          focusNode: focusNode,
+          autofocus: autofocus,
+          materialTapTargetSize: materialTapTargetSize,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              label,
+              const SizedBox(width: 10.0),
+              icon,
+            ],
+          ),
+        );
+}
+
 class ProductDetails extends StatelessWidget {
   final Product product;
 
-  const ProductDetails(this.product, {
+  const ProductDetails(
+    this.product, {
     Key key,
   }) : super(key: key);
 
@@ -93,12 +155,12 @@ class ProductDetails extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            flex: 6,
+            flex: 7,
             child: CarouselSlider(
               //height: mediaQuery.size.height * .5,
               enlargeCenterPage: true,
               viewportFraction: .9,
-              aspectRatio: 1.3,
+              aspectRatio: 1.1,
               items: product.mobileGallery.map(
                 (image) {
                   return Container(
@@ -135,7 +197,7 @@ class ProductDetails extends StatelessWidget {
             color: Colors.grey[600],
           ),
           Expanded(
-            flex: 4,
+            flex: 3,
             child: SingleChildScrollView(
               padding: EdgeInsets.only(bottom: 70),
               child: Column(
@@ -167,10 +229,11 @@ class ProductDetails extends StatelessWidget {
                     height: 5,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Expanded(
-                        child: FlatButton.icon(
+                        flex: 5,
+                        child: SelectableButton(
                           // color: Colors.black,
                           textColor: Colors.grey[600],
                           padding: EdgeInsets.only(left: 0),
@@ -193,30 +256,28 @@ class ProductDetails extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: FlatButton.icon(
-                          // color: Colors.black,
-                          textColor: Colors.grey[600],
-                          padding: EdgeInsets.only(left: 0),
-                          onPressed: () {
-                            selectSizeAndQty(context, product, 1);
-                          },
-                          textTheme: ButtonTextTheme.accent,
-                          label: Consumer<BuyingOptions>(
-                            builder: (ctx, cartProduct, _) => Text(
-                              cartProduct.qty > 0
-                                  ? 'Qty ${cartProduct.qty}'
-                                  : 'Qty',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
+                        flex: 5,
+                        child: SelectableButton(
+                        textColor: Colors.grey[600],
+                        textTheme: ButtonTextTheme.accent,
+                        onPressed: () {
+                          selectSizeAndQty(context, product, 1);
+                        },
+                        icon: Icon(
+                          Icons.keyboard_arrow_down,
+                        ),
+                        label: Consumer<BuyingOptions>(
+                          builder: (ctx, cartProduct, _) => Text(
+                            cartProduct.qty > 0
+                                ? 'Qty ${cartProduct.qty}'
+                                : 'Qty',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          icon: Icon(
-                            Icons.keyboard_arrow_down,
-                          ),
                         ),
-                      ),
+                      )),
                     ],
                   ),
                 ],
