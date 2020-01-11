@@ -21,12 +21,13 @@ class SizeSelector extends StatefulWidget {
 }
 
 class _SizeSelectorState extends State<SizeSelector> {
-  int _selectedWaist = 0;
-  int _selectedLength = 0;
+  int _selectedWaist = -1;
+  int _selectedLength = -1;
 
   @override
   Widget build(BuildContext context) {
     BuyingOptions buyOptions = Provider.of<BuyingOptions>(context);
+    
     return DefaultTabController(
       length: 2,
       initialIndex: widget.tabIndex,
@@ -96,7 +97,9 @@ class _SizeSelectorState extends State<SizeSelector> {
                                       const EdgeInsets.symmetric(horizontal: 5.0),
                                   enabled: i > 3 ? false : true,
                                   value: i,
-                                  selected: _selectedWaist == i,
+                                  selected: _selectedWaist != -1 ? _selectedWaist == i 
+                                    : buyOptions.sizeFactor != null  ? i == buyOptions.sizeFactor['waist']
+                                    : false,
                                   sizeValue: widget.waist[i],
                                   updateGroup: (groupId) {
                                     setState(() {
@@ -141,7 +144,9 @@ class _SizeSelectorState extends State<SizeSelector> {
                                       const EdgeInsets.symmetric(horizontal: 5.0),
                                   enabled: i > 3 ? false : true,
                                   value: i,
-                                  selected: _selectedLength == i,
+                                  selected: _selectedLength != -1 ? _selectedLength == i :
+                                   buyOptions.sizeFactor != null  ? i == buyOptions.sizeFactor['length']
+                                    : false,
                                   sizeValue: widget.length[i],
                                   updateGroup: (groupId) {
                                     setState(() {
@@ -162,10 +167,24 @@ class _SizeSelectorState extends State<SizeSelector> {
                             textColor: Colors.black,
                             padding: EdgeInsets.all(12.0),
                             onPressed: () {
-                              String sizeString = '${widget.waist[_selectedWaist]} X ${widget.length[_selectedLength]}';
+                              int currentWaist, currentLength = -1;
+                              if (_selectedWaist != -1) {
+                                currentWaist = _selectedWaist;
+                              } else if (buyOptions.sizeFactor['waist'] != null) {
+                                currentWaist = buyOptions.sizeFactor['waist'];
+                              }
+                              if (_selectedLength != -1) {
+                                currentLength = _selectedLength;
+                              } else if (buyOptions.sizeFactor['length'] != null) {
+                                currentLength = buyOptions.sizeFactor['length'];
+                              }
+                              String sizeString = '${widget.waist[currentWaist]} X ${widget.length[currentLength]}';
                               print(
                                   'Size :: $sizeString');
-                              buyOptions.setSize(sizeString);
+                              Map<String, int> sizeFactor = {'waist' : currentWaist,
+                                'length' : currentLength};
+                              buyOptions.setSizeLabel(sizeString);
+                              buyOptions.setSizeFactor(sizeFactor);
                               Navigator.pop(context);
                             },
                             child: Text(

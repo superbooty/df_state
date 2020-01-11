@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/buying_options.dart';
 import '../providers/product_service.dart';
 import '../providers/product.dart';
 import '../screens/product_detail_screen.dart';
@@ -27,6 +28,10 @@ class Item extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Provider.of<ProductService>(context, listen: false).fetchProduct(product.code);
+          BuyingOptions buyOptions = Provider.of<BuyingOptions>(context);
+          buyOptions.setSizeFactor({'waist' : 0, 'length' : 0});
+          buyOptions.setSizeLabel(null);
+
           Navigator.push(
             context,
             MaterialPageRoute(
