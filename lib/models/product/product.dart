@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 Product productFromJson(String str) => Product.fromJson(json.decode(str));
 

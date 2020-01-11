@@ -26,33 +26,30 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Provider.of<CartProduct>(context).setCode(product.code);
-    return ChangeNotifierProvider(
-      create: (context) => BuyingOptions(),
-      child: Container(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(product.name),
-            actions: <Widget>[
-              MyPopupMenu(),
-            ],
-          ),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {},
-            label: Text('Add to Cart'),
-            icon: Icon(Icons.add_shopping_cart),
-            backgroundColor: Color(0XFFc41130),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          ),
-          body: Consumer<ProductService>(
-            builder: (ctx, data, _) {
-              if (data.product == null) {
-                return Center(child: CircularProgressIndicator());
-              } else {
-                return ProductDetails(data.product);
-              }
-            },
-          ),
+    return Container(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(product.name),
+          actions: <Widget>[
+            MyPopupMenu(),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {},
+          label: Text('Add to Cart'),
+          icon: Icon(Icons.add_shopping_cart),
+          backgroundColor: Color(0XFFc41130),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
+        body: Consumer<ProductService>(
+          builder: (ctx, data, _) {
+            if (data.product == null) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return ProductDetails(data.product);
+            }
+          },
         ),
       ),
     );
@@ -147,7 +144,7 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //BuyingOptions buyingOptions = Provider.of<BuyingOptions>(context);
+    //Provider.of<BuyingOptions>(context);
     return Container(
       padding: EdgeInsets.all(10),
       child: Column(
@@ -243,7 +240,7 @@ class ProductDetails extends StatelessWidget {
                           textTheme: ButtonTextTheme.accent,
                           label: Consumer<BuyingOptions>(
                             builder: (ctx, cartProduct, _) => Text(
-                              '${cartProduct.size}',
+                              '${cartProduct.sizeLabel}',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
