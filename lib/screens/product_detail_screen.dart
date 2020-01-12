@@ -26,34 +26,31 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Provider.of<CartProduct>(context).setCode(product.code);
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(product.name),
-          actions: <Widget>[
-            MyPopupMenu(),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
-          label: Text('Add to Cart'),
-          icon: Icon(Icons.add_shopping_cart),
-          backgroundColor: Color(0XFFc41130),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        ),
-        body: Consumer<ProductService>(
-          builder: (ctx, data, _) {
-            if (data.product == null) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return ProductDetails(data.product);
-            }
-          },
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(product.name),
+        actions: <Widget>[
+          MyPopupMenu(),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        label: Text('Add to Cart'),
+        icon: Icon(Icons.add_shopping_cart),
+        backgroundColor: Color(0XFFc41130),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      body: Consumer<ProductService>(
+        builder: (ctx, data, _) {
+          if (data.product == null) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return ProductDetails(data.product);
+          }
+        },
       ),
     );
-    ;
   }
 }
 
@@ -136,7 +133,7 @@ class ProductDetails extends StatelessWidget {
     showModalBottomSheet(
       elevation: 3,
       context: ctx,
-      builder: (_) {
+      builder: (ctx) {
         return selector;
       },
     );
@@ -225,57 +222,58 @@ class ProductDetails extends StatelessWidget {
                     color: Colors.grey[700],
                     height: 5,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 5,
-                        child: SelectableButton(
-                          // color: Colors.black,
-                          textColor: Colors.grey[600],
-                          padding: EdgeInsets.only(left: 0),
-                          onPressed: () {
-                            selectSizeAndQty(context, product, 0);
-                          },
-                          textTheme: ButtonTextTheme.accent,
-                          label: Consumer<BuyingOptions>(
-                            builder: (ctx, cartProduct, _) => Text(
-                              '${cartProduct.sizeLabel}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
+                  Consumer<BuyingOptions>(
+                    builder: (context, buyOptions, _) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 5,
+                            child: SelectableButton(
+                              // color: Colors.black,
+                              textColor: Colors.grey[600],
+                              padding: EdgeInsets.only(left: 0),
+                              onPressed: () {
+                                selectSizeAndQty(context, product, 0);
+                              },
+                              textTheme: ButtonTextTheme.accent,
+                              label: Text(
+                                '${buyOptions.sizeLabel}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.keyboard_arrow_down,
                               ),
                             ),
                           ),
-                          icon: Icon(
-                            Icons.keyboard_arrow_down,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: SelectableButton(
-                        textColor: Colors.grey[600],
-                        textTheme: ButtonTextTheme.accent,
-                        onPressed: () {
-                          selectSizeAndQty(context, product, 1);
-                        },
-                        icon: Icon(
-                          Icons.keyboard_arrow_down,
-                        ),
-                        label: Consumer<BuyingOptions>(
-                          builder: (ctx, cartProduct, _) => Text(
-                            cartProduct.qty > 0
-                                ? 'Qty ${cartProduct.qty}'
-                                : 'Qty',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                          Expanded(
+                            flex: 5,
+                            child: SelectableButton(
+                              textColor: Colors.grey[600],
+                              textTheme: ButtonTextTheme.accent,
+                              onPressed: () {
+                                selectSizeAndQty(context, product, 1);
+                              },
+                              icon: Icon(
+                                Icons.keyboard_arrow_down,
+                              ),
+                              label: Text(
+                                buyOptions.qty > 0
+                                    ? 'Qty ${buyOptions.qty}'
+                                    : 'Qty',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      )),
-                    ],
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),

@@ -3,31 +3,28 @@ import 'package:provider/provider.dart';
 import './widgets/labeled_radio.dart';
 import '../../providers/buying_options.dart';
 
-
 class SizeSelector extends StatefulWidget {
   final List<String> waist;
   final List<String> length;
   final List<String> sizes;
-  final int tabIndex; 
+  final int tabIndex;
 
-  SizeSelector.forWasitLength(
-      this.tabIndex, {@required this.waist, @required this.length, this.sizes = const []});
+  SizeSelector.forWasitLength(this.tabIndex,
+      {@required this.waist, @required this.length, this.sizes = const []});
 
-  SizeSelector.forSizes(
-      this.tabIndex, {@required this.sizes, this.waist = const [], this.length = const []});
+  SizeSelector.forSizes(this.tabIndex,
+      {@required this.sizes, this.waist = const [], this.length = const []});
 
   @override
   _SizeSelectorState createState() => _SizeSelectorState();
 }
 
 class _SizeSelectorState extends State<SizeSelector> {
-  int _selectedWaist = -1;
-  int _selectedLength = -1;
-
+  
   @override
   Widget build(BuildContext context) {
     BuyingOptions buyOptions = Provider.of<BuyingOptions>(context);
-    
+
     return DefaultTabController(
       length: 2,
       initialIndex: widget.tabIndex,
@@ -58,105 +55,20 @@ class _SizeSelectorState extends State<SizeSelector> {
                 child: TabBarView(
                   children: [
                     Container(
-                      height: 320,
+                      height: 600,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(
-                            // margin: const EdgeInsets.all(5),
-                            // color: Colors.grey,
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              'Waist',
-                              style: TextStyle(
-                                fontFamily: 'Quicksand',
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 7.0,
-                                    color: Colors.grey[400],
-                                    offset: Offset(5.0, 5.0),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 35,
-                            child: ListView.builder(
-                              itemCount: widget.waist.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (ctx, i) {
-                                var label = widget.waist[i];
-                                return LabeledRadio(
-                                  label: label,
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5.0),
-                                  enabled: i > 3 ? false : true,
-                                  value: i,
-                                  selected: _selectedWaist != -1 ? _selectedWaist == i 
-                                    : buyOptions.sizeFactor != null  ? i == buyOptions.sizeFactor['waist']
-                                    : false,
-                                  sizeValue: widget.waist[i],
-                                  updateGroup: (groupId) {
-                                    setState(() {
-                                      _selectedWaist = groupId;
-                                    });
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Container(
-                            //color: Colors.grey,
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              'Length',
-                              style: TextStyle(
-                                fontFamily: 'Quicksand',
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 7.0,
-                                    color: Colors.grey[400],
-                                    offset: Offset(5.0, 5.0),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 35,
-                            child: ListView.builder(
-                              itemCount: widget.length.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (ctx, i) {
-                                var label = widget.length[i];
-                                return LabeledRadio(
-                                  label: label,
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5.0),
-                                  enabled: i > 3 ? false : true,
-                                  value: i,
-                                  selected: _selectedLength != -1 ? _selectedLength == i :
-                                   buyOptions.sizeFactor != null  ? i == buyOptions.sizeFactor['length']
-                                    : false,
-                                  sizeValue: widget.length[i],
-                                  updateGroup: (groupId) {
-                                    setState(() {
-                                      _selectedLength = groupId;
-                                    });
-                                  },
-                                );
-                              },
-                            ),
-                          ),
+                          widget.sizes.length > 0
+                              ? SingleFactorSize(
+                                  sizes: widget.sizes,
+                                )
+                              : MultiFactorSize(
+                                  waist: widget.waist,
+                                  length: widget.length,
+                                ),
+                          //
                           SizedBox(height: 21),
                           FlatButton(
                             color: Colors.black,
@@ -167,24 +79,13 @@ class _SizeSelectorState extends State<SizeSelector> {
                             textColor: Colors.black,
                             padding: EdgeInsets.all(12.0),
                             onPressed: () {
-                              int currentWaist, currentLength = -1;
-                              if (_selectedWaist != -1) {
-                                currentWaist = _selectedWaist;
-                              } else if (buyOptions.sizeFactor['waist'] != null) {
-                                currentWaist = buyOptions.sizeFactor['waist'];
+                              String sizeString = 'Size';
+                              if (widget.sizes != null && widget.sizes.length > 0) {
+                                sizeString = '${widget.sizes[buyOptions.selectedSizeIndex]}';
+                              } else {
+                                sizeString = '${widget.waist[buyOptions.selectedWaistIndex]} X ${widget.length[buyOptions.selectedLengthIndex]}';
                               }
-                              if (_selectedLength != -1) {
-                                currentLength = _selectedLength;
-                              } else if (buyOptions.sizeFactor['length'] != null) {
-                                currentLength = buyOptions.sizeFactor['length'];
-                              }
-                              String sizeString = '${widget.waist[currentWaist]} X ${widget.length[currentLength]}';
-                              print(
-                                  'Size :: $sizeString');
-                              Map<String, int> sizeFactor = {'waist' : currentWaist,
-                                'length' : currentLength};
                               buyOptions.setSizeLabel(sizeString);
-                              buyOptions.setSizeFactor(sizeFactor);
                               Navigator.pop(context);
                             },
                             child: Text(
@@ -203,7 +104,8 @@ class _SizeSelectorState extends State<SizeSelector> {
                     ),
                     // QTY Selector
                     Container(
-                      child: Text('Someday you will be able to select a quantity'),
+                      child:
+                          Text('Someday you will be able to select a quantity'),
                     ),
                   ],
                 ),
@@ -212,6 +114,168 @@ class _SizeSelectorState extends State<SizeSelector> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class MultiFactorSize extends StatelessWidget {
+  final List<String> waist;
+  final List<String> length;
+
+  MultiFactorSize({this.waist, this.length});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Container(
+          // margin: const EdgeInsets.all(5),
+          // color: Colors.grey,
+          margin: EdgeInsets.only(bottom: 10),
+          child: Text(
+            'Waist',
+            style: TextStyle(
+              fontFamily: 'Quicksand',
+              color: Colors.black54,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+              shadows: [
+                Shadow(
+                  blurRadius: 7.0,
+                  color: Colors.grey[400],
+                  offset: Offset(5.0, 5.0),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          height: 35,
+          child: Consumer<BuyingOptions>(
+            builder: (ctx, buyOptions, _) => ListView.builder(
+              itemCount: waist.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (ctx, i) {
+                var label = waist[i];
+                return LabeledRadio(
+                  label: label,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  enabled: i > 3 ? false : true,
+                  value: i,
+                  selected: i == buyOptions.selectedWaistIndex,
+                  sizeValue: waist[i],
+                  updateGroup: (groupId) {
+                    buyOptions.setSelectedWaistIndex(i);
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
+        Container(
+          //color: Colors.grey,
+          margin: EdgeInsets.only(bottom: 10),
+          child: Text(
+            'Length',
+            style: TextStyle(
+              fontFamily: 'Quicksand',
+              color: Colors.black54,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+              shadows: [
+                Shadow(
+                  blurRadius: 7.0,
+                  color: Colors.grey[400],
+                  offset: Offset(5.0, 5.0),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          height: 35,
+          child: Consumer<BuyingOptions>(
+            builder: (ctx, buyOptions, _) => ListView.builder(
+              itemCount: length.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (ctx, i) {
+                var label = length[i];
+                return LabeledRadio(
+                  label: label,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  enabled: i > 3 ? false : true,
+                  value: i,
+                  selected: i == buyOptions.selectedLengthIndex,
+                  sizeValue: length[i],
+                  updateGroup: (groupId) {
+                    buyOptions.setSelectedLengthIndex(i);
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SingleFactorSize extends StatelessWidget {
+  final List<String> sizes;
+
+  SingleFactorSize({this.sizes});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Container(
+          //color: Colors.grey,
+          margin: EdgeInsets.only(bottom: 10),
+          child: Text(
+            'Size',
+            style: TextStyle(
+              fontFamily: 'Quicksand',
+              color: Colors.black54,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+              shadows: [
+                Shadow(
+                  blurRadius: 7.0,
+                  color: Colors.grey[400],
+                  offset: Offset(5.0, 5.0),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          height: 50,
+          child: Consumer<BuyingOptions>(
+            builder: (context, buyOptions, _) => ListView.builder(
+              itemCount: sizes.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (ctx, i) {
+                var label = sizes[i];
+                return LabeledRadio(
+                  label: label,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  enabled: i > 3 ? false : true,
+                  value: i,
+                  selected: i == buyOptions.selectedSizeIndex,
+                  sizeValue: sizes[i],
+                  updateGroup: (index) {
+                    buyOptions.setSelectedSizeIndex(i);
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

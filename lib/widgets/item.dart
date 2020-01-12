@@ -29,7 +29,7 @@ class Item extends StatelessWidget {
         onTap: () {
           Provider.of<ProductService>(context, listen: false).fetchProduct(product.code);
           BuyingOptions buyOptions = Provider.of<BuyingOptions>(context);
-          buyOptions.setSizeFactor({'waist' : 0, 'length' : 0});
+          buyOptions.resetSelections();
           buyOptions.setSizeLabel(null);
 
           Navigator.push(
