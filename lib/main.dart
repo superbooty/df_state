@@ -14,6 +14,7 @@ import './providers/products.dart';
 import './screens/product_finder_screen.dart';
 import './screens/home.dart';
 import './providers/product_service.dart';
+import './screens/cart_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
             ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
             ProductFinderScreen.routeName: (ctx) => ProductFinderScreen(),
             StoreFinderScreen.routeName: (ctx) => StoreFinderScreen(),
+            Cart.routeName: (ctx) => Cart(),
           }),
     );
   }

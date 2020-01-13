@@ -49,10 +49,11 @@ class LabeledRadio extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       decorationThickness: 3,
-                      letterSpacing: 2,
+                      letterSpacing: 1.5,
                       decoration: !enabled ? TextDecoration.lineThrough : TextDecoration.none,
+                      fontFamily: 'Interstate',
                       fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w700,
                       color: !enabled ? Colors.grey[400] : Colors.grey[700],
                     )
                   ),

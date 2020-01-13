@@ -128,22 +128,23 @@ class MultiFactorSize extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Container(
           // margin: const EdgeInsets.all(5),
           // color: Colors.grey,
           margin: EdgeInsets.only(bottom: 10),
           child: Text(
-            'Waist',
+            'WAIST',
             style: TextStyle(
               fontFamily: 'Quicksand',
               color: Colors.black54,
               fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontSize: 14,
               shadows: [
                 Shadow(
-                  blurRadius: 7.0,
-                  color: Colors.grey[400],
+                  blurRadius: 10.0,
+                  color: Colors.grey[300],
                   offset: Offset(5.0, 5.0),
                 ),
               ],
@@ -151,7 +152,7 @@ class MultiFactorSize extends StatelessWidget {
           ),
         ),
         Container(
-          height: 35,
+          height: 50,
           child: Consumer<BuyingOptions>(
             builder: (ctx, buyOptions, _) => ListView.builder(
               itemCount: waist.length,
@@ -178,16 +179,16 @@ class MultiFactorSize extends StatelessWidget {
           //color: Colors.grey,
           margin: EdgeInsets.only(bottom: 10),
           child: Text(
-            'Length',
+            'LENGTH',
             style: TextStyle(
-              fontFamily: 'Quicksand',
+              fontFamily: 'Interstate',
               color: Colors.black54,
               fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontSize: 14,
               shadows: [
                 Shadow(
-                  blurRadius: 7.0,
-                  color: Colors.grey[400],
+                  blurRadius: 10.0,
+                  color: Colors.grey[300],
                   offset: Offset(5.0, 5.0),
                 ),
               ],
@@ -195,7 +196,7 @@ class MultiFactorSize extends StatelessWidget {
           ),
         ),
         Container(
-          height: 35,
+          height: 50,
           child: Consumer<BuyingOptions>(
             builder: (ctx, buyOptions, _) => ListView.builder(
               itemCount: length.length,
@@ -231,17 +232,18 @@ class SingleFactorSize extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Container(
           //color: Colors.grey,
           margin: EdgeInsets.only(bottom: 10),
           child: Text(
-            'Size',
+            'SIZE',
             style: TextStyle(
-              fontFamily: 'Quicksand',
+              fontFamily: 'Interstate',
               color: Colors.black54,
               fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontSize: 16,
               shadows: [
                 Shadow(
                   blurRadius: 7.0,

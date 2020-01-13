@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/cart_screen.dart';
 import '../screens/products_overview_screen.dart';
 import '../screens/store_finder.dart';
 import '../screens/product_finder_screen.dart';
@@ -24,6 +25,16 @@ class MyPopupMenu extends StatelessWidget {
         }  
         if (val == 1) {
           Navigator.of(context).pushNamedAndRemoveUntil(
+              Cart.routeName,
+              (route) => route.isCurrent &&
+                      route.settings.name == Cart.routeName
+                  ? false
+                  : true,
+              arguments: '',
+            );
+        }
+        if (val == 2) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
               ProductsOverviewScreen.routeName,
               (route) => route.isCurrent &&
                       route.settings.name == ProductsOverviewScreen.routeName
@@ -32,7 +43,7 @@ class MyPopupMenu extends StatelessWidget {
               arguments: '',
             );
         }
-        if (val == 2) {
+        if (val == 3) {
           Navigator.of(context).pushNamedAndRemoveUntil(
             StoreFinderScreen.routeName,
             (route) => route.isCurrent &&
@@ -53,10 +64,14 @@ class MyPopupMenu extends StatelessWidget {
         ),
         PopupMenuItem(
           value: 1,
-          child: Text('browse'),
+          child: Text('cart'),
         ),
         PopupMenuItem(
           value: 2,
+          child: Text('browse'),
+        ),
+        PopupMenuItem(
+          value: 3,
           child: Text('Store finder'),
         ),
       ],
