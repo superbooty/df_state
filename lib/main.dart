@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/providers/recommendations.dart';
-import 'package:flutter_complete_guide/providers/store_locaions.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
@@ -15,6 +13,9 @@ import './screens/product_finder_screen.dart';
 import './screens/home.dart';
 import './providers/product_service.dart';
 import './screens/cart_screen.dart';
+import './providers/cart_data_provider.dart';
+import './providers/recommendations.dart';
+import './providers/store_locaions.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,13 +38,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) =>  ProductService()),
         ChangeNotifierProvider(create: (_) =>  LocationFetcher()),
         ChangeNotifierProvider(create: (_) =>  BuyingOptions()),
+        ChangeNotifierProvider(create: (_) =>  CartDataProvider()),
       ],
       child: MaterialApp(
           title: '',
           theme: ThemeData(
             //primarySwatch: Colors.,
             primaryColor: Color(0XFFc41130),
-            scaffoldBackgroundColor: Color(0xFFf4f4f4),
+            // scaffoldBackgroundColor: Color(0xFFf4f4f4),
             // backgroundColor: Color(0XFFF1DD33),
             accentColor: Colors.redAccent,
             textTheme: ThemeData.light().textTheme.copyWith(

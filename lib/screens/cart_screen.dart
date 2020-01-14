@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/cart/cart_data.dart' as cartData;
+import '../providers/cart_data_provider.dart';
 import '../widgets/popup_menu.dart';
 
 class Cart extends StatelessWidget {
@@ -16,35 +19,135 @@ class Cart extends StatelessWidget {
           MyPopupMenu(),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-              itemCount: 4,
-              itemBuilder: (ctx, i) => Card(
-                child: CartListItem(
-                  image: Image.network(
-                    'https://lsco.scene7.com/is/image/lsco/levis/clothing/005010193-front-pdp.jpg?\$grid_mobile_bottoms\$',
-                      height: 120.0,
-                      fit: BoxFit.cover,
+      body: FutureBuilder(
+          future:
+              Provider.of<CartDataProvider>(context, listen: false).fetchCart(),
+          builder: (ctx, dataSnapshot) {
+            if (dataSnapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return Consumer<CartDataProvider>(
+                builder: (ctx, provider, child) => Container(
+                  //height: 500,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: provider.cartData.entries.length,
+                            itemBuilder: (ctx, i) {
+                              cartData.Entry cartEntry =
+                                  provider.cartData.entries[i];
+                              return Card(
+                                child: CartListItem(
+                                  image: Image.network(
+                                    cartEntry.product.images[0].url,
+                                    height: 120.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  colorName: '${cartEntry.product.colorName}',
+                                  productName: '${cartEntry.product.name}',
+                                  price:
+                                      '${cartEntry.product.price.formattedValue}',
+                                  displayableSize: provider
+                                      .formattedSize(cartEntry.product.code),
+                                  qty: '1',
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Divider(
+                          thickness: .5,
+                          color: Colors.black54,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                SizedBox(height: 10),
+                                _CartCalcRow(
+                                  data:
+                                      provider.cartData.subTotal.formattedValue,
+                                  label: 'SUBTOTAL',
+                                ),
+                                SizedBox(height: 30),
+                                _CartCalcRow(
+                                  data: provider
+                                      .cartData.totalDiscounts.formattedValue,
+                                  label: 'DISCOUNT',
+                                ),
+                                SizedBox(height: 30),
+                                _CartCalcRow(
+                                  data: provider.cartData.deliveryCost != null
+                                      ? provider
+                                          .cartData.deliveryCost.formattedValue
+                                      : '\$0.00',
+                                  label: 'SHIPPING',
+                                ),
+                                SizedBox(height: 30),
+                                _CartCalcRow(
+                                  data:
+                                      provider.cartData.totalTax.formattedValue,
+                                  label: 'ESTIMATED TAX',
+                                ),
+                                SizedBox(height: 10),
+                                Divider(
+                                  thickness: .5,
+                                  color: Colors.black54,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  colorName: 'Nothing compares to blue',
-                  productName: 'My Favorite Jeans',
-                  price: '\$119.98',
-                  displayableSize: '32W X 30L',
-                  qty: '1',
-                )
-              ),
-            ),
+                ),
+              );
+            }
+          }),
+    );
+  }
+}
+
+class _CartCalcRow extends StatelessWidget {
+  _CartCalcRow({
+    Key key,
+    @required this.label,
+    @required this.data,
+    this.dataDecoration,
+  }) : super(key: key);
+
+  final String label;
+  final String data;
+  final TextDecoration dataDecoration;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text('$label',
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            )),
+        Text(
+          '$data',
+          textAlign: TextAlign.right,
+          style: TextStyle(
+            decoration: dataDecoration != null ? dataDecoration : null,
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
           ),
-          Expanded(
-            child: Container(
-              color: Colors.blue,
-            ),
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
@@ -86,7 +189,7 @@ class _CartItemDescription extends StatelessWidget {
               ),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
               Text(
-                '$colorName',
+                'Color $colorName',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -104,7 +207,7 @@ class _CartItemDescription extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Text(
-                '$displayableSize',
+                'Size $displayableSize',
                 style: const TextStyle(
                   fontSize: 12.0,
                   color: Colors.black87,
