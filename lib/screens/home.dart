@@ -5,7 +5,6 @@ import '../providers/cms_content.dart';
 import '../widgets/popup_menu.dart';
 import '../widgets/cms/cms_home.dart';
 
-
 class Home extends StatelessWidget {
   // final String title;
   // final double price;
@@ -25,8 +24,8 @@ class Home extends StatelessWidget {
         ],
       ),
       body: FutureBuilder(
-          future: Provider.of<CmsContent>(context, listen: false)
-              .fetchCMSContent(),
+          future:
+              Provider.of<CmsContent>(context, listen: false).fetchCMSContent(),
           builder: (ctx, dataSnapshot) {
             if (dataSnapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
