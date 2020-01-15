@@ -194,7 +194,7 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
                   Text(widget.iconLabel),
                   const SizedBox(width: 5),
                   Icon(
-                    Icons.add,
+                    !expanded ? Icons.add : Icons.remove,
                     size: 16,
                   ),
                 ],
