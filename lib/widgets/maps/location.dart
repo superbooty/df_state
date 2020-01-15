@@ -30,7 +30,7 @@ class _LocationInputState extends State<StaticLocation> {
     LatLng center = const LatLng(37.7758, -122.4128);
     return Consumer<loc.StoreLocations>(
       builder: (ctx, locations, _) {
-        print('Locations :: ${locations}');
+        print('Locations :: $locations');
         if (locations != null && locations.markers != null) {
           center = LatLng(
             double.parse(locations.originLat),

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import '../models/cart/cart_data.dart';
@@ -207,7 +206,7 @@ const contentJson = '''
 
 class CartDataProvider with ChangeNotifier {
   CartData cartData;
-  bool _promoApplied = false;
+  bool _promoApplied = true;
 
   bool get prmoApplied {
     return _promoApplied;

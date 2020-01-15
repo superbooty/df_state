@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../widgets/maps/location.dart';
 import '../widgets/popup_menu.dart';
-import '../providers/store_locaions.dart' as loc;
 
 class StoreFinderScreen extends StatelessWidget {
   static const routeName = '/store-finder';
@@ -13,10 +12,8 @@ class StoreFinderScreen extends StatelessWidget {
   final LocationFetcher fetcher = LocationFetcher();
 
   @override
-  /**
-   * Eventually this class will use data from the LocationFetcher to generate
-   * a list of Markers to show on the Map.
-   */
+  /// Eventually this class will use data from the LocationFetcher to generate
+  /// a list of Markers to show on the Map.
   Widget build(BuildContext context) {
     LocationFetcher fetcher = Provider.of<LocationFetcher>(context);
     print('Showing store finder screen');

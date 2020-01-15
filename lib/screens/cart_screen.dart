@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/product_detail_screen.dart';
 import '../models/cart/cart_data.dart' as cartData;
 import '../providers/cart_data_provider.dart';
 import '../widgets/popup_menu.dart';
@@ -86,19 +85,24 @@ class Cart extends StatelessWidget {
                                     SizedBox(height: 20),
                                     ButtonTheme(
                                       minWidth: 200,
+                                      height: 44,
                                       child: FlatButton(
                                         color: Colors.black,
                                         textColor: Colors.white,
-                                        padding: EdgeInsets.all(15.0),
+                                        //padding: EdgeInsets.all(15.0),
                                         onPressed: () {
                                           cdp.applyPromo(applyPromoController.text);
                                         },
                                         child: Consumer<CartDataProvider>(
                                           builder: (ctx, data, _) {
                                             if (!data.prmoApplied) {
-                                              return LinearProgressIndicator(
-                                                backgroundColor: Colors.transparent,
-                                                valueColor: AlwaysStoppedAnimation<Color>(Color(0XFFc41130)),
+                                              return SizedBox(
+                                                height: 20,
+                                                width: 20,
+                                                child: CircularProgressIndicator(
+                                                  backgroundColor: Colors.transparent,
+                                                  valueColor: AlwaysStoppedAnimation<Color>(Color(0XFFc41130)),
+                                                ),
                                               );
                                             } else {
                                               return Text(
