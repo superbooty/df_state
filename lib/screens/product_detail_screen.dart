@@ -38,8 +38,7 @@ class ProductDetailScreen extends StatelessWidget {
         label: Text('Add to Cart'),
         icon: Icon(Icons.add_shopping_cart),
         backgroundColor: Color(0XFFc41130),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       body: Consumer<ProductService>(
         builder: (ctx, data, _) {
@@ -57,7 +56,7 @@ class ProductDetailScreen extends StatelessWidget {
 class SelectableButton extends FlatButton with MaterialButtonWithIconMixin {
   SelectableButton({
     Key key,
-    @required VoidCallback onPressed,
+    VoidCallback onPressed,
     VoidCallback onLongPress,
     ValueChanged<bool> onHighlightChanged,
     ButtonTextTheme textTheme,
@@ -76,10 +75,9 @@ class SelectableButton extends FlatButton with MaterialButtonWithIconMixin {
     FocusNode focusNode,
     bool autofocus = false,
     MaterialTapTargetSize materialTapTargetSize,
-    @required Widget icon,
+    Widget icon,
     @required Widget label,
-  })  : assert(icon != null),
-        assert(label != null),
+  })  : assert(label != null),
         assert(clipBehavior != null),
         assert(autofocus != null),
         super(
@@ -105,10 +103,11 @@ class SelectableButton extends FlatButton with MaterialButtonWithIconMixin {
           materialTapTargetSize: materialTapTargetSize,
           child: Row(
             mainAxisSize: MainAxisSize.min,
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               label,
-              const SizedBox(width: 10.0),
-              icon,
+              icon != null ? const SizedBox(width: 5.0) : SizedBox(),
+              icon != null ? icon : SizedBox(width: 5.0),
             ],
           ),
         );
@@ -196,7 +195,7 @@ class ProductDetails extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 70),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
                     product.name,
@@ -225,49 +224,44 @@ class ProductDetails extends StatelessWidget {
                   Consumer<BuyingOptions>(
                     builder: (context, buyOptions, _) {
                       return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Expanded(
-                            flex: 5,
-                            child: SelectableButton(
-                              // color: Colors.black,
-                              textColor: Colors.grey[600],
-                              padding: EdgeInsets.only(left: 0),
-                              onPressed: () {
-                                selectSizeAndQty(context, product, 0);
-                              },
-                              textTheme: ButtonTextTheme.accent,
-                              label: Text(
-                                '${buyOptions.sizeLabel}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.keyboard_arrow_down,
+                          SelectableButton(
+                            // color: Colors.black,
+                            textColor: Colors.grey[600],
+                            padding: EdgeInsets.only(left: 0),
+                            onPressed: () {
+                              selectSizeAndQty(context, product, 0);
+                            },
+                            textTheme: ButtonTextTheme.accent,
+                            label: Text(
+                              '${buyOptions.sizeLabel}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
+                            icon: Icon(
+                              Icons.keyboard_arrow_down,
+                            ),
                           ),
-                          Expanded(
-                            flex: 5,
-                            child: SelectableButton(
-                              textColor: Colors.grey[600],
-                              textTheme: ButtonTextTheme.accent,
-                              onPressed: () {
-                                selectSizeAndQty(context, product, 1);
-                              },
-                              icon: Icon(
-                                Icons.keyboard_arrow_down,
-                              ),
-                              label: Text(
-                                buyOptions.qty > 0
-                                    ? 'Qty ${buyOptions.qty}'
-                                    : 'Qty',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                          SelectableButton(
+                            textColor: Colors.grey[600],
+                            textTheme: ButtonTextTheme.accent,
+                            onPressed: () {
+                              selectSizeAndQty(context, product, 1);
+                            },
+                            icon: Icon(
+                              Icons.keyboard_arrow_down,
+                            ),
+                            label: Text(
+                              buyOptions.qty > 0
+                                  ? 'Qty ${buyOptions.qty}'
+                                  : 'Qty',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
