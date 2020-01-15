@@ -10,9 +10,12 @@ class Cart extends StatelessWidget {
   static const routeName = '/cart';
 
   final String appBarText = 'Cart';
+  final applyPromoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    CartDataProvider cdp =
+        Provider.of<CartDataProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarText),
@@ -22,7 +25,7 @@ class Cart extends StatelessWidget {
       ),
       body: FutureBuilder(
           future:
-              Provider.of<CartDataProvider>(context, listen: false).fetchCart(),
+              cdp.fetchCart(),
           builder: (ctx, dataSnapshot) {
             if (dataSnapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -73,6 +76,7 @@ class Cart extends StatelessWidget {
                                     SizedBox(
                                       width: 250,
                                       child: TextField(
+                                        controller: applyPromoController,
                                         decoration: InputDecoration(
                                           labelText: 'Enter Promo Code',
                                           alignLabelWithHint: true,
@@ -87,15 +91,26 @@ class Cart extends StatelessWidget {
                                         textColor: Colors.white,
                                         padding: EdgeInsets.all(15.0),
                                         onPressed: () {
-                                          /*...*/
+                                          cdp.applyPromo(applyPromoController.text);
                                         },
-                                        child: Text(
-                                          'APPLY',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                        child: Consumer<CartDataProvider>(
+                                          builder: (ctx, data, _) {
+                                            if (!data.prmoApplied) {
+                                              return LinearProgressIndicator(
+                                                backgroundColor: Colors.transparent,
+                                                valueColor: AlwaysStoppedAnimation<Color>(Color(0XFFc41130)),
+                                              );
+                                            } else {
+                                              return Text(
+                                                'APPLY',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              );
+                                            }
+                                          },
                                         ),
                                       ),
                                     )
