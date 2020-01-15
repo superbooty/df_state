@@ -37,6 +37,7 @@ class Cart extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Expanded(
+                          flex: 2,
                           child: ListView.builder(
                             itemCount: provider.cartData.entries.length,
                             itemBuilder: (ctx, i) {
@@ -62,11 +63,12 @@ class Cart extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: SingleChildScrollView(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.only(left: 10, right: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 _ExpandableFormTile(
                                   message: 'HAVE A PROMTION CODE',
@@ -188,11 +190,11 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
   Widget build(BuildContext context) {
     print("building....");
     return Container(
-      padding: EdgeInsets.only(top: 15, bottom: 15),
+      padding: EdgeInsets.all(0),
       child: Column(
         children: <Widget>[
           Divider(
-            height: 25,
+            //height: 25,
             thickness: 2,
           ),
           GestureDetector(
@@ -203,6 +205,7 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
               print("EXPANDED ::  $expanded");
             },
             child: Container(
+              padding: EdgeInsets.only(bottom: 10, top: 10),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -224,6 +227,7 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
             height: !expanded ? 0.00 : 150.0,
             duration: Duration(milliseconds: 300),
             child: SingleChildScrollView(
+              padding: EdgeInsets.all(0),
               child: Column(
                 children: widget.items != null
                     ? widget.items.map<Widget>((item) {
@@ -234,7 +238,7 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
             ),
           ),
           Divider(
-            height: 25,
+            //height: 25,
             thickness: 2,
           ),
         ],
