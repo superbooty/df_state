@@ -36,7 +36,12 @@ class Cart extends StatelessWidget {
                   child: Column(
                     //shrinkWrap: true,
                     children: <Widget>[
-                      ListView.builder(
+                      ListView.separated(
+                        separatorBuilder: (ctx, si) => Divider(
+                          color: Colors.grey,
+                          thickness: 1,
+                          indent: 120,
+                        ),
                         padding: EdgeInsets.all(0),
                         itemCount: provider.cartData.entries.length,
                         shrinkWrap: true,
@@ -44,26 +49,24 @@ class Cart extends StatelessWidget {
                         itemBuilder: (ctx, i) {
                           cartData.Entry cartEntry =
                               provider.cartData.entries[i];
-                          return Card(
-                            child: CartListItem(
-                              image: Image.network(
-                                cartEntry.product.images[0].url,
-                                height: 120.0,
-                                fit: BoxFit.cover,
-                              ),
-                              colorName: '${cartEntry.product.colorName}',
-                              productName: '${cartEntry.product.name}',
-                              price:
-                                  '${cartEntry.product.price.formattedValue}',
-                              displayableSize: provider
-                                  .formattedSize(cartEntry.product.code),
-                              qty: '1',
+                          return CartListItem(
+                            image: Image.network(
+                              cartEntry.product.images[0].url,
+                              height: 120.0,
+                              fit: BoxFit.cover,
                             ),
+                            colorName: '${cartEntry.product.colorName}',
+                            productName: '${cartEntry.product.name}',
+                            price:
+                                '${cartEntry.product.price.formattedValue}',
+                            displayableSize: provider
+                                .formattedSize(cartEntry.product.code),
+                            qty: '1',
                           );
                         },
                       ),
                       _ExpandableFormTile(
-                        message: 'HAVE A PROMOTION CODE',
+                        message: 'HAVE A PROMOTION CODE?',
                         iconLabel: 'Add Code',
                         items: <Widget>[
                           SizedBox(
@@ -73,6 +76,9 @@ class Cart extends StatelessWidget {
                               decoration: InputDecoration(
                                 labelText: 'Enter Promo Code',
                                 alignLabelWithHint: true,
+                                labelStyle: TextStyle(
+                                 fontSize: 12, 
+                                )
                               ),
                             ),
                           ),
@@ -276,7 +282,7 @@ class _CartCalcRow extends StatelessWidget {
           style: labelStyle == null
               ? TextStyle(
                   fontFamily: 'Interstate',
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 )
               : labelStyle,
@@ -288,7 +294,7 @@ class _CartCalcRow extends StatelessWidget {
               ? TextStyle(
                   decoration: dataDecoration != null ? dataDecoration : null,
                   fontFamily: 'Interstate',
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.w400,
                 )
               : dataStyle,
@@ -360,6 +366,7 @@ class _CartItemDescription extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
+              SizedBox(height: 5,),
               Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -416,7 +423,7 @@ class CartListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: SizedBox(
-        height: 100,
+        height: 110,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
