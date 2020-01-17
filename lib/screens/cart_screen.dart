@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/models/cart/cart_data.dart' as cartData;
 import 'package:provider/provider.dart';
 
 import '../models/cart/cart_data.dart' as cartData;
@@ -23,147 +24,148 @@ class Cart extends StatelessWidget {
         ],
       ),
       body: FutureBuilder(
-          future:
-              cdp.fetchCart(),
-          builder: (ctx, dataSnapshot) {
-            if (dataSnapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return Consumer<CartDataProvider>(
-                builder: (ctx, provider, child) => Container(
-                  //height: 500,
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: ListView.builder(
-                            itemCount: provider.cartData.entries.length,
-                            itemBuilder: (ctx, i) {
-                              cartData.Entry cartEntry =
-                                  provider.cartData.entries[i];
-                              return Card(
-                                child: CartListItem(
-                                  image: Image.network(
-                                    cartEntry.product.images[0].url,
-                                    height: 120.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  colorName: '${cartEntry.product.colorName}',
-                                  productName: '${cartEntry.product.name}',
-                                  price:
-                                      '${cartEntry.product.price.formattedValue}',
-                                  displayableSize: provider
-                                      .formattedSize(cartEntry.product.code),
-                                  qty: '1',
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: SingleChildScrollView(
-                            padding: EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                _ExpandableFormTile(
-                                  message: 'HAVE A PROMTION CODE',
-                                  iconLabel: 'Add Code',
-                                  items: <Widget>[
-                                    SizedBox(
-                                      width: 250,
-                                      child: TextField(
-                                        controller: applyPromoController,
-                                        decoration: InputDecoration(
-                                          labelText: 'Enter Promo Code',
-                                          alignLabelWithHint: true,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    ButtonTheme(
-                                      minWidth: 200,
-                                      height: 44,
-                                      child: FlatButton(
-                                        color: Colors.black,
-                                        textColor: Colors.white,
-                                        //padding: EdgeInsets.all(15.0),
-                                        onPressed: () {
-                                          cdp.applyPromo(applyPromoController.text);
-                                        },
-                                        child: Consumer<CartDataProvider>(
-                                          builder: (ctx, data, _) {
-                                            if (!data.prmoApplied) {
-                                              return SizedBox(
-                                                height: 20,
-                                                width: 20,
-                                                child: CircularProgressIndicator(
-                                                  backgroundColor: Colors.transparent,
-                                                  valueColor: AlwaysStoppedAnimation<Color>(Color(0XFFc41130)),
-                                                ),
-                                              );
-                                            } else {
-                                              return Text(
-                                                'APPLY',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              );
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                _CartCalcRow(
-                                  data:
-                                      provider.cartData.subTotal.formattedValue,
-                                  label: 'SUBTOTAL',
-                                ),
-                                SizedBox(height: 30),
-                                _CartCalcRow(
-                                  data: provider
-                                      .cartData.totalDiscounts.formattedValue,
-                                  label: 'DISCOUNT',
-                                ),
-                                SizedBox(height: 30),
-                                _CartCalcRow(
-                                  data: provider.cartData.deliveryCost != null
-                                      ? provider
-                                          .cartData.deliveryCost.formattedValue
-                                      : '\$0.00',
-                                  label: 'SHIPPING',
-                                ),
-                                SizedBox(height: 30),
-                                _CartCalcRow(
-                                  data:
-                                      provider.cartData.totalTax.formattedValue,
-                                  label: 'ESTIMATED TAX',
-                                ),
-                                SizedBox(height: 10),
-                                Divider(
-                                  thickness: .5,
-                                  color: Colors.black54,
-                                ),
-                              ],
+        future: cdp.fetchCart(),
+        builder: (ctx, dataSnapshot) {
+          if (dataSnapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return Consumer<CartDataProvider>(
+              builder: (ctx, provider, child) => SingleChildScrollView(
+                padding: EdgeInsets.only(left: 10, right: 10, bottom: 50),
+                child: Container(
+                  child: Column(
+                    //shrinkWrap: true,
+                    children: <Widget>[
+                      ListView.builder(
+                        padding: EdgeInsets.all(0),
+                        itemCount: provider.cartData.entries.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (ctx, i) {
+                          cartData.Entry cartEntry =
+                              provider.cartData.entries[i];
+                          return Card(
+                            child: CartListItem(
+                              image: Image.network(
+                                cartEntry.product.images[0].url,
+                                height: 120.0,
+                                fit: BoxFit.cover,
+                              ),
+                              colorName: '${cartEntry.product.colorName}',
+                              productName: '${cartEntry.product.name}',
+                              price:
+                                  '${cartEntry.product.price.formattedValue}',
+                              displayableSize: provider
+                                  .formattedSize(cartEntry.product.code),
+                              qty: '1',
+                            ),
+                          );
+                        },
+                      ),
+                      _ExpandableFormTile(
+                        message: 'HAVE A PROMOTION CODE',
+                        iconLabel: 'Add Code',
+                        items: <Widget>[
+                          SizedBox(
+                            width: 250,
+                            child: TextField(
+                              controller: applyPromoController,
+                              decoration: InputDecoration(
+                                labelText: 'Enter Promo Code',
+                                alignLabelWithHint: true,
+                              ),
                             ),
                           ),
+                          SizedBox(height: 20),
+                          ButtonTheme(
+                            minWidth: 250,
+                            height: 44,
+                            child: FlatButton(
+                              color: Colors.black,
+                              textColor: Colors.white,
+                              //padding: EdgeInsets.all(15.0),
+                              onPressed: () {
+                                cdp
+                                    .applyPromo(applyPromoController.text)
+                                    .then((data) {
+                                  if (data.code != null) {
+                                    applyPromoController.clear();
+                                  }
+                                });
+                              },
+                              child: Consumer<CartDataProvider>(
+                                builder: (ctx, data, _) {
+                                  if (!data.prmoApplied) {
+                                    return SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        backgroundColor: Colors.transparent,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Color(0XFFc41130)),
+                                      ),
+                                    );
+                                  } else {
+                                    return Text(
+                                      'APPLY',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      _CartCalcRow(
+                        data: provider.cartData.subTotal.formattedValue,
+                        label: 'SUBTOTAL',
+                      ),
+                      SizedBox(height: 20),
+                      _CartCalcRow(
+                        data: provider.cartData.totalDiscounts.formattedValue,
+                        label: 'DISCOUNT',
+                      ),
+                      SizedBox(height: 20),
+                      _CartCalcRow(
+                        data: provider.cartData.deliveryCost != null
+                            ? provider.cartData.deliveryCost.formattedValue
+                            : '\$0.00',
+                        label: 'SHIPPING',
+                      ),
+                      SizedBox(height: 20),
+                      _CartCalcRow(
+                        data: provider.cartData.totalTax.formattedValue,
+                        label: 'ESTIMATED TAX',
+                      ),
+                      SizedBox(height: 10),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(height: 15),
+                      _CartCalcRow(
+                        data: provider.cartData.totalPrice.formattedValue,
+                        label: 'TOTAL',
+                        labelStyle: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            }
-          }),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
@@ -194,8 +196,8 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
       child: Column(
         children: <Widget>[
           Divider(
-            //height: 25,
-            thickness: 2,
+            color: Colors.grey,
+            thickness: 1,
           ),
           GestureDetector(
             onTap: () {
@@ -224,7 +226,7 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
             ),
           ),
           AnimatedContainer(
-            height: !expanded ? 0.00 : 150.0,
+            height: !expanded ? 0.00 : 150,
             duration: Duration(milliseconds: 300),
             child: SingleChildScrollView(
               padding: EdgeInsets.all(0),
@@ -238,8 +240,8 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
             ),
           ),
           Divider(
-            //height: 25,
-            thickness: 2,
+            color: Colors.grey,
+            thickness: 1,
           ),
         ],
       ),
@@ -252,11 +254,15 @@ class _CartCalcRow extends StatelessWidget {
     Key key,
     @required this.label,
     @required this.data,
+    this.labelStyle,
+    this.dataStyle,
     this.dataDecoration,
   }) : super(key: key);
 
   final String label;
   final String data;
+  final TextStyle labelStyle;
+  final TextStyle dataStyle;
   final TextDecoration dataDecoration;
 
   @override
@@ -264,22 +270,28 @@ class _CartCalcRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text('$label',
-            textAlign: TextAlign.right,
-            style: TextStyle(
-              fontFamily: 'Interstate',
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            )),
+        Text(
+          '$label',
+          textAlign: TextAlign.right,
+          style: labelStyle == null
+              ? TextStyle(
+                  fontFamily: 'Interstate',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                )
+              : labelStyle,
+        ),
         Text(
           '$data',
           textAlign: TextAlign.right,
-          style: TextStyle(
-            decoration: dataDecoration != null ? dataDecoration : null,
-            fontFamily: 'Interstate',
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-          ),
+          style: dataStyle == null
+              ? TextStyle(
+                  decoration: dataDecoration != null ? dataDecoration : null,
+                  fontFamily: 'Interstate',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                )
+              : dataStyle,
         )
       ],
     );
