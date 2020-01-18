@@ -204,7 +204,7 @@ class ProductDetails extends StatelessWidget {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontFamily: 'Quicksand',
-                      fontSize: 20,
+                      fontSize: 16,
                       color: Colors.grey[800],
                       fontWeight: FontWeight.w600,
                     ),
@@ -214,7 +214,7 @@ class ProductDetails extends StatelessWidget {
                     TextUtils.removeAllHtmlTags(product.description),
                     style: TextStyle(
                       //fontFamily: 'Quicksand',
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -240,7 +240,7 @@ class ProductDetails extends StatelessWidget {
                             label: Text(
                               '${buyOptions.sizeLabel}',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -262,7 +262,7 @@ class ProductDetails extends StatelessWidget {
                                   ? 'Qty ${buyOptions.qty}'
                                   : 'Qty',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),

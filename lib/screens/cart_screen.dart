@@ -40,7 +40,7 @@ class Cart extends StatelessWidget {
                         separatorBuilder: (ctx, si) => Divider(
                           color: Colors.grey,
                           thickness: 1,
-                          indent: 120,
+                          indent: 140,
                         ),
                         padding: EdgeInsets.all(0),
                         itemCount: provider.cartData.entries.length,
@@ -59,8 +59,7 @@ class Cart extends StatelessWidget {
                             productName: '${cartEntry.product.name}',
                             price:
                                 '${cartEntry.product.price.formattedValue}',
-                            displayableSize: provider
-                                .formattedSize(cartEntry.product.code),
+                            displayableSize: cartEntry.product.baseOptions[0].selected.displaySizeDescription,
                             qty: '1',
                           );
                         },

@@ -50,12 +50,12 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.redAccent,
             textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
-                fontFamily: 'Quicksand',
+                fontFamily: 'Interstate',
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
               display1: TextStyle(
-                fontFamily: 'Quicksand',
+                fontFamily: 'Interstate',
                 fontSize: 12,
                 color: Colors.grey[900],
               ),
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
             appBarTheme: AppBarTheme(
               textTheme: ThemeData.light().textTheme.copyWith(
                 title: TextStyle(
-                  fontFamily: 'OpenSans',
+                  fontFamily: 'Interstate',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

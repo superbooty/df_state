@@ -42,12 +42,12 @@ class _SizeSelectorState extends State<SizeSelector> {
                 indicatorWeight: 3.0,
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelStyle: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
                 ),
                 tabs: [
-                  Tab(text: "Select Size"),
-                  Tab(text: "Select Qty"),
+                  Tab(text: 'SELECT SIZE'),
+                  Tab(text: 'SELECT QTY'),
                 ],
               ),
             ),
@@ -57,7 +57,7 @@ class _SizeSelectorState extends State<SizeSelector> {
                 child: TabBarView(
                   children: [
                     Container(
-                      height: 600,
+                      //height: 600,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,7 +71,7 @@ class _SizeSelectorState extends State<SizeSelector> {
                                   length: widget.length,
                                 ),
                           //
-                          SizedBox(height: 21),
+                          //SizedBox(height: 21),
                           FlatButton(
                             color: Colors.black,
                             // shape: Border.all(
@@ -95,7 +95,7 @@ class _SizeSelectorState extends State<SizeSelector> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Quicksand',
+                                fontFamily: 'Interstate',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -141,19 +141,18 @@ class MultiFactorSize extends StatelessWidget {
     
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.end,
+      //mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Container(
           // margin: const EdgeInsets.all(5),
           // color: Colors.grey,
-          margin: EdgeInsets.only(bottom: 10),
+          //margin: EdgeInsets.only(bottom: 10),
           child: Text(
             'WAIST',
             style: TextStyle(
-              fontFamily: 'Quicksand',
               color: Colors.black54,
               fontWeight: FontWeight.w600,
-              fontSize: 14,
+              fontSize: 12,
               shadows: [
                 Shadow(
                   blurRadius: 10.0,
@@ -190,17 +189,17 @@ class MultiFactorSize extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 50),
         Container(
           //color: Colors.grey,
-          margin: EdgeInsets.only(bottom: 10),
+          //margin: EdgeInsets.only(bottom: 10),
           child: Text(
             'LENGTH',
             style: TextStyle(
               fontFamily: 'Interstate',
               color: Colors.black54,
               fontWeight: FontWeight.w600,
-              fontSize: 14,
+              fontSize: 12,
               shadows: [
                 Shadow(
                   blurRadius: 10.0,
@@ -212,7 +211,7 @@ class MultiFactorSize extends StatelessWidget {
           ),
         ),
         Container(
-          height: 50,
+          height: 55,
           child: Consumer<BuyingOptions>(
             builder: (ctx, buyOptions, _) => ListView.builder(
               itemCount: length.length,
@@ -250,23 +249,24 @@ class SingleFactorSize extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BuyingOptions bo = Provider.of<BuyingOptions>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Container(
           //color: Colors.grey,
-          margin: EdgeInsets.only(bottom: 10),
+          //margin: EdgeInsets.only(bottom: 10),
           child: Text(
             'SIZE',
             style: TextStyle(
               fontFamily: 'Interstate',
               color: Colors.black54,
               fontWeight: FontWeight.w600,
-              fontSize: 16,
+              fontSize: 12,
               shadows: [
                 Shadow(
-                  blurRadius: 7.0,
+                  blurRadius: 10.0,
                   color: Colors.grey[400],
                   offset: Offset(5.0, 5.0),
                 ),
@@ -275,11 +275,14 @@ class SingleFactorSize extends StatelessWidget {
           ),
         ),
         Container(
-          height: 50,
+          height: 55,
           child: Consumer<BuyingOptions>(
             builder: (context, buyOptions, _) => ListView.builder(
               itemCount: sizes.length,
               scrollDirection: Axis.horizontal,
+              controller: ScrollController(
+                initialScrollOffset: (bo.selectedLengthIndex * 40).toDouble(),
+              ),
               itemBuilder: (ctx, i) {
                 var label = sizes[i];
                 return LabeledRadio(
