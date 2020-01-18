@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './widgets/labeled_radio.dart';
 import '../../providers/buying_options.dart';
+import '../../models/product/product.dart';
 
 class SizeSelector extends StatefulWidget {
   final List<String> waist;
   final List<String> length;
   final List<String> sizes;
+  final List<Swatch> swatches;
   final int tabIndex;
 
-  SizeSelector.forWasitLength(this.tabIndex,
+  SizeSelector.forWasitLength(this.tabIndex, this.swatches,
       {@required this.waist, @required this.length, this.sizes = const []});
 
-  SizeSelector.forSizes(this.tabIndex,
+  SizeSelector.forSizes(this.tabIndex, this.swatches,
       {@required this.sizes, this.waist = const [], this.length = const []});
 
   @override
@@ -61,10 +63,10 @@ class _SizeSelectorState extends State<SizeSelector> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           widget.sizes.length > 0
-                              ? SingleFactorSize(
+                              ? SingleFactorSize(widget.swatches,
                                   sizes: widget.sizes,
                                 )
-                              : MultiFactorSize(
+                              : MultiFactorSize(widget.swatches,
                                   waist: widget.waist,
                                   length: widget.length,
                                 ),
@@ -121,11 +123,22 @@ class _SizeSelectorState extends State<SizeSelector> {
 class MultiFactorSize extends StatelessWidget {
   final List<String> waist;
   final List<String> length;
+  final List<Swatch> swatches;
 
-  MultiFactorSize({this.waist, this.length});
+  MultiFactorSize(this.swatches, {this.waist, this.length});
+
+  checkCanEnableWaist(int i) {
+    return true;
+  }
+
+  checkCanEnableLength(int i) {
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
+    BuyingOptions bo = Provider.of<BuyingOptions>(context);
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.end,
@@ -155,6 +168,9 @@ class MultiFactorSize extends StatelessWidget {
           height: 50,
           child: Consumer<BuyingOptions>(
             builder: (ctx, buyOptions, _) => ListView.builder(
+              controller: ScrollController(
+                initialScrollOffset: (bo.selectedWaistIndex * 40).toDouble(),
+              ),
               itemCount: waist.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (ctx, i) {
@@ -162,7 +178,7 @@ class MultiFactorSize extends StatelessWidget {
                 return LabeledRadio(
                   label: label,
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  enabled: i > 3 ? false : true,
+                  enabled: checkCanEnableWaist(i),
                   value: i,
                   selected: i == buyOptions.selectedWaistIndex,
                   sizeValue: waist[i],
@@ -200,13 +216,16 @@ class MultiFactorSize extends StatelessWidget {
           child: Consumer<BuyingOptions>(
             builder: (ctx, buyOptions, _) => ListView.builder(
               itemCount: length.length,
+              controller: ScrollController(
+                initialScrollOffset: (bo.selectedLengthIndex * 40).toDouble(),
+              ),
               scrollDirection: Axis.horizontal,
               itemBuilder: (ctx, i) {
                 var label = length[i];
                 return LabeledRadio(
                   label: label,
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  enabled: i > 3 ? false : true,
+                  enabled: checkCanEnableLength(i),
                   value: i,
                   selected: i == buyOptions.selectedLengthIndex,
                   sizeValue: length[i],
@@ -225,8 +244,9 @@ class MultiFactorSize extends StatelessWidget {
 
 class SingleFactorSize extends StatelessWidget {
   final List<String> sizes;
+  final List<Swatch> swatches;
 
-  SingleFactorSize({this.sizes});
+  SingleFactorSize(this.swatches, {this.sizes});
 
   @override
   Widget build(BuildContext context) {

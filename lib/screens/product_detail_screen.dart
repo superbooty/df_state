@@ -45,7 +45,7 @@ class ProductDetailScreen extends StatelessWidget {
           if (data.product == null) {
             return Center(child: CircularProgressIndicator());
           } else {
-            return ProductDetails(data.product);
+            return ProductDetails(data.product, data.swatches);
           }
         },
       ),
@@ -53,8 +53,8 @@ class ProductDetailScreen extends StatelessWidget {
   }
 }
 
-class SelectableButton extends FlatButton with MaterialButtonWithIconMixin {
-  SelectableButton({
+class OptionsButton extends FlatButton with MaterialButtonWithIconMixin {
+  OptionsButton({
     Key key,
     VoidCallback onPressed,
     VoidCallback onLongPress,
@@ -115,19 +115,21 @@ class SelectableButton extends FlatButton with MaterialButtonWithIconMixin {
 
 class ProductDetails extends StatelessWidget {
   final Product product;
+  final SwatchData swatches;
 
   const ProductDetails(
-    this.product, {
+    this.product, 
+    this.swatches, {
     Key key,
   }) : super(key: key);
 
-  selectSizeAndQty(BuildContext ctx, Product product, int tabIndex) {
+  selectSizeAndQty(BuildContext ctx, int tabIndex) {
     SizeSelector selector;
     if (product.variantSize != null) {
-      selector = SizeSelector.forSizes(tabIndex, sizes: product.variantSize);
+      selector = SizeSelector.forSizes(tabIndex, swatches.swatches, sizes: product.variantSize);
     } else {
-      selector = SizeSelector.forWasitLength(tabIndex,
-          waist: product.variantWaist, length: product.variantLength);
+      selector = SizeSelector.forWasitLength(tabIndex, swatches.swatches,
+          waist: product.variantWaist, length: product.variantLength,);
     }
     showModalBottomSheet(
       elevation: 3,
@@ -227,12 +229,12 @@ class ProductDetails extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          SelectableButton(
+                          OptionsButton(
                             // color: Colors.black,
                             textColor: Colors.grey[600],
                             padding: EdgeInsets.only(left: 0),
                             onPressed: () {
-                              selectSizeAndQty(context, product, 0);
+                              selectSizeAndQty(context, 0);
                             },
                             textTheme: ButtonTextTheme.accent,
                             label: Text(
@@ -246,11 +248,11 @@ class ProductDetails extends StatelessWidget {
                               Icons.keyboard_arrow_down,
                             ),
                           ),
-                          SelectableButton(
+                          OptionsButton(
                             textColor: Colors.grey[600],
                             textTheme: ButtonTextTheme.accent,
                             onPressed: () {
-                              selectSizeAndQty(context, product, 1);
+                              selectSizeAndQty(context, 1);
                             },
                             icon: Icon(
                               Icons.keyboard_arrow_down,

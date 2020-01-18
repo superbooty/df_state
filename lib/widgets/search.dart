@@ -45,8 +45,8 @@ class _SearchState extends State<Search> {
                     query search(\$query: String!) {
                       search(
                         query: \$query
-                        country: "US"
-                        locale: "en_US"
+                        country: "GR"
+                        locale: "en"
                         sort: "relevance"
                         currentPage: 0
                         pageSize: 20

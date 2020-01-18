@@ -2,10 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-Product productFromJson(String str) => Product.fromJson(json.decode(str));
-
-String productToJson(Product data) => json.encode(data.toJson());
-
 class Product with ChangeNotifier {
   String altText;
   dynamic averageOverallRatings;
@@ -81,7 +77,7 @@ class Product with ChangeNotifier {
     this.variantWaist,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory Product.fromMap(Map<String, dynamic> json) => Product(
         altText: json["altText"] == null ? null : json["altText"],
         averageOverallRatings: json["averageOverallRatings"] == null
             ? null
@@ -607,4 +603,104 @@ class EnumValues<T> {
     }
     return reverseMap;
   }
+}
+
+class SwatchData {
+    final List<Swatch> swatches;
+    final List<dynamic> errors;
+
+    SwatchData({
+        this.swatches,
+        this.errors,
+    });
+
+    factory SwatchData.fromJson(String str) => SwatchData.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory SwatchData.fromMap(Map<String, dynamic> json) => SwatchData(
+        swatches: json["swatches"] == null ? null : List<Swatch>.from(json["swatches"].map((x) => Swatch.fromMap(x))),
+        errors: json["errors"] == null ? null : List<dynamic>.from(json["errors"].map((x) => x)),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "swatches": swatches == null ? null : List<dynamic>.from(swatches.map((x) => x.toMap())),
+        "errors": errors == null ? null : List<dynamic>.from(errors.map((x) => x)),
+    };
+}
+
+class Swatch {
+    final bool active;
+    final bool available;
+    final String code;
+    final String colorName;
+    final String imageUrl;
+    final String url;
+    final List<VariantsAvailability> variantsAvailability;
+
+    Swatch({
+        this.active,
+        this.available,
+        this.code,
+        this.colorName,
+        this.imageUrl,
+        this.url,
+        this.variantsAvailability,
+    });
+
+    factory Swatch.fromJson(String str) => Swatch.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory Swatch.fromMap(Map<String, dynamic> json) => Swatch(
+        active: json["active"] == null ? null : json["active"],
+        available: json["available"] == null ? null : json["available"],
+        code: json["code"] == null ? null : json["code"],
+        colorName: json["colorName"] == null ? null : json["colorName"],
+        imageUrl: json["imageUrl"] == null ? null : json["imageUrl"],
+        url: json["url"] == null ? null : json["url"],
+        variantsAvailability: json["variantsAvailability"] == null ? null : List<VariantsAvailability>.from(json["variantsAvailability"].map((x) => VariantsAvailability.fromMap(x))),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "active": active == null ? null : active,
+        "available": available == null ? null : available,
+        "code": code == null ? null : code,
+        "colorName": colorName == null ? null : colorName,
+        "imageUrl": imageUrl == null ? null : imageUrl,
+        "url": url == null ? null : url,
+        "variantsAvailability": variantsAvailability == null ? null : List<dynamic>.from(variantsAvailability.map((x) => x.toMap())),
+    };
+}
+
+class VariantsAvailability {
+    final bool available;
+    final String length;
+    final String size;
+    final String waist;
+
+    VariantsAvailability({
+        this.available,
+        this.length,
+        this.size,
+        this.waist,
+    });
+
+    factory VariantsAvailability.fromJson(String str) => VariantsAvailability.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory VariantsAvailability.fromMap(Map<String, dynamic> json) => VariantsAvailability(
+        available: json["available"] == null ? null : json["available"],
+        length: json["length"] == null ? null : json["length"],
+        size: json["size"] == null ? null : json["size"],
+        waist: json["waist"] == null ? null : json["waist"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "available": available == null ? null : available,
+        "length": length == null ? null : length,
+        "size": size == null ? null : size,
+        "waist": waist == null ? null : waist,
+    };
 }

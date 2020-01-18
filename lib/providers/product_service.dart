@@ -4,9 +4,36 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import '../models/product/product.dart';
 
 class ProductService with ChangeNotifier {
+  final swatchesQuery = '''
+  query swatches (\$code: ID!)  {
+    swatches(code: \$code, locale:"en", country:"GR") {
+        swatches {
+            active
+            available
+            code
+            colorName
+            imageUrl
+            url
+            variantsAvailability {
+                available
+                length
+                size
+                waist
+            }
+        }
+        errors {
+    name
+    component
+    message
+  }
+  }
+  }
+  ''';
+
+
   final productQuery = '''
    query product(\$code: ID!) {
-    product(code: \$code, locale: "en_US", country: "US" ) {
+    product(code: \$code, locale: "en", country: "GR" ) {
         altText
         averageOverallRatings
         baseProduct
@@ -171,9 +198,14 @@ class ProductService with ChangeNotifier {
 }
   ''';
   Product _product;
+  SwatchData _swatches;
 
   Product get product {
     return _product;
+  }
+
+  SwatchData get swatches {
+    return _swatches;
   }
   
   // queryText.setText(searchTermController.text);
@@ -187,17 +219,43 @@ class ProductService with ChangeNotifier {
     link: httpLink,
   );
 
-  Future<void> fetchProduct(productCode) async {
-    _product = null;
-    notifyListeners();
+  Future<SwatchData> _fetchSwatches(productCode) async {
+    var results = await client.query(QueryOptions(
+      documentNode: gql(swatchesQuery),
+      variables: {
+        'code': productCode,
+      },
+    ));
+    SwatchData swatches = SwatchData.fromMap(results.data['swatches']);
+    return swatches;
+  }
+
+  Future<Product> _fetchProductData(productCode) async {
     var results = await client.query(QueryOptions(
       documentNode: gql(productQuery),
       variables: {
         'code': productCode,
       },
     ));
-    _product = Product.fromJson(results.data['product']);
-    print('Product :: $_product');
+    Product product = Product.fromMap(results.data['product']);
+    return product;
+  }
+
+  Future<void> fetchProduct(productCode) async {
+    _product = null;
+    notifyListeners();
+    await Future.wait([_fetchProductData(productCode), _fetchSwatches(productCode)]).then((List<dynamic> results) {
+      results.forEach((result) {
+        if(result is Product) {
+          _product = result;
+        }
+        if(result is SwatchData) {
+          _swatches = result;
+        }
+        print('Product :: $_product');
+        print('Product :: $_swatches');
+      });
+    });
     notifyListeners();
   }
 }
