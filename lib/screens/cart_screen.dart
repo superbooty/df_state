@@ -423,7 +423,7 @@ class CartListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: SizedBox(
-        height: 110,
+        height: 115,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
