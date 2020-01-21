@@ -10,7 +10,12 @@ class Cart extends StatelessWidget {
   static const routeName = '/cart';
 
   final String appBarText = 'Cart';
-  final applyPromoController = TextEditingController();
+
+  Cart({
+    Key key,
+  }) : super(key: key) {}
+
+  final TextEditingController applyPromoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +36,16 @@ class Cart extends StatelessWidget {
           } else {
             return Consumer<CartDataProvider>(
               builder: (ctx, provider, child) => SingleChildScrollView(
-                padding: EdgeInsets.only(left: 10, right: 10, bottom: 50),
+                padding: EdgeInsets.only(left: 20, right: 20, bottom: 50),
                 child: Container(
                   child: Column(
                     //shrinkWrap: true,
                     children: <Widget>[
                       ListView.separated(
                         separatorBuilder: (ctx, si) => Divider(
-                          color: Colors.grey,
+                          color: Colors.grey[400],
                           thickness: 1,
-                          indent: 120,
+                          indent: 140,
                         ),
                         padding: EdgeInsets.all(0),
                         itemCount: provider.cartData.entries.length,
@@ -57,10 +62,9 @@ class Cart extends StatelessWidget {
                             ),
                             colorName: '${cartEntry.product.colorName}',
                             productName: '${cartEntry.product.name}',
-                            price:
-                                '${cartEntry.product.price.formattedValue}',
-                            displayableSize: provider
-                                .formattedSize(cartEntry.product.code),
+                            price: '${cartEntry.product.price.formattedValue}',
+                            displayableSize: cartEntry.product.baseOptions[0]
+                                .selected.displaySizeDescription,
                             qty: '1',
                           );
                         },
@@ -72,60 +76,32 @@ class Cart extends StatelessWidget {
                           SizedBox(
                             width: 250,
                             child: TextField(
-                              controller: applyPromoController,
+                              // controller: applyPromoController,
+                              onSubmitted: (value) {
+                                cdp.setPromoText(value);
+                              },
                               decoration: InputDecoration(
-                                labelText: 'Enter Promo Code',
-                                alignLabelWithHint: true,
-                                labelStyle: TextStyle(
-                                 fontSize: 12, 
-                                )
+                                  labelText: 'Enter Promo Code',
+                                  alignLabelWithHint: true,
+                                  labelStyle: TextStyle(
+                                    fontSize: 12,
+                                  )),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              provider.promoError ? 'Invalid Promo Code' : '',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Color(0XFFc41130),
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
-                          ButtonTheme(
-                            minWidth: 250,
-                            height: 44,
-                            child: FlatButton(
-                              color: Colors.black,
-                              textColor: Colors.white,
-                              //padding: EdgeInsets.all(15.0),
-                              onPressed: () {
-                                cdp
-                                    .applyPromo(applyPromoController.text)
-                                    .then((data) {
-                                  if (data.code != null) {
-                                    applyPromoController.clear();
-                                  }
-                                });
-                              },
-                              child: Consumer<CartDataProvider>(
-                                builder: (ctx, data, _) {
-                                  if (!data.prmoApplied) {
-                                    return SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(
-                                        backgroundColor: Colors.transparent,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Color(0XFFc41130)),
-                                      ),
-                                    );
-                                  } else {
-                                    return Text(
-                                      'APPLY',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                            ),
-                          )
+                          _ActionButton(
+                            action: () => provider.applyPromo(cdp.promoText),
+                            activate: provider.promoText.isNotEmpty,
+                          ),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -153,7 +129,7 @@ class Cart extends StatelessWidget {
                       SizedBox(height: 10),
                       Divider(
                         thickness: 1,
-                        color: Colors.grey,
+                        color: Colors.grey[400],
                       ),
                       SizedBox(height: 15),
                       _CartCalcRow(
@@ -176,6 +152,69 @@ class Cart extends StatelessWidget {
   }
 }
 
+class _ActionButton extends StatefulWidget {
+  _ActionButton({
+    Key key,
+    this.action,
+    this.activate,
+  }) : super(key: key);
+
+  final Function action;
+  final bool activate;
+
+  @override
+  __ActionButtonState createState() => __ActionButtonState();
+}
+
+class __ActionButtonState extends State<_ActionButton> {
+  bool processing = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ButtonTheme(
+          minWidth: 250,
+          height: 44,
+          child: FlatButton(
+            color: widget.activate ? Colors.black : Colors.grey,
+            textColor: Colors.white,
+            //padding: EdgeInsets.all(15.0),
+            onPressed: () async {
+              if(widget.activate) {
+                setState(() {
+                  processing = true;
+                });
+                await widget.action();
+              }
+              setState(() {
+                processing = false;
+              });
+            },
+            child: processing
+                ? SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.transparent,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                : Text(
+                    'APPLY',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _ExpandableFormTile extends StatefulWidget {
   _ExpandableFormTile({
     Key key,
@@ -187,6 +226,10 @@ class _ExpandableFormTile extends StatefulWidget {
   final String message;
   final String iconLabel;
   final List<Widget> items;
+
+  final TextStyle _topStyle = TextStyle(
+    color: Colors.grey[700],
+  );
 
   @override
   __ExpandableFormTileState createState() => __ExpandableFormTileState();
@@ -202,7 +245,7 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
       child: Column(
         children: <Widget>[
           Divider(
-            color: Colors.grey,
+            color: Colors.grey[300],
             thickness: 1,
           ),
           GestureDetector(
@@ -210,19 +253,25 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
               setState(() {
                 expanded = !expanded;
               });
-              print("EXPANDED ::  $expanded");
+              print('EXPANDED ::  $expanded');
             },
             child: Container(
-              padding: EdgeInsets.only(bottom: 10, top: 10),
+              padding: EdgeInsets.only(bottom: 15, top: 15),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Expanded(
                     flex: 5,
-                    child: Text(widget.message),
+                    child: Text(
+                      widget.message,
+                      style: widget._topStyle,
+                    ),
                   ),
-                  Text(widget.iconLabel),
-                  const SizedBox(width: 5),
+                  Text(
+                    widget.iconLabel,
+                    style: widget._topStyle,
+                  ),
+                  const SizedBox(width: 10),
                   Icon(
                     !expanded ? Icons.add : Icons.remove,
                     size: 16,
@@ -246,7 +295,7 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
             ),
           ),
           Divider(
-            color: Colors.grey,
+            color: Colors.grey[300],
             thickness: 1,
           ),
         ],
@@ -366,7 +415,9 @@ class _CartItemDescription extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 5,),
+              SizedBox(
+                height: 5,
+              ),
               Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[

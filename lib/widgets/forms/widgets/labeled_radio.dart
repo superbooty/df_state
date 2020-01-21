@@ -36,6 +36,7 @@ class LabeledRadio extends StatelessWidget {
             ),
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               GestureDetector(
                 onTap: () {
@@ -44,7 +45,8 @@ class LabeledRadio extends StatelessWidget {
                   }
                 },
                 child: SizedBox(
-                  width: 40,
+                  width: 30,
+                  height: 22,
                   child: Text(label,
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -52,7 +54,7 @@ class LabeledRadio extends StatelessWidget {
                       letterSpacing: 1.5,
                       decoration: !enabled ? TextDecoration.lineThrough : TextDecoration.none,
                       fontFamily: 'Interstate',
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w700,
                       color: !enabled ? Colors.grey[400] : Colors.grey[700],
                     )

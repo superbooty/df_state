@@ -538,9 +538,19 @@ const contentJson = '''{
 class CartDataProvider with ChangeNotifier {
   CartData cartData;
   bool _promoApplied = true;
+  bool _promoError = false;
+  String _promoText = '';
 
   bool get prmoApplied {
     return _promoApplied;
+  }
+
+  bool get promoError {
+    return _promoError;
+  }
+
+  String get promoText {
+    return _promoText;
   }
 
   String formattedSize(String code) {
@@ -566,18 +576,25 @@ class CartDataProvider with ChangeNotifier {
 
     await Future<void>.value(null);
     print(cartData);
+    _promoError = false;
     notifyListeners();
   }
 
   Future<CartData> applyPromo(String text) async {
-    print('Applying *** \$text *** promotion');
+    print('Applying *** $text *** promotion');
 
     _promoApplied = false;
     notifyListeners();
     await Future<CartData>.delayed(Duration(seconds: 3));
     _promoApplied = true;
+    _promoError = true;
     print(cartData);
     notifyListeners();
     return cartData;
+  }
+
+  void setPromoText(String value) {
+    _promoText = value;
+    notifyListeners();
   }
 }
