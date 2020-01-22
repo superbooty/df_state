@@ -13,7 +13,7 @@ class Cart extends StatelessWidget {
 
   Cart({
     Key key,
-  }) : super(key: key) {}
+  }) : super(key: key);
 
   final TextEditingController applyPromoController = TextEditingController();
 
@@ -22,6 +22,7 @@ class Cart extends StatelessWidget {
     CartDataProvider cdp =
         Provider.of<CartDataProvider>(context, listen: false);
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text(appBarText),
         actions: <Widget>[
@@ -36,8 +37,10 @@ class Cart extends StatelessWidget {
           } else {
             return Consumer<CartDataProvider>(
               builder: (ctx, provider, child) => SingleChildScrollView(
-                padding: EdgeInsets.only(left: 20, right: 20, bottom: 50),
+                //padding: EdgeInsets.only(left: 20, right: 20, bottom: 50),
                 child: Container(
+                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 50),
+                  color: Colors.white,
                   child: Column(
                     //shrinkWrap: true,
                     children: <Widget>[
@@ -100,7 +103,7 @@ class Cart extends StatelessWidget {
                           ),
                           _ActionButton(
                             action: () => provider.applyPromo(cdp.promoText),
-                            activate: provider.promoText.isNotEmpty,
+                            active: provider.promoText.isNotEmpty,
                           ),
                         ],
                       ),
@@ -156,11 +159,11 @@ class _ActionButton extends StatefulWidget {
   _ActionButton({
     Key key,
     this.action,
-    this.activate,
+    this.active= false,
   }) : super(key: key);
 
   final Function action;
-  final bool activate;
+  final bool active;
 
   @override
   __ActionButtonState createState() => __ActionButtonState();
@@ -177,11 +180,11 @@ class __ActionButtonState extends State<_ActionButton> {
           minWidth: 250,
           height: 44,
           child: FlatButton(
-            color: widget.activate ? Colors.black : Colors.grey,
+            color: widget.active ? Colors.black : Colors.grey,
             textColor: Colors.white,
             //padding: EdgeInsets.all(15.0),
             onPressed: () async {
-              if(widget.activate) {
+              if(widget.active) {
                 setState(() {
                   processing = true;
                 });
@@ -227,8 +230,13 @@ class _ExpandableFormTile extends StatefulWidget {
   final String iconLabel;
   final List<Widget> items;
 
-  final TextStyle _topStyle = TextStyle(
-    color: Colors.grey[700],
+  final TextStyle _labelStyle = TextStyle(
+    color: Colors.black87,
+  );
+
+  final TextStyle _titleStyle = TextStyle(
+    color: Colors.black87,
+    fontWeight: FontWeight.w500,
   );
 
   @override
@@ -264,12 +272,12 @@ class __ExpandableFormTileState extends State<_ExpandableFormTile> {
                     flex: 5,
                     child: Text(
                       widget.message,
-                      style: widget._topStyle,
+                      style: widget._titleStyle,
                     ),
                   ),
                   Text(
                     widget.iconLabel,
-                    style: widget._topStyle,
+                    style: widget._labelStyle,
                   ),
                   const SizedBox(width: 10),
                   Icon(
