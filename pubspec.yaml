@@ -85,7 +85,7 @@ flutter:
     - family: Interstate
       fonts:
         - asset: assets/fonts/Interstate-Light.woff
-        - asset: assets/fonts/Interstate-Bold.woff
+        - asset: assets/fonts/Interstate-Black.ttf
           weight: 700
   #   - family: Trajan Pro
   #     fonts:

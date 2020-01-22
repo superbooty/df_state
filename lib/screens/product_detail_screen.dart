@@ -236,12 +236,10 @@ class ProductDetails extends StatelessWidget {
                             onPressed: () {
                               selectSizeAndQty(context, 0);
                             },
-                            textTheme: ButtonTextTheme.accent,
                             label: Text(
                               '${buyOptions.sizeLabel}',
                               style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
                               ),
                             ),
                             icon: Icon(
@@ -250,7 +248,6 @@ class ProductDetails extends StatelessWidget {
                           ),
                           OptionsButton(
                             textColor: Colors.grey[600],
-                            textTheme: ButtonTextTheme.accent,
                             onPressed: () {
                               selectSizeAndQty(context, 1);
                             },
@@ -259,11 +256,10 @@ class ProductDetails extends StatelessWidget {
                             ),
                             label: Text(
                               buyOptions.qty > 0
-                                  ? 'Qty ${buyOptions.qty}'
-                                  : 'Qty',
+                                  ? 'QTY ${buyOptions.qty}'
+                                  : 'QTY',
                               style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
                               ),
                             ),
                           ),

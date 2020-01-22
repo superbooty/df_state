@@ -553,13 +553,6 @@ class CartDataProvider with ChangeNotifier {
     return _promoText;
   }
 
-  String formattedSize(String code) {
-    String size = code.substring(code.length - 4);
-    String length = size.substring(0, 2);
-    String waist = size.substring(2, 4);
-    return '\${waist}W X \${length}L';
-  }
-
   Future<void> fetchCart() async {
     // final contentURL =
     //     'https://www.levi.com/omni-cms-gw-exp-api/v1/levicom/online/homepage?country=US&language=en_US&type=homepage_v2&include[]=ref__marketing_layout_v1.ref__marketing_modules_v1';

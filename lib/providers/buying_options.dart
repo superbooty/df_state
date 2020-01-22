@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class BuyingOptions with ChangeNotifier{
 
-  String sizeLabel = 'Size';
+  String sizeLabel = 'SIZE';
   int qty = 1;
   int selectedSizeIndex = 0;
   int selectedWaistIndex = 0;
@@ -19,7 +19,7 @@ class BuyingOptions with ChangeNotifier{
 
   void setSizeLabel(label) {
     if (label == null) {
-      this.sizeLabel = 'Size';
+      this.sizeLabel = 'SIZE';
     } else {
       this.sizeLabel = label;
     }
