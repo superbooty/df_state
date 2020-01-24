@@ -118,7 +118,7 @@ class ProductDetails extends StatelessWidget {
   final SwatchData swatches;
 
   const ProductDetails(
-    this.product, 
+    this.product,
     this.swatches, {
     Key key,
   }) : super(key: key);
@@ -126,10 +126,15 @@ class ProductDetails extends StatelessWidget {
   selectSizeAndQty(BuildContext ctx, int tabIndex) {
     SizeSelector selector;
     if (product.variantSize != null) {
-      selector = SizeSelector.forSizes(tabIndex, swatches.swatches, sizes: product.variantSize);
+      selector = SizeSelector.forSizes(tabIndex, swatches.swatches,
+          sizes: product.variantSize);
     } else {
-      selector = SizeSelector.forWasitLength(tabIndex, swatches.swatches,
-          waist: product.variantWaist, length: product.variantLength,);
+      selector = SizeSelector.forWasitLength(
+        tabIndex,
+        swatches.swatches,
+        waist: product.variantWaist,
+        length: product.variantLength,
+      );
     }
     showModalBottomSheet(
       elevation: 3,
@@ -143,46 +148,43 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Provider.of<BuyingOptions>(context);
-    return Container(
-      padding: EdgeInsets.all(10),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            flex: 7,
-            child: CarouselSlider(
-              //height: mediaQuery.size.height * .5,
-              enlargeCenterPage: true,
-              viewportFraction: .9,
-              aspectRatio: 1.1,
-              items: product.mobileGallery.map(
-                (image) {
-                  return Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(left: 4, right: 4),
-                    child: GestureDetector(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          image.url,
-                          fit: BoxFit.cover,
-                        ),
+          CarouselSlider(
+            //height: mediaQuery.size.height * .5,
+            enlargeCenterPage: true,
+            viewportFraction: .9,
+            aspectRatio: .8,
+            items: product.mobileGallery.map(
+              (image) {
+                return Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.only(left: 4, right: 4),
+                  child: GestureDetector(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        image.url,
+                        fit: BoxFit.cover,
                       ),
-                      onTap: () {
-                        print('Tapped');
-                      },
                     ),
-                  );
-                },
-              ).toList(),
-            ),
+                    onTap: () {
+                      print('Tapped');
+                    },
+                  ),
+                );
+              },
+            ).toList(),
           ),
+          SizedBox(height: 10),
           Text(
             product.price.formattedValue,
             textAlign: TextAlign.start,
             style: TextStyle(
-              fontFamily: 'Quicksand',
               fontSize: 20,
               color: Color(0XFFc41130),
               fontWeight: FontWeight.w600,
@@ -191,87 +193,111 @@ class ProductDetails extends StatelessWidget {
           Divider(
             color: Colors.grey[600],
           ),
-          Expanded(
-            flex: 3,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: 70),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text(
-                    product.name,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'Quicksand',
-                      fontSize: 16,
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    TextUtils.removeAllHtmlTags(product.description),
-                    style: TextStyle(
-                      //fontFamily: 'Quicksand',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: Colors.grey[700],
-                    height: 5,
-                  ),
-                  Consumer<BuyingOptions>(
-                    builder: (context, buyOptions, _) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          OptionsButton(
-                            // color: Colors.black,
-                            textColor: Colors.grey[600],
-                            padding: EdgeInsets.only(left: 0),
-                            onPressed: () {
-                              selectSizeAndQty(context, 0);
-                            },
-                            label: Text(
-                              '${buyOptions.sizeLabel}',
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                            icon: Icon(
-                              Icons.keyboard_arrow_down,
-                            ),
-                          ),
-                          OptionsButton(
-                            textColor: Colors.grey[600],
-                            onPressed: () {
-                              selectSizeAndQty(context, 1);
-                            },
-                            icon: Icon(
-                              Icons.keyboard_arrow_down,
-                            ),
-                            label: Text(
-                              buyOptions.qty > 0
-                                  ? 'QTY ${buyOptions.qty}'
-                                  : 'QTY',
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
+          Text(
+            product.name,
+            textAlign: TextAlign.start,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[800],
+              fontWeight: FontWeight.w600,
             ),
           ),
+          SizedBox(height: 10),
+          Text(
+            TextUtils.removeAllHtmlTags(product.description),
+            style: TextStyle(
+              //fontFamily: 'Quicksand',
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(height: 20),
+          Text(
+            'Color: ${product.colorName}',
+            style: TextStyle(
+              //fontFamily: 'Quicksand',
+              fontSize: 14,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          SizedBox(height: 10),
+          Divider(
+            color: Colors.grey[700],
+            height: 5,
+          ),
+          Consumer<BuyingOptions>(
+            builder: (context, buyOptions, _) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  OptionsButton(
+                    // color: Colors.black,
+                    textColor: Colors.grey[600],
+                    padding: EdgeInsets.only(left: 0),
+                    onPressed: () {
+                      selectSizeAndQty(context, 0);
+                    },
+                    label: Text(
+                      '${buyOptions.sizeLabel}',
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                    ),
+                  ),
+                  OptionsButton(
+                    textColor: Colors.grey[600],
+                    onPressed: () {
+                      selectSizeAndQty(context, 1);
+                    },
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                    ),
+                    label: Text(
+                      buyOptions.qty > 0 ? 'QTY ${buyOptions.qty}' : 'QTY',
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+          ProductRating(rating: 3.0),
         ],
+      ),
+    );
+  }
+}
+
+class ProductRating extends StatelessWidget {
+  final double rating;
+
+  const ProductRating({
+    @required this.rating,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      //width: 200,
+      height: 40,
+      child: ListView.builder(
+        itemCount: 5,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, i) {
+          if (i + 1 <= rating) {
+            return Icon(Icons.star, color: Colors.amberAccent);
+          } else {
+            return Icon(Icons.star_border, color: Colors.amberAccent);
+          }
+        },
       ),
     );
   }
