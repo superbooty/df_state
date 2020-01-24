@@ -118,7 +118,7 @@ class ProductDetails extends StatelessWidget {
   final SwatchData swatches;
 
   const ProductDetails(
-    this.product, 
+    this.product,
     this.swatches, {
     Key key,
   }) : super(key: key);
@@ -126,10 +126,15 @@ class ProductDetails extends StatelessWidget {
   selectSizeAndQty(BuildContext ctx, int tabIndex) {
     SizeSelector selector;
     if (product.variantSize != null) {
-      selector = SizeSelector.forSizes(tabIndex, swatches.swatches, sizes: product.variantSize);
+      selector = SizeSelector.forSizes(tabIndex, swatches.swatches,
+          sizes: product.variantSize);
     } else {
-      selector = SizeSelector.forWasitLength(tabIndex, swatches.swatches,
-          waist: product.variantWaist, length: product.variantLength,);
+      selector = SizeSelector.forWasitLength(
+        tabIndex,
+        swatches.swatches,
+        waist: product.variantWaist,
+        length: product.variantLength,
+      );
     }
     showModalBottomSheet(
       elevation: 3,
@@ -252,9 +257,7 @@ class ProductDetails extends StatelessWidget {
                       Icons.keyboard_arrow_down,
                     ),
                     label: Text(
-                      buyOptions.qty > 0
-                          ? 'QTY ${buyOptions.qty}'
-                          : 'QTY',
+                      buyOptions.qty > 0 ? 'QTY ${buyOptions.qty}' : 'QTY',
                       style: TextStyle(
                         fontSize: 12,
                       ),
@@ -264,7 +267,37 @@ class ProductDetails extends StatelessWidget {
               );
             },
           ),
+          ProductRating(rating: 3.0),
         ],
+      ),
+    );
+  }
+}
+
+class ProductRating extends StatelessWidget {
+  final double rating;
+
+  const ProductRating({
+    @required this.rating,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      //width: 200,
+      height: 40,
+      child: ListView.builder(
+        itemCount: 5,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, i) {
+          if (i + 1 <= rating) {
+            return Icon(Icons.star, color: Colors.amberAccent);
+          } else {
+            return Icon(Icons.star_border, color: Colors.amberAccent);
+          }
+        },
       ),
     );
   }
