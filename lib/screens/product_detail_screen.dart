@@ -241,7 +241,7 @@ class ProductDetails extends StatelessWidget {
                     label: Text(
                       '${buyOptions.sizeLabel}',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                     icon: Icon(
@@ -259,7 +259,7 @@ class ProductDetails extends StatelessWidget {
                     label: Text(
                       buyOptions.qty > 0 ? 'QTY ${buyOptions.qty}' : 'QTY',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                   ),
@@ -267,7 +267,10 @@ class ProductDetails extends StatelessWidget {
               );
             },
           ),
-          ProductRating(rating: 3.0),
+          ProductRating(
+              rating: product.averageOverallRatings != null
+                  ? product.averageOverallRatings.toDouble()
+                  : 0.0),
         ],
       ),
     );
@@ -292,10 +295,12 @@ class ProductRating extends StatelessWidget {
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, i) {
-          if (i + 1 <= rating) {
-            return Icon(Icons.star, color: Colors.amberAccent);
+          if (i + 1 < rating) {
+            return Icon(Icons.star, color: const Color(0XFFc41130));
+          } else if (i < rating && i + 1 > rating) {
+            return Icon(Icons.star_half, color: const Color(0XFFc41130));
           } else {
-            return Icon(Icons.star_border, color: Colors.amberAccent);
+            return Icon(Icons.star_border, color: const Color(0XFFc41130));
           }
         },
       ),
