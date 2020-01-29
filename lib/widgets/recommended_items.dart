@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/product_detail_screen.dart';
 import '../providers/recommendations.dart';
 
 class RecommendedItems extends StatelessWidget {
@@ -32,6 +33,7 @@ class RecommendedItems extends StatelessWidget {
                 builder: (ctx, recommendations, child) => ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: recommendations.items.length,
+                  // this will create the scrollable horizontal list of recommended items
                   itemBuilder: (ctx, i) => Card(
                     child: Container(
                       width: 150,
@@ -39,9 +41,25 @@ class RecommendedItems extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Image.network(
-                            recommendations.items[i].images[0]['url'],
-                            height: 180,
+                          // Wrap the Image in a Gesture detector to make it clickable
+                          GestureDetector(
+                            child: Image.network(
+                              recommendations.items[i].images[0]['url'],
+                              height: 180,
+                            ),
+                            // add the tap event handler
+                            onTap: () {
+                              // route to product details page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      // pass the product to the detail screen when route triggers
+                                      ProductDetailScreen(
+                                          product: recommendations.items[i]),
+                                ),
+                              );
+                            },
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 5, right: 5),
@@ -55,7 +73,9 @@ class RecommendedItems extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Text(
                             '\$${recommendations.items[i].price['value'].toStringAsFixed(2)}',
                             textAlign: TextAlign.end,
