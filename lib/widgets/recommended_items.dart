@@ -47,7 +47,7 @@ class RecommendedItems extends StatelessWidget {
                               recommendations.items[i].images[0]['url'],
                               height: 180,
                             ),
-                            // add the tap event handler
+                            // add the tap event handler 
                             onTap: () {
                               // route to product details page
                               Navigator.push(
@@ -56,6 +56,7 @@ class RecommendedItems extends StatelessWidget {
                                   builder: (context) =>
                                       // pass the product to the detail screen when route triggers
                                       ProductDetailScreen(
+                                          key: null,
                                           product: recommendations.items[i]),
                                 ),
                               );

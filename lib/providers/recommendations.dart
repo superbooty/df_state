@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart' show rootBundle;
 
 import '../providers/product.dart';
 
@@ -13,18 +14,26 @@ class Recommendations with ChangeNotifier {
     return [..._items];
   }
   
+  Future<Map<String, dynamic>> parseJsonFromAssets(String assetsPath) async {
+    print('--- Parse json from: $assetsPath');
+    return rootBundle.loadString(assetsPath)
+        .then((jsonStr) => jsonDecode(jsonStr));
+  }
+
   Future<void> getRecommendationProducts() async {
     // this URL is a production URL do not use unless you're sure of what you're doing
-    final recommendationsURL = 'https://api.levi-site.com/homereco/homerecommendations';
     final List<Product> recommended = [];
+    /*
+    final recommendationsURL = 'https://api.levi-site.com/homereco/homerecommendations';
     final data = await http.post(recommendationsURL, body: {
       'anonId': '',
       'location': 'California',
       'device': 'Desktop',
       'CSRFToken':''
     });
-    final respBody =
-              json.decode(data.body) as Map<String, dynamic>;
+    final respBody = json.decode(data.body) as Map<String, dynamic>;
+    */
+    final respBody = await parseJsonFromAssets('assets/recommendations-list.json');
     Map<String, dynamic> productsWrapper =
           respBody["final_recos"]["cdhrecommendations"][0];
     List<dynamic> products = productsWrapper["recommendedProducts"];
