@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../providers/product_service.dart';
 import '../screens/product_detail_screen.dart';
 import '../providers/recommendations.dart';
 
@@ -50,13 +50,13 @@ class RecommendedItems extends StatelessWidget {
                             // add the tap event handler 
                             onTap: () {
                               // route to product details page
+                              Provider.of<ProductService>(context, listen: false).fetchProduct(recommendations.items[i].code);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       // pass the product to the detail screen when route triggers
                                       ProductDetailScreen(
-                                          key: null,
                                           product: recommendations.items[i]),
                                 ),
                               );
